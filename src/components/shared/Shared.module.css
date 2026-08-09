@@ -1,0 +1,202 @@
+.panel,
+.sourceDrawer {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.panel {
+  padding: clamp(1rem, 2vw, 1.5rem);
+}
+
+.panelHeader,
+.modeToolbar,
+.actions,
+.classroomActions,
+.stepControls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.stepControls output {
+  min-width: 5.4rem;
+  color: var(--color-ink-muted);
+  font-size: 0.85rem;
+  font-weight: 750;
+  text-align: center;
+}
+
+.panelHeader h2 {
+  margin: 0.25rem 0 0;
+}
+
+.eyebrow {
+  color: var(--color-accent-strong);
+  font-size: 0.75rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.secondaryButton,
+.segmented button,
+.qrPopover summary {
+  border: 1px solid var(--color-border-strong);
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  padding: 0.62rem 0.9rem;
+}
+
+.secondaryButton:hover,
+.segmented button:hover,
+.qrPopover summary:hover {
+  border-color: var(--color-accent);
+}
+
+.secondaryButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.evidenceGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 0.75rem;
+  margin: 1.25rem 0 0;
+}
+
+.evidenceGrid div {
+  border-radius: var(--radius-md);
+  background: var(--color-surface-muted);
+  padding: 0.9rem;
+}
+
+.evidenceGrid dt {
+  color: var(--color-ink-muted);
+  font-size: 0.8rem;
+}
+
+.evidenceGrid dd {
+  margin: 0.4rem 0 0;
+  color: var(--color-ink);
+  font-size: 1.2rem;
+  font-weight: 750;
+}
+
+.empty,
+.note {
+  color: var(--color-ink-muted);
+}
+
+.note {
+  border-left: 3px solid var(--color-sand);
+  padding-left: 0.75rem;
+}
+
+.sourceDrawer {
+  overflow: clip;
+}
+
+.sourceDrawer > summary {
+  cursor: pointer;
+  font-weight: 750;
+  padding: 1rem 1.25rem;
+}
+
+.drawerContent {
+  border-top: 1px solid var(--color-border);
+  padding: 1rem 1.25rem;
+}
+
+.sourceList {
+  display: grid;
+  gap: 0.75rem;
+  padding-left: 1.4rem;
+}
+
+.sourceList li,
+.sourceList span {
+  display: block;
+}
+
+.sourceList span {
+  color: var(--color-ink-muted);
+  margin-top: 0.25rem;
+}
+
+.modeToolbar {
+  margin-block: 1rem;
+}
+
+.segmented {
+  display: inline-flex;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 999px;
+  background: var(--color-surface);
+  padding: 0.2rem;
+}
+
+.segmented button {
+  border: 0;
+  padding-inline: 1rem;
+}
+
+.segmented button[aria-pressed="true"] {
+  background: var(--color-navy);
+  color: white;
+}
+
+.qrPopover {
+  position: relative;
+}
+
+.qrPopover summary {
+  list-style: none;
+}
+
+.qrPopover > div {
+  position: absolute;
+  z-index: 10;
+  right: 0;
+  top: calc(100% + 0.5rem);
+  display: grid;
+  justify-items: center;
+  gap: 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: white;
+  box-shadow: var(--shadow-lifted);
+  padding: 1rem;
+}
+
+@media (max-width: 40rem) {
+  .modeToolbar {
+    align-items: stretch;
+  }
+
+  .segmented,
+  .segmented button {
+    flex: 1;
+  }
+
+  .qrPopover > div {
+    left: 0;
+    right: auto;
+  }
+}
+
+@media print {
+  .actions,
+  .modeToolbar,
+  .sourceDrawer {
+    display: none;
+  }
+}

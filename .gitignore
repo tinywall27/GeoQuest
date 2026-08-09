@@ -1,0 +1,72 @@
+# Operating systems and editors
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# Dependencies and build output
+node_modules/
+.pnpm-store/
+dist/
+coverage/
+.vite/
+*.tsbuildinfo
+playwright-report/
+test-results/
+blob-report/
+*.log
+
+# Local environment and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.mobileprovision
+
+# Python / UV tooling
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Private source material and internal planning
+/work/
+/scratch/
+/outputs/
+/private/
+/internal/
+/docs/internal/
+/.agents/
+/.codex/
+*.pdf
+*.PDF
+*.doc
+*.docx
+*.DOC
+*.DOCX
+*.xls
+*.xlsx
+*.XLS
+*.XLSX
+*.ppt
+*.pptx
+*.PPT
+*.PPTX
+*.zip
+*.7z
+*.rar
+
+# Unapproved or raw data/assets
+**/raw/
+**/pending/
+**/unreviewed/
+**/*.tmp
+**/*.bak

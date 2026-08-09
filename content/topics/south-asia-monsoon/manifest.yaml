@@ -1,0 +1,56 @@
+id: GQ-T022
+slug: south-asia-monsoon
+title: 季风迟到会怎样
+summary: 对照气候基线与明确标注的反事实情景，追踪降水、作物窗口和风险的连锁变化。
+coreQuestion: 如果南亚季风整体迟到二十天，农业与生活会发生什么变化？
+volume: G7B
+chapter: 南亚
+prototype: compare
+channels: [earth-lab, region-explorer, textbook-explorer]
+competencies: [综合思维, 人地协调观]
+status: 开发中
+releaseBatch: Sprint 2
+classroomMinutes: 15
+explorationMinutes: 22
+modes:
+  exploration: { path: /topics/south-asia-monsoon }
+  classroom: { query: "?mode=classroom", sameContent: true }
+primaryInteraction:
+  object: 同步 A/B 季风对照图
+  action: 将同一降水过程平移并比较播种窗口内的水分风险
+  feedback: 检查时间窗口口径，持续区分实测基线与反事实教学情景
+evidenceOutput:
+  type: 对比表
+  description: 基准与延迟情景的四项对照、风险选择和模型局限
+  persistsFreeText: false
+reflectionPrompt: 为什么季风迟到不能直接推出某一种作物必然减产？
+hints: [保证 A/B 使用同一区域与时间尺度, 只比较播种初期水分风险]
+components: [Compare, ClimateChart, EvidencePanel]
+sources:
+  - kind: reference
+    id: DS-CLIMATE-ERA5
+    title: ERA5 daily statistics
+    publisher: Copernicus Climate Change Service
+    attribution: Copernicus Climate Change Service
+    url: https://cds.climate.copernicus.eu/datasets/derived-era5-single-levels-daily-statistics
+    review: &sourceReview { status: unreviewed, notes: 正式本地快照生成后改为 dataset }
+  - kind: simulation
+    id: DS-SIM-MONSOON-GQ
+    title: 季风延迟反事实情景
+    attribution: GeoQuest
+    method: 将同一基准降水序列整体平移二十天并保持完整序列总量
+    parameters: [基准降水序列, 延迟天数, 播种窗口]
+    version: 0.1.0
+    limitations: [不是历史观测或天气预报, 不估算最终产量]
+    review: *sourceReview
+reviews:
+  teaching: &pending { status: unreviewed, notes: 待主题教学审核 }
+  curriculum: *pending
+  textbook: *pending
+  data: { status: blocked, notes: ERA5 正式快照尚未生成 }
+  map: { status: initial, notes: 核心互动不使用地图 }
+  copyright: *pending
+  privacy: *pending
+  technical: *pending
+version: 0.1.0
+updatedAt: "2026-08-09"

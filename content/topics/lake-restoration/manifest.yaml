@@ -1,0 +1,54 @@
+id: GQ-T041
+slug: lake-restoration
+title: 洞庭湖如何重获呼吸
+summary: 比较两个时期的同季节遥感合成影像，只对可见水面变化作出有边界的解释。
+coreQuestion: 洞庭湖的水面、水质、生产活动和治理措施之间发生了怎样的连锁变化，哪些变化还不能只凭影像归因？
+volume: G8A
+chapter: 中国的自然环境
+prototype: image-explorer
+channels: [map-lab, data-lab, region-explorer]
+competencies: [地理实践力, 人地协调观]
+status: 开发中
+releaseBatch: Sprint 4
+classroomMinutes: 12
+explorationMinutes: 20
+modes:
+  exploration: { path: /topics/lake-restoration }
+  classroom: { query: "?mode=classroom", sameContent: true }
+primaryInteraction:
+  object: 同范围同季节的两期洞庭湖遥感合成
+  action: 拖动分割线并标注三个预设变化热点
+  feedback: 区分影像直接支持、官方监测支持和只能提出假设
+evidenceOutput:
+  type: 标注
+  description: 三处热点、一条问题—措施—成效链、替代解释和置信度
+  persistsFreeText: false
+reflectionPrompt: 为什么水面或颜色变化不能直接证明水质改善和治理因果？
+hints: [先核对日期季节和有效像元, 把影像观察与官方监测分开]
+components: [ImageSwipe, AnnotationLayer, EvidencePanel]
+sources:
+  - kind: reference
+    id: DS-REMOTE-LANDSAT
+    title: Landsat Collection 2 Level-2 Surface Reflectance
+    publisher: U.S. Geological Survey
+    attribution: U.S. Geological Survey
+    url: https://www.usgs.gov/landsat-missions/landsat-collection-2
+    review: &sourceReview { status: unreviewed, notes: 两期正式合成与场景清单完成后改为 dataset }
+  - kind: reference
+    id: DS-WATER-JRC
+    title: JRC Global Surface Water
+    publisher: European Commission Joint Research Centre
+    attribution: "Source: EC JRC/Google"
+    url: https://global-surface-water.appspot.com/
+    review: *sourceReview
+reviews:
+  teaching: &pending { status: unreviewed, notes: 待主题教学审核 }
+  curriculum: *pending
+  textbook: *pending
+  data: { status: blocked, notes: 两期同季节影像、官方监测与处理记录尚未生成 }
+  map: { status: blocked, notes: 遥感定位图和公开展示门禁尚未完成 }
+  copyright: *pending
+  privacy: *pending
+  technical: *pending
+version: 0.1.0
+updatedAt: "2026-08-09"

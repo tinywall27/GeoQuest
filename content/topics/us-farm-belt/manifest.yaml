@@ -1,0 +1,63 @@
+id: GQ-T030
+slug: us-farm-belt
+title: 为美国划农业带
+summary: 比较多个区域的自然和市场条件，设计可说明理由但不追求唯一答案的农业布局。
+coreQuestion: 如果只掌握有限证据，你会怎样为美国划分农业带？
+volume: G7B
+chapter: 美国
+prototype: decision-lab
+channels: [region-explorer, geo-challenge, textbook-explorer]
+competencies: [区域认知, 综合思维]
+status: 开发中
+releaseBatch: Sprint 3
+classroomMinutes: 15
+explorationMinutes: 25
+modes:
+  exploration: { path: /topics/us-farm-belt }
+  classroom: { query: "?mode=classroom", sameContent: true }
+primaryInteraction:
+  object: 九区农业规划面板
+  action: 将六类农业卡分配到教学区域并比较自然、市场、运输和水资源条件
+  feedback: 说明证据与代价，不把现实分布设为唯一正确答案
+evidenceOutput:
+  type: 方案卡
+  description: 六项区域分配、五类证据、一个冲突和一个取舍
+  persistsFreeText: false
+reflectionPrompt: 现实农业分布为何不能简单等同于唯一最优方案？
+hints: [先判断自然可行性, 再比较市场与资源代价]
+components: [DecisionLab, EvidencePanel]
+sources:
+  - kind: reference
+    id: DS-USDA-CDL
+    title: USDA NASS Cropland Data Layer 2024
+    publisher: USDA National Agricultural Statistics Service
+    attribution: USDA National Agricultural Statistics Service
+    url: https://www.nass.usda.gov/Research_and_Science/Cropland/SARS1a.php
+    review: &sourceReview { status: unreviewed, notes: 只发布区域聚合结果，不发布全国原始栅格 }
+  - kind: reference
+    id: DS-USDA-ERS-FRR
+    title: USDA ERS Farm Resource Regions
+    publisher: USDA Economic Research Service
+    attribution: USDA Economic Research Service
+    url: https://www.ers.usda.gov/
+    review: *sourceReview
+  - kind: simulation
+    id: DS-SIM-US-FARM-GQ
+    title: 美国农业布局教学规则
+    attribution: GeoQuest
+    method: 对热量水分地形市场和交通进行可解释的加权比较
+    parameters: [热量, 水分, 地形, 市场, 交通, 指标权重]
+    version: 0.1.0
+    limitations: [市场和交通部分为教学情景变量, 不预测实际收益]
+    review: *sourceReview
+reviews:
+  teaching: &pending { status: unreviewed, notes: 待主题教学审核 }
+  curriculum: *pending
+  textbook: *pending
+  data: { status: blocked, notes: USDA、ERA5 与 SRTM 区域聚合快照尚未完成 }
+  map: { status: initial, notes: 当前使用无政治边界区域示意，正式定位图待审核 }
+  copyright: *pending
+  privacy: *pending
+  technical: *pending
+version: 0.1.0
+updatedAt: "2026-08-09"

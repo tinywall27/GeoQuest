@@ -1,0 +1,56 @@
+id: GQ-T003
+slug: earth-motion-lab
+title: 如果地球不这样转
+summary: 一次只改变一个地球运动变量，观察昼夜、季节和太阳高度怎样改变。
+coreQuestion: 地球运动方式改变后，我们熟悉的昼夜和季节还会存在吗？
+volume: G7A
+chapter: 地球的运动
+prototype: simulator
+channels: [earth-lab, textbook-explorer]
+competencies: [综合思维, 地理实践力]
+status: 开发中
+releaseBatch: Sprint 1
+classroomMinutes: 12
+explorationMinutes: 20
+modes:
+  exploration: { path: /topics/earth-motion-lab }
+  classroom: { query: "?mode=classroom", sameContent: true }
+primaryInteraction:
+  object: 原创二维地球运动模型
+  action: 分别改变公转位置、地轴倾角和观测纬度
+  feedback: 同步显示太阳直射纬度、昼长及相对基准变化
+evidenceOutput:
+  type: 情景结果
+  description: 三组变量—现象对照与一条机制判断
+  persistsFreeText: false
+reflectionPrompt: 模型中哪些条件被简化了，结论能解释到什么范围？
+hints: [一次只改变一个变量, 先比较倾角为零与当前倾角]
+components: [ScenarioControls, EvidencePanel]
+sources:
+  - kind: reference
+    id: DS-SPACE-NASA
+    title: NASA Earth Facts
+    publisher: National Aeronautics and Space Administration
+    attribution: NASA
+    url: https://science.nasa.gov/earth/facts/
+    review: &sourceReview { status: unreviewed, notes: 仅核对事实参数，不复用页面图片 }
+  - kind: simulation
+    id: DS-SIM-EARTH-GQ
+    title: GeoQuest 地球运动教学模型
+    attribution: GeoQuest
+    method: 基于球面天文几何计算太阳直射纬度与理论昼长
+    parameters: [公转位置, 地轴倾角, 观测纬度]
+    version: 0.1.0
+    limitations: [天体大小距离与速度不按比例, 不推演停止自转后的气候灾难]
+    review: *sourceReview
+reviews: &reviews
+  teaching: &pending { status: unreviewed, notes: 待主题教学审核 }
+  curriculum: *pending
+  textbook: *pending
+  data: *pending
+  map: { status: initial, notes: 不涉及地图，仍需人工确认 }
+  copyright: *pending
+  privacy: *pending
+  technical: *pending
+version: 0.1.0
+updatedAt: "2026-08-09"

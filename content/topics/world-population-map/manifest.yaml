@@ -1,0 +1,54 @@
+id: GQ-T009
+slug: world-population-map
+title: 世界人口住在哪里
+summary: 叠加人口、地形等本地快照，识别人口分布格局及其不能被单一因素解释的例外。
+coreQuestion: 世界人口为什么集中在某些地方，又为什么会出现例外？
+volume: G7A
+chapter: 世界的居民
+prototype: data-explorer
+channels: [map-lab, data-lab, textbook-explorer]
+competencies: [综合思维, 区域认知]
+status: 开发中
+releaseBatch: Sprint 2
+classroomMinutes: 15
+explorationMinutes: 25
+modes:
+  exploration: { path: /topics/world-population-map }
+  classroom: { query: "?mode=classroom", sameContent: true }
+primaryInteraction:
+  object: 世界人口数据视图
+  action: 切换年份和密度等级并选择密集区、稀疏区与反例
+  feedback: 联动纬度和海拔统计，只判断证据匹配而不把相关性写成因果
+evidenceOutput:
+  type: 图表
+  description: 一条总体规律、两个反例及尺度局限
+  persistsFreeText: false
+reflectionPrompt: 相同纬度或海拔的地区为何仍可能具有完全不同的人口密度？
+hints: [先比较人口占比与土地占比, 主动寻找不符合单一解释的地区]
+components: [DataExplorer, MapProviderAdapter, EvidencePanel]
+sources:
+  - kind: reference
+    id: DS-POP-GHSL
+    title: GHS-POP R2023A
+    publisher: European Commission Joint Research Centre
+    attribution: European Commission, Joint Research Centre
+    url: https://human-settlement.emergency.copernicus.eu/ghs_pop2023.php
+    review: &sourceReview { status: unreviewed, notes: 快照、加工参数和地图门禁完成后改为 dataset }
+  - kind: reference
+    id: DS-TOPO-ETOPO
+    title: ETOPO 2022 Global Relief Model
+    publisher: NOAA National Centers for Environmental Information
+    attribution: NOAA NCEI
+    url: https://www.ncei.noaa.gov/products/etopo-global-relief-model
+    review: *sourceReview
+reviews:
+  teaching: &pending { status: unreviewed, notes: 待主题教学审核 }
+  curriculum: *pending
+  textbook: *pending
+  data: { status: blocked, notes: GHSL 与 ETOPO 正式快照尚未生成 }
+  map: { status: blocked, notes: 人口栅格叠加后的送审判断尚未完成 }
+  copyright: *pending
+  privacy: *pending
+  technical: *pending
+version: 0.1.0
+updatedAt: "2026-08-09"

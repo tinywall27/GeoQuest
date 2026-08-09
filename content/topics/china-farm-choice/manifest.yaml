@@ -1,0 +1,56 @@
+id: GQ-T047
+slug: china-farm-choice
+title: 一块农田种什么
+summary: 在四个预设地块中权衡水热、作物、灌溉、市场和技术，形成结构化种植方案。
+coreQuestion: 一块农田适合种什么，究竟由哪些自然和社会条件共同决定？
+volume: G8A
+chapter: 中国的农业
+prototype: decision-lab
+channels: [data-lab, geo-challenge, textbook-explorer]
+competencies: [人地协调观, 综合思维]
+status: 开发中
+releaseBatch: Sprint 4
+classroomMinutes: 15
+explorationMinutes: 25
+modes:
+  exploration: { path: /topics/china-farm-choice }
+  classroom: { query: "?mode=classroom", sameContent: true }
+primaryInteraction:
+  object: 农业生产配置面板
+  action: 配置地块、作物、灌溉、市场距离和技术投入
+  feedback: 即时显示自然适宜、水资源压力、市场匹配和风险韧性
+evidenceOutput:
+  type: 方案卡
+  description: 一套农业方案、两项自然证据、两项社会证据和可持续取舍
+  persistsFreeText: false
+reflectionPrompt: 为什么得分接近的两套方案仍可能代表不同的风险和取舍？
+hints: [先排除自然条件明显不适宜的组合, 再比较资源与市场代价]
+components: [DecisionLab, EvidencePanel]
+sources:
+  - kind: reference
+    id: DS-CLIMATE-ERA5-LAND
+    title: ERA5-Land monthly averaged data
+    publisher: Copernicus Climate Change Service
+    attribution: Copernicus Climate Change Service
+    url: https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land-monthly-means
+    review: &sourceReview { status: unreviewed, notes: 四个地块 1991—2020 快照生成后改为 dataset }
+  - kind: simulation
+    id: DS-MODEL-FARM-V1
+    title: GeoQuest 农业决策教学规则
+    attribution: GeoQuest
+    method: 对自然适宜、水压力、市场匹配和风险韧性进行确定性比较
+    parameters: [气候情景, 作物, 灌溉可靠度, 市场距离, 技术投入]
+    version: 0.1.0
+    limitations: [不是产量或收益预测, 市场和技术为离散教学情景]
+    review: *sourceReview
+reviews:
+  teaching: &pending { status: unreviewed, notes: 待主题教学审核 }
+  curriculum: *pending
+  textbook: *pending
+  data: { status: blocked, notes: ERA5-Land 正式快照尚未生成 }
+  map: { status: blocked, notes: 四地块定位标准地图尚未锁定 }
+  copyright: *pending
+  privacy: *pending
+  technical: *pending
+version: 0.1.0
+updatedAt: "2026-08-09"

@@ -1,0 +1,47 @@
+id: GQ-T037
+slug: china-terrain-steps
+title: 穿越中国三级阶梯
+summary: 沿一条东西向折线读取本地高程剖面，解释地势阶梯与河流、交通之间的联系。
+coreQuestion: 从高原走向海洋，中国地势的变化怎样影响河流与交通？
+volume: G8A
+chapter: 中国的地形
+prototype: map-explorer
+channels: [map-lab, region-explorer, textbook-explorer]
+competencies: [区域认知, 综合思维]
+status: 开发中
+releaseBatch: Sprint 3
+classroomMinutes: 12
+explorationMinutes: 20
+modes:
+  exploration: { path: /topics/china-terrain-steps }
+  classroom: { query: "?mode=classroom", sameContent: true }
+primaryInteraction:
+  object: 那曲至上海的折线观察剖面
+  action: 沿六个地点移动并联动高程、概念阶梯和影响证据
+  feedback: 显示高程与支持证据，同时提示阶梯界线只是教材概念示意
+evidenceOutput:
+  type: 图表
+  description: 两个阶梯过渡点、三个剖面标注、三项影响和尺度限制
+  persistsFreeText: false
+reflectionPrompt: 一条折线剖面能够代表多大范围的中国地势特征？
+hints: [先观察高程突变再判断过渡, 不要把观察折线当成实际交通路线]
+components: [MapExplorer, TerrainProfile, MapProviderAdapter, EvidencePanel]
+sources:
+  - kind: reference
+    id: DS-TOPO-SRTM
+    title: SRTMGL1 v003
+    publisher: NASA EOSDIS Land Processes DAAC
+    attribution: NASA EOSDIS Land Processes DAAC
+    url: https://www.earthdata.nasa.gov/data/instruments/srtm
+    review: { status: unreviewed, notes: 正式剖面采样、产品 DOI 和校验值完成后改为 dataset }
+reviews:
+  teaching: &pending { status: unreviewed, notes: 待主题教学审核 }
+  curriculum: *pending
+  textbook: *pending
+  data: { status: blocked, notes: SRTM 剖面正式快照尚未生成 }
+  map: { status: blocked, notes: 中国标准地图版本、审图号和叠加检查尚未归档 }
+  copyright: *pending
+  privacy: *pending
+  technical: *pending
+version: 0.1.0
+updatedAt: "2026-08-09"

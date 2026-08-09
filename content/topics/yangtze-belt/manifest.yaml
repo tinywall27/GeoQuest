@@ -1,0 +1,68 @@
+id: GQ-T060
+slug: yangtze-belt
+title: 一条大河如何协同上中下游
+summary: 沿时间与空间证据链比较长江上中下游角色，提出兼顾联系与生态责任的协同方案。
+coreQuestion: 上中下游各有不同任务时，长江经济带怎样形成真正的协同？
+volume: G8B
+chapter: 长江中下游地区
+prototype: story-map
+channels: [region-explorer, geo-challenge, textbook-explorer]
+competencies: [人地协调观, 区域认知, 综合思维]
+status: 开发中
+releaseBatch: Sprint 5
+classroomMinutes: 15
+explorationMinutes: 25
+modes:
+  exploration: { path: /topics/yangtze-belt }
+  classroom: { query: "?mode=classroom", sameContent: true }
+primaryInteraction:
+  object: 五节点协同时间轴
+  action: 选择转折点并拼合政策、三段分工、跨区联系和共同责任
+  feedback: 检查时间顺序、三段覆盖和证据类别，不判定唯一产业分工
+evidenceOutput:
+  type: 方案卡
+  description: 一条协同链、上中下游三张角色卡和共同生态责任
+  persistsFreeText: false
+reflectionPrompt: 一条政策时间线为什么不能完整证明区域协同的实际成效？
+hints: [先确定转折点的前后关系, 证据链必须同时覆盖联系与生态责任]
+components: [TimeSlider, FlowMap, EvidencePanel]
+sources:
+  - kind: reference
+    id: DS-NDRC-YREB-TIMELINE
+    title: 长江经济带发展历程
+    publisher: 国家发展和改革委员会
+    attribution: 国家发展和改革委员会
+    url: https://cjjjd.ndrc.gov.cn/zhongshuochangjiang/ztbd/202206/t20220623_1327983.htm
+    review: &sourceReview { status: unreviewed, notes: 只原创转述少量事实与时间节点 }
+  - kind: reference
+    id: DS-MOT-YREB
+    title: 长江经济带综合立体交通走廊材料
+    publisher: 交通运输部
+    attribution: 交通运输部
+    url: https://www.mot.gov.cn/2023wangshangzhibo/2023tenth/zhibozhaiyao/202310/t20231026_3934345.html
+    review: *sourceReview
+  - kind: reference
+    id: DS-NBS-YREB-2023
+    title: 新中国75年经济社会发展成就系列报告之八
+    publisher: 国家统计局
+    attribution: 国家统计局
+    url: https://www.stats.gov.cn/sj/sjjd/202409/t20240912_1956415.html
+    review: *sourceReview
+  - kind: reference
+    id: DS-MEE-YANGTZE-2024
+    title: 2024中国生态环境状况公报发布说明
+    publisher: 中华人民共和国生态环境部
+    attribution: 中华人民共和国生态环境部
+    url: https://www.mee.gov.cn/ywgz/sthjjcgl/hjzljcypj/202506/t20250605_1120773.shtml
+    review: *sourceReview
+reviews:
+  teaching: &pending { status: unreviewed, notes: 待主题教学审核 }
+  curriculum: *pending
+  textbook: *pending
+  data: { status: blocked, notes: 五节点官方事实快照与逐项口径尚未归档 }
+  map: { status: blocked, notes: 长江叠加层及中国标准地图尚未通过门禁 }
+  copyright: *pending
+  privacy: *pending
+  technical: *pending
+version: 0.1.0
+updatedAt: "2026-08-09"
