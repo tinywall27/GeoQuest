@@ -20,9 +20,9 @@ export function TopicsPage(): React.JSX.Element {
   return (
     <div className={styles.page}>
       <header className={styles.pageHero}>
-        <span className={styles.kickerDark}>V1 互动主题</span>
+        <span className={styles.kickerDark}>精选互动主题</span>
         <h1>用问题组织探索</h1>
-        <p>十个主题覆盖八类互动原型。开发中主题仅在本地环境可进入，正式网站只开放审核通过的内容。</p>
+        <p>优先完成地形实验。地球与太阳、流域与水土、气候与农业将逐步融合打磨。</p>
       </header>
       <section className={styles.filters} aria-label="筛选主题">
         <label>

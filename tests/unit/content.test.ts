@@ -12,6 +12,15 @@ const approvedReview = {
   notes: "仅供内部审核",
 };
 
+const passedAiReview = {
+  status: "passed" as const,
+  agent: "codex-content-review",
+  checkedAt: "2026-09-16",
+  evidencePath: "docs/PROJECT_CONSTRAINTS.md",
+  scope: ["schema", "sources", "offline"],
+  version: "1.0.0",
+};
+
 const validManifest = {
   id: "GQ-T003",
   slug: "earth-motion-lab",
@@ -67,6 +76,7 @@ const validManifest = {
     privacy: approvedReview,
     technical: approvedReview,
   },
+  aiReview: passedAiReview,
   version: "1.0.0",
   updatedAt: "2026-08-09",
 };
@@ -83,6 +93,47 @@ describe("主题内容契约", () => {
     );
   });
 
+  it("已发布主题只要求当前版本的 passed AI 审核", () => {
+    const withoutLegacyReviews = structuredClone(validManifest) as Record<string, unknown>;
+    delete withoutLegacyReviews.reviews;
+    expect(topicManifestSourceSchema.parse(withoutLegacyReviews).aiReview).toEqual(
+      passedAiReview,
+    );
+
+    const withLegacyPendingReview = structuredClone(validManifest) as Record<string, unknown>;
+    (withLegacyPendingReview.reviews as Record<string, unknown>).teaching = {
+      status: "unreviewed",
+    };
+    expect(
+      topicManifestSourceSchema.parse(withLegacyPendingReview).reviews?.teaching.status,
+    ).toBe("unreviewed");
+
+    const staleReview = structuredClone(validManifest);
+    staleReview.aiReview.version = "0.9.0";
+    expect(() => topicManifestSourceSchema.parse(staleReview)).toThrow(/当前 version/);
+  });
+
+  it("没有旧版 reviews 的开发主题不会被投影成 approved", () => {
+    const draft = structuredClone(validManifest) as Record<string, unknown>;
+    delete draft.reviews;
+    delete draft.aiReview;
+    draft.status = "开发中";
+    const publicManifest = toPublicTopicManifest(
+      topicManifestSourceSchema.parse(draft),
+    );
+    expect(publicManifest.reviewSummary).toEqual({ status: "unreviewed" });
+  });
+
+  it("AI 审核记录拒绝绝对路径和目录穿越", () => {
+    const absolutePath = structuredClone(validManifest);
+    absolutePath.aiReview.evidencePath = "/tmp/review.md";
+    expect(() => topicManifestSourceSchema.parse(absolutePath)).toThrow(/仓库内相对路径/);
+
+    const parentPath = structuredClone(validManifest);
+    parentPath.aiReview.evidencePath = "reviews/../review.md";
+    expect(() => topicManifestSourceSchema.parse(parentPath)).toThrow(/仓库内相对路径/);
+  });
+
   it("双模式必须共用与 slug 一致的主题地址", () => {
     const invalid = structuredClone(validManifest);
     invalid.modes.exploration.path = "/topics/wrong-topic";
@@ -95,10 +146,15 @@ describe("主题内容契约", () => {
     const serialized = JSON.stringify(publicManifest);
 
     expect(publicManifest.reviewSummary).toEqual({
-      status: "approved",
-      checkedAt: "2026-08-09",
+      status: "passed",
+      checkedAt: "2026-09-16",
+    });
+    expect(publicManifest.aiReview).toEqual({
+      status: "passed",
+      checkedAt: "2026-09-16",
     });
     expect(serialized).not.toContain("internal-reviewer");
+    expect(serialized).not.toContain("codex-content-review");
     expect(serialized).not.toContain("evidencePath");
     expect(serialized).not.toContain("notes");
     expect(publicManifest.sources[0]?.review).toEqual({

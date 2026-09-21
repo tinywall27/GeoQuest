@@ -2,7 +2,7 @@
 .sourceDrawer {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  background: var(--color-surface);
+  background: rgba(255, 250, 240, .84);
   box-shadow: var(--shadow-soft);
 }
 
@@ -47,7 +47,7 @@
 .qrPopover summary {
   border: 1px solid var(--color-border-strong);
   border-radius: 999px;
-  background: var(--color-surface);
+  background: rgba(255, 250, 240, .88);
   color: var(--color-ink);
   cursor: pointer;
   font: inherit;
@@ -133,14 +133,21 @@
 }
 
 .modeToolbar {
-  margin-block: 1rem;
+  position: relative;
+  z-index: 8;
+  border: 1px solid var(--color-border);
+  border-radius: .85rem;
+  background: rgba(255, 250, 240, .88);
+  box-shadow: 0 .4rem 1rem rgba(66, 51, 27, .08);
+  margin-block: .8rem;
+  padding: .48rem;
 }
 
 .segmented {
   display: inline-flex;
   border: 1px solid var(--color-border-strong);
   border-radius: 999px;
-  background: var(--color-surface);
+  background: #e9e1d1;
   padding: 0.2rem;
 }
 
@@ -150,7 +157,8 @@
 }
 
 .segmented button[aria-pressed="true"] {
-  background: var(--color-navy);
+  background: #175d78;
+  box-shadow: 0 .18rem .5rem rgba(23, 93, 120, .22);
   color: white;
 }
 

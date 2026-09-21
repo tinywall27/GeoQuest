@@ -1,0 +1,41 @@
+{
+  "source": "World Bank World Development Indicators",
+  "apiVersion": "v2",
+  "retrievedAt": "2026-09-19",
+  "lastUpdated": "2026-07-13",
+  "year": 2023,
+  "indicators": {
+    "population": "SP.POP.TOTL",
+    "landAreaKm2": "AG.LND.TOTL.K2"
+  },
+  "records": [
+    {
+      "code": "AUS",
+      "name": "澳大利亚",
+      "englishName": "Australia",
+      "population": 26659922,
+      "landAreaKm2": 7692020
+    },
+    {
+      "code": "BGD",
+      "name": "孟加拉国",
+      "englishName": "Bangladesh",
+      "population": 171466990,
+      "landAreaKm2": 129980
+    },
+    {
+      "code": "NLD",
+      "name": "荷兰",
+      "englishName": "Netherlands",
+      "population": 17877117,
+      "landAreaKm2": 33670
+    },
+    {
+      "code": "JPN",
+      "name": "日本",
+      "englishName": "Japan",
+      "population": 124516650,
+      "landAreaKm2": 364569.27
+    }
+  ]
+}

@@ -1,3 +1,5 @@
+> 历史 V1 文档。2026-09-16 起，选题与发布审核以 [V2 重构方案](REFACTOR_PLAN_V2.md) 和 [项目约束](PROJECT_CONSTRAINTS.md) 为准；以下旧人工门禁和主题数量不再生效。
+
 # GeoQuest 路线图
 
 路线图描述顺序与门禁，不把候选主题或日期当作发布承诺。任何阶段均受 [`PROJECT_CONSTRAINTS.md`](PROJECT_CONSTRAINTS.md) 约束。

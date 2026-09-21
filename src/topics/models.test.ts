@@ -3,6 +3,9 @@ import {
   agricultureFit,
   controlledErosionComparison,
   dayLengthHours,
+  daylightDurationForSolarDay,
+  detailedErosionBaseline,
+  detailedErosionModel,
   erosionModel,
   farmDecisionScores,
   localTimeDifferenceHours,
@@ -12,6 +15,8 @@ import {
   relativeRouteRiskIndex,
   shiftSeries,
   solarDeclination,
+  solarDeclinationAtOrbit,
+  solarNoonAltitude,
 } from "./models";
 
 describe("earth motion model", () => {
@@ -26,6 +31,23 @@ describe("earth motion model", () => {
 
   it("uses fifteen degrees per local-time hour", () => {
     expect(localTimeDifferenceHours(90, 120)).toBe(2);
+  });
+
+  it("moves solar declination continuously around the four key orbit positions", () => {
+    expect(solarDeclinationAtOrbit(0)).toBeCloseTo(0, 6);
+    expect(solarDeclinationAtOrbit(90)).toBeCloseTo(23.4, 6);
+    expect(solarDeclinationAtOrbit(180)).toBeCloseTo(0, 6);
+    expect(solarDeclinationAtOrbit(270)).toBeCloseTo(-23.4, 6);
+    expect(solarDeclinationAtOrbit(90, 0)).toBeCloseTo(0, 6);
+  });
+
+  it("keeps the extended-day teaching comparison internally consistent", () => {
+    const declination = solarDeclinationAtOrbit(90, 23.4);
+    expect(solarNoonAltitude(40, declination)).toBeCloseTo(73.4, 1);
+    expect(daylightDurationForSolarDay(40, declination, 48)).toBeCloseTo(
+      dayLengthHours(40, declination) * 2,
+      6,
+    );
   });
 });
 
@@ -116,6 +138,54 @@ describe("teaching scenario models", () => {
           }
         }
       }
+    }
+  });
+
+  it("keeps the continuous erosion field bounded and deterministic", () => {
+    const practices = ["downslope", "contour", "terrace", "grass"] as const;
+    for (const rainIntensity of [10, 24, 42, 63, 80]) {
+      for (const slopeDegrees of [5, 14, 21, 35]) {
+        for (const vegetationCover of [0, 35, 60, 90]) {
+          for (const practice of practices) {
+            const input = { rainIntensity, slopeDegrees, vegetationCover, practice };
+            const first = detailedErosionModel(input);
+            expect(detailedErosionModel(input)).toEqual(first);
+            for (const value of [first.runoff, first.erosion, first.protection]) {
+              expect(Number.isFinite(value)).toBe(true);
+              expect(value).toBeGreaterThanOrEqual(0);
+              expect(value).toBeLessThanOrEqual(100);
+            }
+          }
+        }
+      }
+    }
+  });
+
+  it("changes continuously in the planned directions across adjacent slider values", () => {
+    const rainSeries = Array.from({ length: 71 }, (_, index) => detailedErosionModel({ ...detailedErosionBaseline, rainIntensity: 10 + index }));
+    const slopeSeries = Array.from({ length: 31 }, (_, index) => detailedErosionModel({ ...detailedErosionBaseline, slopeDegrees: 5 + index }));
+    const coverSeries = Array.from({ length: 91 }, (_, index) => detailedErosionModel({ ...detailedErosionBaseline, vegetationCover: index }));
+    for (let index = 1; index < rainSeries.length; index += 1) {
+      expect(rainSeries[index]!.erosion).toBeGreaterThanOrEqual(rainSeries[index - 1]!.erosion);
+      expect(rainSeries[index]!.runoff).toBeGreaterThanOrEqual(rainSeries[index - 1]!.runoff);
+    }
+    for (let index = 1; index < slopeSeries.length; index += 1) {
+      expect(slopeSeries[index]!.erosion).toBeGreaterThanOrEqual(slopeSeries[index - 1]!.erosion);
+      expect(slopeSeries[index]!.runoff).toBeGreaterThanOrEqual(slopeSeries[index - 1]!.runoff);
+    }
+    for (let index = 1; index < coverSeries.length; index += 1) {
+      expect(coverSeries[index]!.erosion).toBeLessThanOrEqual(coverSeries[index - 1]!.erosion);
+      expect(coverSeries[index]!.runoff).toBeLessThanOrEqual(coverSeries[index - 1]!.runoff);
+    }
+  });
+
+  it("orders all four conservation practices from less to more protective", () => {
+    const practices = ["downslope", "contour", "terrace", "grass"] as const;
+    const results = practices.map((practice) => detailedErosionModel({ ...detailedErosionBaseline, practice }));
+    for (let index = 1; index < results.length; index += 1) {
+      expect(results[index]!.erosion).toBeLessThanOrEqual(results[index - 1]!.erosion);
+      expect(results[index]!.runoff).toBeLessThanOrEqual(results[index - 1]!.runoff);
+      expect(results[index]!.protection).toBeGreaterThanOrEqual(results[index - 1]!.protection);
     }
   });
 

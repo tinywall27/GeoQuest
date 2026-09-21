@@ -1,4 +1,6 @@
 import type {
+  AiReviewRecord,
+  PublicAiReviewSummary,
   PublicReviewSummary,
   PublicSourceRef,
   PublicTopicManifest,
@@ -12,6 +14,10 @@ function toPublicReview(review: ReviewRecord): PublicReviewSummary {
     : { status: review.status };
 }
 
+function toPublicAiReview(review: AiReviewRecord): PublicAiReviewSummary {
+  return { status: review.status, checkedAt: review.checkedAt };
+}
+
 function toPublicSource(
   source: TopicManifestSource["sources"][number],
 ): PublicSourceRef {
@@ -22,10 +28,10 @@ function toPublicSource(
 }
 
 function overallReview(reviews: TopicManifestSource["reviews"]): PublicReviewSummary {
-  const entries = Object.values(reviews);
+  const entries = reviews ? Object.values(reviews) : [];
   const status = entries.some((review) => review.status === "blocked")
     ? "blocked"
-    : entries.every((review) => review.status === "approved")
+    : entries.length > 0 && entries.every((review) => review.status === "approved")
       ? "approved"
       : entries.some((review) => review.status === "initial")
         ? "initial"
@@ -41,10 +47,13 @@ function overallReview(reviews: TopicManifestSource["reviews"]): PublicReviewSum
 export function toPublicTopicManifest(
   source: TopicManifestSource,
 ): PublicTopicManifest {
-  const { reviews, sources, ...publicFields } = source;
+  const { reviews, aiReview, sources, ...publicFields } = source;
   return {
     ...publicFields,
     sources: sources.map(toPublicSource),
-    reviewSummary: overallReview(reviews),
+    ...(aiReview ? { aiReview: toPublicAiReview(aiReview) } : {}),
+    reviewSummary: aiReview
+      ? toPublicAiReview(aiReview)
+      : overallReview(reviews),
   };
 }

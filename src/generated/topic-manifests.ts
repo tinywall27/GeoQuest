@@ -20,7 +20,7 @@ export const topicManifests: readonly PublicTopicManifest[] = [
       "人地协调观",
       "综合思维"
     ],
-    "status": "开发中",
+    "status": "已归档",
     "releaseBatch": "Sprint 4",
     "classroomMinutes": 15,
     "explorationMinutes": 25,
@@ -111,7 +111,7 @@ export const topicManifests: readonly PublicTopicManifest[] = [
       "区域认知",
       "综合思维"
     ],
-    "status": "开发中",
+    "status": "已归档",
     "releaseBatch": "Sprint 3",
     "classroomMinutes": 12,
     "explorationMinutes": 20,
@@ -167,9 +167,9 @@ export const topicManifests: readonly PublicTopicManifest[] = [
   {
     "id": "GQ-T006",
     "slug": "contour-rescue",
-    "title": "等高线山地救援",
-    "summary": "读取原创等高线地形，比较三条候选路线，为山地救援选择相对稳妥的路径。",
-    "coreQuestion": "只看等高线能判断哪些地形条件，还缺哪些信息才能选择相对安全的路线？",
+    "title": "地形与路线探究",
+    "summary": "旋转三维山地，对照同源等高线与路线剖面，用距离、爬升和坡度证据比较三条路线。",
+    "coreQuestion": "直达的路线一定更省力吗，等高线与剖面能提供哪些证据？",
     "volume": "G7A",
     "chapter": "学会使用地图",
     "prototype": "geo-challenge",
@@ -182,9 +182,9 @@ export const topicManifests: readonly PublicTopicManifest[] = [
       "区域认知",
       "地理实践力"
     ],
-    "status": "开发中",
+    "status": "已发布",
     "releaseBatch": "Sprint 1",
-    "classroomMinutes": 12,
+    "classroomMinutes": 20,
     "explorationMinutes": 20,
     "modes": {
       "exploration": {
@@ -196,62 +196,69 @@ export const topicManifests: readonly PublicTopicManifest[] = [
       }
     },
     "primaryInteraction": {
-      "object": "原创虚构等高线地形图",
-      "action": "判读地形部位并比较三条同起终点候选路线",
-      "feedback": "区分地形判读错误、计算错误与现有证据不足"
+      "object": "同源三维高程表面与等高线",
+      "action": "旋转俯视与切片观察，比较三条同起终点路线",
+      "feedback": "三维和二维观察点、剖面及距离爬升坡度同步更新"
     },
     "evidenceOutput": {
       "type": "路线",
-      "description": "地形标注、路线指标、选择依据和仍需补充的信息",
+      "description": "多条路线的水平距离、累计爬升与最大局部坡度对照表，可导出CSV",
       "persistsFreeText": false
     },
     "reflectionPrompt": "为什么等高线证据不能单独保证现实中的救援安全？",
     "hints": [
-      "先找闭合等高线和鞍部",
-      "等高线越密通常坡度越陡"
+      "观察闭合线内侧标高变化以判断山顶",
+      "相同比例尺与等高距下比较等高线疏密"
     ],
     "components": [
-      "GeoChallenge",
-      "CoordinatePicker",
-      "EvidencePanel"
+      "TerrainScene",
+      "ContourMap",
+      "RouteProfile",
+      "EvidenceTable"
     ],
-    "version": "0.1.0",
-    "updatedAt": "2026-08-09",
+    "version": "2.1.0",
+    "updatedAt": "2026-09-16",
     "sources": [
       {
         "id": "DS-SIM-TOPO-GQ",
-        "title": "GeoQuest 虚构山地高程网格",
+        "title": "GeoQuest 虚构山地高程模型",
         "attribution": "GeoQuest",
         "review": {
-          "status": "unreviewed"
+          "status": "initial"
         },
         "kind": "simulation",
-        "method": "固定高程网格派生 50 米等高距与三条预设路线指标",
+        "method": "四个高斯山体叠加得到解析高程，121×91网格派生等高线，路线按241个等水平距离点计算",
         "parameters": [
-          "原创高程网格",
-          "50 米等高距",
+          "水平范围4×3km",
+          "等高距50或100或200m",
+          "垂直夸张仅作用于显示",
           "总爬升",
-          "最大坡度",
-          "谷地穿越",
-          "通视"
+          "最大局部坡度"
         ],
-        "version": "0.1.0",
+        "version": "2.0.0",
         "limitations": [
           "不对应真实地点",
+          "坡度为离散采样估计",
+          "水平切片不表示洪水范围",
           "不含天气道路植被和地质灾害数据"
         ]
       }
     ],
+    "aiReview": {
+      "status": "passed",
+      "checkedAt": "2026-09-16"
+    },
     "reviewSummary": {
-      "status": "initial"
+      "status": "passed",
+      "checkedAt": "2026-09-16"
     }
   },
   {
     "id": "GQ-T003",
     "slug": "earth-motion-lab",
-    "title": "如果地球不这样转",
-    "summary": "一次只改变一个地球运动变量，观察昼夜、季节和太阳高度怎样改变。",
-    "coreQuestion": "地球运动方式改变后，我们熟悉的昼夜和季节还会存在吗？",
+    "title": "地球与太阳",
+    "summary": "跟随地表观测点经历昼夜，比较南北半球日照，用同纬度与零倾角实验探究四季。",
+    "coreQuestion": "自转怎样造成昼夜交替，地轴倾斜与公转怎样改变季节日照？",
     "volume": "G7A",
     "chapter": "地球的运动",
     "prototype": "simulator",
@@ -263,9 +270,9 @@ export const topicManifests: readonly PublicTopicManifest[] = [
       "综合思维",
       "地理实践力"
     ],
-    "status": "开发中",
-    "releaseBatch": "Sprint 1",
-    "classroomMinutes": 12,
+    "status": "已发布",
+    "releaseBatch": "Sprint 2",
+    "classroomMinutes": 20,
     "explorationMinutes": 20,
     "modes": {
       "exploration": {
@@ -277,61 +284,98 @@ export const topicManifests: readonly PublicTopicManifest[] = [
       }
     },
     "primaryInteraction": {
-      "object": "原创二维地球运动模型",
-      "action": "分别改变公转位置、地轴倾角和观测纬度",
-      "feedback": "同步显示太阳直射纬度、昼长及相对基准变化"
+      "object": "地轴、太阳光与地表观测点共享几何的三维地球",
+      "action": "分开控制一天时刻与公转位置，比较23.4度和0度地轴倾角",
+      "feedback": "地表点、昼夜光照、太阳高度、南北昼长与轨道位置同步变化"
     },
     "evidenceOutput": {
       "type": "情景结果",
-      "description": "三组变量—现象对照与一条机制判断",
+      "description": "记录昼夜时刻和同纬度至日对照，可本地导出结构化JSON",
       "persistsFreeText": false
     },
-    "reflectionPrompt": "模型中哪些条件被简化了，结论能解释到什么范围？",
+    "reflectionPrompt": "模型距离不变时为何仍有日照季节差异，日照变化是否等于天气变化？",
     "hints": [
-      "一次只改变一个变量",
-      "先比较倾角为零与当前倾角"
+      "先记录白昼与黑夜各一次",
+      "保持纬度与倾角不变比较两次至日",
+      "同纬度补齐零倾角对照"
     ],
     "components": [
-      "ScenarioControls",
-      "EvidencePanel"
+      "EarthScene",
+      "OrbitDiagram",
+      "SolarPath",
+      "DaylightBar",
+      "EarthEvidence"
     ],
-    "version": "0.1.0",
-    "updatedAt": "2026-08-09",
+    "version": "2.0.0",
+    "updatedAt": "2026-09-17",
     "sources": [
       {
         "id": "DS-SPACE-NASA",
-        "title": "NASA Earth Facts",
+        "title": "NASA Facts About Earth",
         "attribution": "NASA",
         "review": {
-          "status": "unreviewed"
+          "status": "initial"
         },
         "kind": "reference",
         "publisher": "National Aeronautics and Space Administration",
-        "url": "https://science.nasa.gov/earth/facts/"
+        "url": "https://science.nasa.gov/earth/facts/",
+        "verifiedAt": "2026-09-17"
+      },
+      {
+        "id": "DS-SEASONS-NASA",
+        "title": "What Causes the Seasons",
+        "attribution": "NASA",
+        "review": {
+          "status": "initial"
+        },
+        "kind": "reference",
+        "publisher": "NASA Space Place",
+        "url": "https://spaceplace.nasa.gov/seasons/en/",
+        "verifiedAt": "2026-09-17"
+      },
+      {
+        "id": "DS-SOLAR-NOAA",
+        "title": "General Solar Position Calculations",
+        "attribution": "NOAA",
+        "review": {
+          "status": "initial"
+        },
+        "kind": "reference",
+        "publisher": "NOAA Global Monitoring Laboratory",
+        "url": "https://gml.noaa.gov/grad/solcalc/solareqns.PDF",
+        "verifiedAt": "2026-09-17"
       },
       {
         "id": "DS-SIM-EARTH-GQ",
-        "title": "GeoQuest 地球运动教学模型",
-        "attribution": "GeoQuest",
+        "title": "GeoQuest 地球与太阳球面几何模型",
+        "attribution": "GeoQuest 原创",
         "review": {
-          "status": "unreviewed"
+          "status": "initial"
         },
         "kind": "simulation",
-        "method": "基于球面天文几何计算太阳直射纬度与理论昼长",
+        "method": "固定地轴向量和圆轨道太阳方向，球面点积共同决定受光状态、太阳高度与理论昼长",
         "parameters": [
-          "公转位置",
-          "地轴倾角",
-          "观测纬度"
+          "公转角0至360度",
+          "地轴倾角23.4或0度",
+          "地方太阳时0至24小时",
+          "南北对照纬度0至80度"
         ],
-        "version": "0.1.0",
+        "version": "2.0.0",
         "limitations": [
-          "天体大小距离与速度不按比例",
-          "不推演停止自转后的气候灾难"
+          "天体大小距离速度不按比例",
+          "固定日地距离的圆轨道",
+          "无大气折射太阳视半径地形与气温模拟",
+          "不处理极点分日情形"
         ]
       }
     ],
+    "aiReview": {
+      "status": "passed",
+      "checkedAt": "2026-09-17"
+    },
     "reviewSummary": {
-      "status": "initial"
+      "status": "passed",
+      "checkedAt": "2026-09-17"
     }
   },
   {
@@ -352,7 +396,7 @@ export const topicManifests: readonly PublicTopicManifest[] = [
       "地理实践力",
       "人地协调观"
     ],
-    "status": "开发中",
+    "status": "已归档",
     "releaseBatch": "Sprint 4",
     "classroomMinutes": 12,
     "explorationMinutes": 20,
@@ -418,11 +462,11 @@ export const topicManifests: readonly PublicTopicManifest[] = [
   {
     "id": "GQ-T065",
     "slug": "loess-soil-water",
-    "title": "一场暴雨带走多少黄土",
-    "summary": "改变降雨、坡度、植被和措施，观察原创相对侵蚀指数如何响应并比较治理情景。",
-    "coreQuestion": "同一场暴雨下，为什么有些坡地流失更多，又能怎样减缓？",
+    "title": "水土与流域",
+    "summary": "对照植被覆盖与坡面产流，追踪径流经滞蓄区到下游的过程，用水量账区分保土、削峰与暂存。",
+    "coreQuestion": "增加覆盖与流域滞蓄，分别怎样改变水土流失和下游流量？",
     "volume": "G8B",
-    "chapter": "黄土高原",
+    "chapter": "水土保持与流域联系",
     "prototype": "simulator",
     "channels": [
       "earth-lab",
@@ -434,9 +478,9 @@ export const topicManifests: readonly PublicTopicManifest[] = [
       "地理实践力",
       "综合思维"
     ],
-    "status": "开发中",
-    "releaseBatch": "Sprint 5",
-    "classroomMinutes": 12,
+    "status": "已发布",
+    "releaseBatch": "Sprint 3",
+    "classroomMinutes": 20,
     "explorationMinutes": 20,
     "modes": {
       "exploration": {
@@ -448,73 +492,110 @@ export const topicManifests: readonly PublicTopicManifest[] = [
       }
     },
     "primaryInteraction": {
-      "object": "原创黄土坡面相对侵蚀模型",
-      "action": "依次改变雨强、坡度、植被覆盖和耕作措施",
-      "feedback": "显示相对径流、相对侵蚀及与基准的方向性差异"
+      "object": "原创坡面产流与理想流域蓄水池",
+      "action": "同雨型比较两种覆盖，再固定覆盖改变滞蓄空间并追踪雨后过程",
+      "feedback": "坡面水量分配、相对侵蚀、入出流曲线和暂存水量同源更新"
     },
     "evidenceOutput": {
       "type": "情景结果",
-      "description": "四组控制变量对比、一套保持方案和模型局限",
+      "description": "保存整场情景与时间序列，比较控制变量证据，可本地导出JSON",
       "persistsFreeText": false
     },
-    "reflectionPrompt": "为什么相对侵蚀指数不能换算成真实泥沙量？",
+    "reflectionPrompt": "为什么洪峰降低不等于水量消失，模型指数又为何不是实际泥沙量？",
     "hints": [
-      "比较单一变量时锁定另外三项",
-      "多变量组合只能评价方案而不能单因归因"
+      "比较覆盖时保持雨型和滞蓄相同",
+      "比较滞蓄时保持雨型和覆盖相同",
+      "核对累计产流等于累计流出加暂存"
     ],
     "components": [
-      "ScenarioControls",
-      "Compare",
-      "EvidencePanel"
+      "BasinFigure",
+      "SlopeFigure",
+      "Hydrograph",
+      "WaterBudget",
+      "WaterEvidence"
     ],
-    "version": "0.1.0",
-    "updatedAt": "2026-08-09",
+    "version": "2.0.0",
+    "updatedAt": "2026-09-17",
     "sources": [
       {
-        "id": "DS-REFERENCE-RUSLE",
-        "title": "RUSLE 结构说明",
-        "attribution": "Food and Agriculture Organization of the United Nations",
+        "id": "DS-RUNOFF-USGS",
+        "title": "Surface Runoff and the Water Cycle",
+        "attribution": "USGS",
         "review": {
-          "status": "unreviewed"
+          "status": "initial"
         },
         "kind": "reference",
-        "publisher": "Food and Agriculture Organization of the United Nations",
-        "url": "https://www.fao.org/land-water/land/land-governance/land-resources-planning-toolbox/category/details/fr/c/1236444/"
+        "publisher": "U.S. Geological Survey",
+        "url": "https://www.usgs.gov/water-science-school/science/surface-runoff-and-water-cycle",
+        "verifiedAt": "2026-09-17"
       },
       {
-        "id": "DS-MODEL-LOESS-V1",
-        "title": "GeoQuest 相对侵蚀教学模型",
-        "attribution": "GeoQuest",
+        "id": "DS-COVER-NRCS",
+        "title": "Cover Crops for Soil Health",
+        "attribution": "USDA NRCS",
         "review": {
-          "status": "unreviewed"
+          "status": "initial"
+        },
+        "kind": "reference",
+        "publisher": "USDA Natural Resources Conservation Service",
+        "url": "https://www.nrcs.usda.gov/conservation-basics/soil/soil-health/cover-crops-for-soil-health",
+        "verifiedAt": "2026-09-17"
+      },
+      {
+        "id": "DS-DETENTION-EPA",
+        "title": "Stormwater Best Management Design Guide Volume 3",
+        "attribution": "EPA",
+        "review": {
+          "status": "initial"
+        },
+        "kind": "reference",
+        "publisher": "U.S. Environmental Protection Agency",
+        "url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=2000D1L8.TXT",
+        "verifiedAt": "2026-09-17"
+      },
+      {
+        "id": "DS-SIM-WATERSHED-GQ",
+        "title": "GeoQuest 坡面产流与流域滞蓄概念模型",
+        "attribution": "GeoQuest 原创",
+        "review": {
+          "status": "initial"
         },
         "kind": "simulation",
-        "method": "固定土壤可蚀性和坡长，对雨强坡度覆盖和措施使用离散相对因子",
+        "method": "限入渗能力分配降雨，逐时段守恒路由到有限容量线性蓄水池，相对侵蚀独立计算",
         "parameters": [
-          "雨强",
-          "坡度",
-          "植被覆盖",
-          "耕作措施"
+          "面积1平方千米",
+          "六段十分钟雨型",
+          "覆盖20或80百分比",
+          "滞蓄0或3000或12000立方米",
+          "初始蓄水为0"
         ],
-        "version": "0.1.0",
+        "version": "2.0.0",
         "limitations": [
-          "只比较方向和相对指数",
-          "不输出真实单位或预测实际泥沙量"
+          "不是实测流域",
+          "系数未经校准",
+          "不模拟基流蒸发渗漏沉沙和河道传播",
+          "侵蚀无量纲不能换算吨数",
+          "峰值为十分钟平均"
         ]
       }
     ],
+    "aiReview": {
+      "status": "passed",
+      "checkedAt": "2026-09-17"
+    },
     "reviewSummary": {
-      "status": "initial"
+      "status": "passed",
+      "checkedAt": "2026-09-17"
     }
   },
   {
     "id": "GQ-T022",
     "slug": "south-asia-monsoon",
-    "title": "季风迟到会怎样",
-    "summary": "对照气候基线与明确标注的反事实情景，追踪降水、作物窗口和风险的连锁变化。",
-    "coreQuestion": "如果南亚季风整体迟到二十天，农业与生活会发生什么变化？",
+    "title": "气候与农业",
+    "summary": "在原创季节情景中对照降雨时机、播期、作物与有限补灌，用水量账和低温暴露解释方案取舍。",
+    "coreQuestion": "总雨量相同，为什么农业供水条件仍可能不同？",
     "volume": "G7B",
-    "chapter": "南亚",
+    "chapter": "气候与农业区位",
     "prototype": "compare",
     "channels": [
       "earth-lab",
@@ -523,12 +604,13 @@ export const topicManifests: readonly PublicTopicManifest[] = [
     ],
     "competencies": [
       "综合思维",
-      "人地协调观"
+      "人地协调观",
+      "地理实践力"
     ],
-    "status": "开发中",
+    "status": "已发布",
     "releaseBatch": "Sprint 2",
-    "classroomMinutes": 15,
-    "explorationMinutes": 22,
+    "classroomMinutes": 20,
+    "explorationMinutes": 20,
     "modes": {
       "exploration": {
         "path": "/topics/south-asia-monsoon"
@@ -539,62 +621,85 @@ export const topicManifests: readonly PublicTopicManifest[] = [
       }
     },
     "primaryInteraction": {
-      "object": "同步 A/B 季风对照图",
-      "action": "将同一降水过程平移并比较播种窗口内的水分风险",
-      "feedback": "检查时间窗口口径，持续区分实测基线与反事实教学情景"
+      "object": "同坐标雨热图与逐日根区水量模型",
+      "action": "先比较雨季时序，再分别改变播期、作物或补灌预算",
+      "feedback": "早期缺口、整季缺口、实际净补灌与低温暴露同步更新"
     },
     "evidenceOutput": {
       "type": "对比表",
-      "description": "基准与延迟情景的四项对照、风险选择和模型局限",
+      "description": "保存完整条件和180天水量记录，检查单变量对照并导出JSON",
       "persistsFreeText": false
     },
-    "reflectionPrompt": "为什么季风迟到不能直接推出某一种作物必然减产？",
+    "reflectionPrompt": "为什么需水少或缺口小不能直接推出产量高、收益好？",
     "hints": [
-      "保证 A/B 使用同一区域与时间尺度",
-      "只比较播种初期水分风险"
+      "比较降雨时序时保持作物播期补灌相同",
+      "比较应对方案时只改变一项",
+      "同时检查低温与水量"
     ],
     "components": [
-      "Compare",
-      "ClimateChart",
-      "EvidencePanel"
+      "FarmChart",
+      "FarmWaterBalance",
+      "FarmEvidence"
     ],
-    "version": "0.1.0",
-    "updatedAt": "2026-08-09",
+    "version": "2.0.0",
+    "updatedAt": "2026-09-19",
     "sources": [
       {
-        "id": "DS-CLIMATE-ERA5",
-        "title": "ERA5 daily statistics",
-        "attribution": "Copernicus Climate Change Service",
+        "id": "DS-FAO-CROP-WATER",
+        "title": "Crop water and irrigation water requirements",
+        "attribution": "FAO",
         "review": {
-          "status": "unreviewed"
+          "status": "initial"
         },
         "kind": "reference",
-        "publisher": "Copernicus Climate Change Service",
-        "url": "https://cds.climate.copernicus.eu/datasets/derived-era5-single-levels-daily-statistics"
+        "publisher": "FAO AQUASTAT",
+        "url": "https://www.fao.org/aquastat/en/data-analysis/irrig-water-use/irrig-water-requirement/",
+        "verifiedAt": "2026-09-19"
       },
       {
-        "id": "DS-SIM-MONSOON-GQ",
-        "title": "季风延迟反事实情景",
-        "attribution": "GeoQuest",
+        "id": "DS-FAO-EFFECTIVE-RAIN",
+        "title": "Irrigation water needs",
+        "attribution": "FAO",
         "review": {
-          "status": "unreviewed"
+          "status": "initial"
+        },
+        "kind": "reference",
+        "publisher": "FAO",
+        "url": "https://www.fao.org/4/s2022e/s2022e08.htm",
+        "verifiedAt": "2026-09-19"
+      },
+      {
+        "id": "DS-SIM-FARM-GQ",
+        "title": "GeoQuest 原创季节供水情景",
+        "attribution": "GeoQuest 原创",
+        "review": {
+          "status": "initial"
         },
         "kind": "simulation",
-        "method": "将同一基准降水序列整体平移二十天并保持完整序列总量",
+        "method": "完整雨型平移保持总量，按天核算根区储水、需求、有限净补灌及缺口",
         "parameters": [
-          "基准降水序列",
-          "延迟天数",
-          "播种窗口"
+          "180天总雨量320毫米",
+          "根区初存20毫米上限60毫米",
+          "80百分比雨量入根区",
+          "玉米谷子示意方案",
+          "15摄氏度教学阈值"
         ],
-        "version": "0.1.0",
+        "version": "2.0.0",
         "limitations": [
-          "不是历史观测或天气预报",
-          "不估算最终产量"
+          "不是任何地区的观测或气候平均值",
+          "所有系数为未校准教学假设",
+          "不预测产量收益或气候变化",
+          "不模拟非生长期蒸发和地下水"
         ]
       }
     ],
+    "aiReview": {
+      "status": "passed",
+      "checkedAt": "2026-09-19"
+    },
     "reviewSummary": {
-      "status": "blocked"
+      "status": "passed",
+      "checkedAt": "2026-09-19"
     }
   },
   {
@@ -615,7 +720,7 @@ export const topicManifests: readonly PublicTopicManifest[] = [
       "区域认知",
       "综合思维"
     ],
-    "status": "开发中",
+    "status": "已归档",
     "releaseBatch": "Sprint 3",
     "classroomMinutes": 15,
     "explorationMinutes": 25,
@@ -703,9 +808,9 @@ export const topicManifests: readonly PublicTopicManifest[] = [
   {
     "id": "GQ-T009",
     "slug": "world-population-map",
-    "title": "世界人口住在哪里",
-    "summary": "叠加人口、地形等本地快照，识别人口分布格局及其不能被单一因素解释的例外。",
-    "coreQuestion": "世界人口为什么集中在某些地方，又为什么会出现例外？",
+    "title": "人口与区域",
+    "summary": "用四个国家的同年人口总量与陆地面积计算密度，比较国家平均与合并尺度的证据边界。",
+    "coreQuestion": "人口总量、陆地面积和统计尺度如何共同改变我们对人口密度的判断？",
     "volume": "G7A",
     "chapter": "世界的居民",
     "prototype": "data-explorer",
@@ -718,10 +823,10 @@ export const topicManifests: readonly PublicTopicManifest[] = [
       "综合思维",
       "区域认知"
     ],
-    "status": "开发中",
+    "status": "已发布",
     "releaseBatch": "Sprint 2",
-    "classroomMinutes": 15,
-    "explorationMinutes": 25,
+    "classroomMinutes": 20,
+    "explorationMinutes": 20,
     "modes": {
       "exploration": {
         "path": "/topics/world-population-map"
@@ -732,53 +837,85 @@ export const topicManifests: readonly PublicTopicManifest[] = [
       }
     },
     "primaryInteraction": {
-      "object": "世界人口数据视图",
-      "action": "切换年份和密度等级并选择密集区、稀疏区与反例",
-      "feedback": "联动纬度和海拔统计，只判断证据匹配而不把相关性写成因果"
+      "object": "四国人口总量、陆地面积与密度的原创数字图形",
+      "action": "记录国家读数并选择两个不同国家进行加权合并实验",
+      "feedback": "即时显示人口÷面积、总量÷总面积和简单平均的差异，并标出统计边界"
     },
     "evidenceOutput": {
-      "type": "图表",
-      "description": "一条总体规律、两个反例及尺度局限",
+      "type": "对比表",
+      "description": "至少两个国家的总量、面积、密度记录和一组按面积加权的合并结果",
       "persistsFreeText": false
     },
-    "reflectionPrompt": "相同纬度或海拔的地区为何仍可能具有完全不同的人口密度？",
+    "reflectionPrompt": "国家平均人口密度能说明一个国家内部均匀吗？两个国家合并时为什么不能直接平均两个密度？",
     "hints": [
-      "先比较人口占比与土地占比",
-      "主动寻找不符合单一解释的地区"
+      "先统一年份和单位",
+      "先算人口÷陆地面积",
+      "合并时把总人口和总面积一起相加",
+      "把相关与因果分开"
     ],
     "components": [
-      "DataExplorer",
-      "MapProviderAdapter",
-      "EvidencePanel"
+      "PopulationLab",
+      "DensityGrid",
+      "PairBars",
+      "EvidenceTable"
     ],
-    "version": "0.1.0",
-    "updatedAt": "2026-08-09",
+    "version": "2.0.0",
+    "updatedAt": "2026-09-19",
     "sources": [
       {
-        "id": "DS-POP-GHSL",
-        "title": "GHS-POP R2023A",
-        "attribution": "European Commission, Joint Research Centre",
+        "id": "DS-WB-POP-2023",
+        "title": "World Development Indicators：Population, total（SP.POP.TOTL）",
+        "attribution": "World Bank, World Development Indicators",
         "review": {
-          "status": "unreviewed"
+          "status": "initial",
+          "checkedAt": "2026-09-19"
         },
-        "kind": "reference",
-        "publisher": "European Commission Joint Research Centre",
-        "url": "https://human-settlement.emergency.copernicus.eu/ghs_pop2023.php"
+        "kind": "dataset",
+        "url": "https://api.worldbank.org/v2/country/AUS;BGD;NLD;JPN/indicator/SP.POP.TOTL?date=2023&format=json&per_page=100",
+        "version": "WDI API v2；响应标记 lastupdated 2026-07-13",
+        "license": "CC BY 4.0",
+        "retrievedAt": "2026-09-19",
+        "timeCoverage": "2023",
+        "spatialCoverage": "AUS、BGD、NLD、JPN",
+        "snapshotPath": "src/topics/population/data/world-bank-2023.json",
+        "checksum": "sha256:62dfff2de4bd921a6f6ec61cd2a15948c5e35175729adbf962736fed7af517cb",
+        "processing": [
+          "按国家代码筛选 AUS、BGD、NLD、JPN 的 2023 年返回值",
+          "与同年 AG.LND.TOTL.K2 响应按国家代码合并为一个最小本地 JSON 快照",
+          "保留人口原值；密度由运行时用人口除以陆地面积计算"
+        ]
       },
       {
-        "id": "DS-TOPO-ETOPO",
-        "title": "ETOPO 2022 Global Relief Model",
-        "attribution": "NOAA NCEI",
+        "id": "DS-WB-LAND-2023",
+        "title": "World Development Indicators：Land area (sq. km)（AG.LND.TOTL.K2）",
+        "attribution": "World Bank, World Development Indicators",
         "review": {
-          "status": "unreviewed"
+          "status": "initial",
+          "checkedAt": "2026-09-19"
         },
-        "kind": "reference",
-        "publisher": "NOAA National Centers for Environmental Information",
-        "url": "https://www.ncei.noaa.gov/products/etopo-global-relief-model"
+        "kind": "dataset",
+        "url": "https://api.worldbank.org/v2/country/AUS;BGD;NLD;JPN/indicator/AG.LND.TOTL.K2?date=2023&format=json&per_page=100",
+        "version": "WDI API v2；响应标记 lastupdated 2026-07-13",
+        "license": "CC BY 4.0",
+        "retrievedAt": "2026-09-19",
+        "timeCoverage": "2023",
+        "spatialCoverage": "AUS、BGD、NLD、JPN",
+        "snapshotPath": "src/topics/population/data/world-bank-2023.json",
+        "checksum": "sha256:62dfff2de4bd921a6f6ec61cd2a15948c5e35175729adbf962736fed7af517cb",
+        "processing": [
+          "按国家代码筛选 AUS、BGD、NLD、JPN 的 2023 年返回值",
+          "保留陆地面积原值，单位为平方千米；未换算为总面积或地图面积",
+          "与同年 SP.POP.TOTL 响应合并并在运行时计算密度"
+        ]
       }
     ],
+    "aiReview": {
+      "status": "passed",
+      "checkedAt": "2026-09-19"
+    },
     "reviewSummary": {
-      "status": "blocked"
+      "status": "passed",
+      "checkedAt": "2026-09-19"
     }
   },
   {
@@ -800,7 +937,7 @@ export const topicManifests: readonly PublicTopicManifest[] = [
       "区域认知",
       "综合思维"
     ],
-    "status": "开发中",
+    "status": "已归档",
     "releaseBatch": "Sprint 5",
     "classroomMinutes": 15,
     "explorationMinutes": 25,

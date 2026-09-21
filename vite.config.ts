@@ -1,9 +1,11 @@
 import mdx from "@mdx-js/rollup";
 import react from "@vitejs/plugin-react";
 import { fileURLToPath, URL } from "node:url";
+import { rm } from "node:fs/promises";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig(({ command }) => ({
+  base: process.env.VITE_BASE_PATH ?? "/",
   resolve: {
     alias: {
       "#topic-manifests": fileURLToPath(
@@ -33,6 +35,14 @@ export default defineConfig(({ command }) => ({
     },
   },
   plugins: [
+    {
+      name: "exclude-legacy-candidate-images",
+      apply: "build",
+      async closeBundle() {
+        // Retain original candidate assets for local legacy demos; they are not V2 release inputs.
+        await rm(fileURLToPath(new URL("./dist/assets/field-notebook", import.meta.url)), { recursive: true, force: true });
+      },
+    },
     { enforce: "pre", ...mdx() },
     react({ include: /\.(?:js|jsx|ts|tsx|mdx)$/ }),
   ],

@@ -1,56 +1,71 @@
 id: GQ-T065
 slug: loess-soil-water
-title: 一场暴雨带走多少黄土
-summary: 改变降雨、坡度、植被和措施，观察原创相对侵蚀指数如何响应并比较治理情景。
-coreQuestion: 同一场暴雨下，为什么有些坡地流失更多，又能怎样减缓？
+title: 水土与流域
+summary: 对照植被覆盖与坡面产流，追踪径流经滞蓄区到下游的过程，用水量账区分保土、削峰与暂存。
+coreQuestion: 增加覆盖与流域滞蓄，分别怎样改变水土流失和下游流量？
 volume: G8B
-chapter: 黄土高原
+chapter: 水土保持与流域联系
 prototype: simulator
 channels: [earth-lab, region-explorer, geo-challenge]
 competencies: [人地协调观, 地理实践力, 综合思维]
-status: 开发中
-releaseBatch: Sprint 5
-classroomMinutes: 12
+status: 已发布
+releaseBatch: Sprint 3
+classroomMinutes: 20
 explorationMinutes: 20
 modes:
   exploration: { path: /topics/loess-soil-water }
   classroom: { query: "?mode=classroom", sameContent: true }
 primaryInteraction:
-  object: 原创黄土坡面相对侵蚀模型
-  action: 依次改变雨强、坡度、植被覆盖和耕作措施
-  feedback: 显示相对径流、相对侵蚀及与基准的方向性差异
+  object: 原创坡面产流与理想流域蓄水池
+  action: 同雨型比较两种覆盖，再固定覆盖改变滞蓄空间并追踪雨后过程
+  feedback: 坡面水量分配、相对侵蚀、入出流曲线和暂存水量同源更新
 evidenceOutput:
   type: 情景结果
-  description: 四组控制变量对比、一套保持方案和模型局限
+  description: 保存整场情景与时间序列，比较控制变量证据，可本地导出JSON
   persistsFreeText: false
-reflectionPrompt: 为什么相对侵蚀指数不能换算成真实泥沙量？
-hints: [比较单一变量时锁定另外三项, 多变量组合只能评价方案而不能单因归因]
-components: [ScenarioControls, Compare, EvidencePanel]
+reflectionPrompt: 为什么洪峰降低不等于水量消失，模型指数又为何不是实际泥沙量？
+hints: [比较覆盖时保持雨型和滞蓄相同, 比较滞蓄时保持雨型和覆盖相同, 核对累计产流等于累计流出加暂存]
+components: [BasinFigure, SlopeFigure, Hydrograph, WaterBudget, WaterEvidence]
 sources:
   - kind: reference
-    id: DS-REFERENCE-RUSLE
-    title: RUSLE 结构说明
-    publisher: Food and Agriculture Organization of the United Nations
-    attribution: Food and Agriculture Organization of the United Nations
-    url: https://www.fao.org/land-water/land/land-governance/land-resources-planning-toolbox/category/details/fr/c/1236444/
-    review: &sourceReview { status: unreviewed, notes: 仅作为模型结构参考 }
-  - kind: simulation
-    id: DS-MODEL-LOESS-V1
-    title: GeoQuest 相对侵蚀教学模型
-    attribution: GeoQuest
-    method: 固定土壤可蚀性和坡长，对雨强坡度覆盖和措施使用离散相对因子
-    parameters: [雨强, 坡度, 植被覆盖, 耕作措施]
-    version: 0.1.0
-    limitations: [只比较方向和相对指数, 不输出真实单位或预测实际泥沙量]
+    id: DS-RUNOFF-USGS
+    title: Surface Runoff and the Water Cycle
+    publisher: U.S. Geological Survey
+    attribution: USGS
+    url: https://www.usgs.gov/water-science-school/science/surface-runoff-and-water-cycle
+    verifiedAt: "2026-09-17"
+    review: &sourceReview { status: initial, notes: AI核对原理，不复制图片，模型系数为原创假设 }
+  - kind: reference
+    id: DS-COVER-NRCS
+    title: Cover Crops for Soil Health
+    publisher: USDA Natural Resources Conservation Service
+    attribution: USDA NRCS
+    url: https://www.nrcs.usda.gov/conservation-basics/soil/soil-health/cover-crops-for-soil-health
+    verifiedAt: "2026-09-17"
     review: *sourceReview
-reviews:
-  teaching: &pending { status: unreviewed, notes: 待主题教学审核 }
-  curriculum: *pending
-  textbook: *pending
-  data: { status: initial, notes: 原创参数表待人工核对 }
-  map: { status: initial, notes: 不涉及地图，仍需人工确认 }
-  copyright: *pending
-  privacy: *pending
-  technical: *pending
-version: 0.1.0
-updatedAt: "2026-08-09"
+  - kind: reference
+    id: DS-DETENTION-EPA
+    title: Stormwater Best Management Design Guide Volume 3
+    publisher: U.S. Environmental Protection Agency
+    attribution: EPA
+    url: https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=2000D1L8.TXT
+    verifiedAt: "2026-09-17"
+    review: *sourceReview
+  - kind: simulation
+    id: DS-SIM-WATERSHED-GQ
+    title: GeoQuest 坡面产流与流域滞蓄概念模型
+    attribution: GeoQuest 原创
+    method: 限入渗能力分配降雨，逐时段守恒路由到有限容量线性蓄水池，相对侵蚀独立计算
+    parameters: [面积1平方千米, 六段十分钟雨型, 覆盖20或80百分比, 滞蓄0或3000或12000立方米, 初始蓄水为0]
+    version: 2.0.0
+    limitations: [不是实测流域, 系数未经校准, 不模拟基流蒸发渗漏沉沙和河道传播, 侵蚀无量纲不能换算吨数, 峰值为十分钟平均]
+    review: *sourceReview
+aiReview:
+  status: passed
+  agent: Codex
+  checkedAt: "2026-09-17"
+  evidencePath: docs/reviews/watershed-v2.md
+  scope: [model, sources, classroom, interaction, accessibility, offline, responsive]
+  version: 2.0.0
+version: 2.0.0
+updatedAt: "2026-09-17"

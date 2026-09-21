@@ -28,8 +28,8 @@ export function SourcesPage(): React.JSX.Element {
       <section className={styles.auditSection}>
         <div>
           <span className={styles.kicker}>发布门禁</span>
-          <h2>自动检查不能代替人工审核</h2>
-          <p>教学、课标、教材、数据、地图、版权、隐私和技术八类审核都必须留下审核人、日期与证据。</p>
+          <h2>AI 核对内容，程序校验一致性</h2>
+          <p>每个主题保留一份与版本对应的 AI 审查记录，核对来源、模型、交互和显示结果；自动检查验证计算与文件一致性。</p>
         </div>
         <ol>
           <li>来源与许可清楚</li>

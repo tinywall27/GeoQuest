@@ -50,30 +50,57 @@ export function getPublicTopicManifest(slug: string): PublicTopicManifest | unde
 `;
 }
 
-const interactiveExports: Readonly<Record<string, string>> = {
-  "earth-motion-lab": "EarthMotionLab",
-  "contour-rescue": "ContourRescue",
-  "world-population-map": "WorldPopulationMap",
-  "south-asia-monsoon": "SouthAsiaMonsoon",
-  "us-farm-belt": "UsFarmBelt",
-  "china-terrain-steps": "ChinaTerrainSteps",
-  "lake-restoration": "LakeRestoration",
-  "china-farm-choice": "ChinaFarmChoice",
-  "yangtze-belt": "YangtzeBelt",
-  "loess-soil-water": "LoessSoilWater",
+type InteractiveModule = {
+  path: string;
+  exportName?: string;
+};
+
+const interactiveModules: Readonly<Record<string, InteractiveModule>> = {
+  "earth-motion-lab": { path: "../topics/earth/EarthSunLab" },
+  "contour-rescue": { path: "../topics/terrain/TerrainLab" },
+  "world-population-map": { path: "../topics/population/PopulationLab" },
+  "south-asia-monsoon": { path: "../topics/agriculture/AgricultureLab" },
+  "us-farm-belt": {
+    path: "../topics/interactives",
+    exportName: "UsFarmBelt",
+  },
+  "china-terrain-steps": {
+    path: "../topics/interactives",
+    exportName: "ChinaTerrainSteps",
+  },
+  "lake-restoration": {
+    path: "../topics/interactives",
+    exportName: "LakeRestoration",
+  },
+  "china-farm-choice": {
+    path: "../topics/interactives",
+    exportName: "ChinaFarmChoice",
+  },
+  "yangtze-belt": {
+    path: "../topics/interactives",
+    exportName: "YangtzeBelt",
+  },
+  "loess-soil-water": { path: "../topics/watershed/WatershedLab" },
 };
 
 const publishedManifests = manifests.filter((topic) => topic.status === "已发布");
 for (const topic of publishedManifests) {
-  if (!interactiveExports[topic.slug]) {
+  if (!Object.hasOwn(interactiveModules, topic.slug)) {
     throw new Error(`已发布主题 ${topic.slug} 没有注册互动组件`);
   }
 }
 
+function interactiveImport(module: InteractiveModule): string {
+  const importExpression = `lazy(() => import(${JSON.stringify(module.path)})`;
+  return module.exportName
+    ? `${importExpression}.then((module) => ({ default: module.${module.exportName} })))`
+    : `${importExpression})`;
+}
+
 const publishedRegistryEntries = publishedManifests
   .map((topic) => {
-    const exportName = interactiveExports[topic.slug];
-    return `  ${JSON.stringify(topic.slug)}: lazy(() => import("../topics/interactives").then((module) => ({ default: module.${exportName} }))),`;
+    const module = interactiveModules[topic.slug]!;
+    return `  ${JSON.stringify(topic.slug)}: ${interactiveImport(module)},`;
   })
   .join("\n");
 const registryImport = publishedManifests.length > 0

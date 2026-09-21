@@ -1,54 +1,72 @@
 id: GQ-T009
 slug: world-population-map
-title: 世界人口住在哪里
-summary: 叠加人口、地形等本地快照，识别人口分布格局及其不能被单一因素解释的例外。
-coreQuestion: 世界人口为什么集中在某些地方，又为什么会出现例外？
+title: 人口与区域
+summary: 用四个国家的同年人口总量与陆地面积计算密度，比较国家平均与合并尺度的证据边界。
+coreQuestion: 人口总量、陆地面积和统计尺度如何共同改变我们对人口密度的判断？
 volume: G7A
 chapter: 世界的居民
 prototype: data-explorer
 channels: [map-lab, data-lab, textbook-explorer]
 competencies: [综合思维, 区域认知]
-status: 开发中
+status: 已发布
 releaseBatch: Sprint 2
-classroomMinutes: 15
-explorationMinutes: 25
+classroomMinutes: 20
+explorationMinutes: 20
 modes:
   exploration: { path: /topics/world-population-map }
   classroom: { query: "?mode=classroom", sameContent: true }
 primaryInteraction:
-  object: 世界人口数据视图
-  action: 切换年份和密度等级并选择密集区、稀疏区与反例
-  feedback: 联动纬度和海拔统计，只判断证据匹配而不把相关性写成因果
+  object: 四国人口总量、陆地面积与密度的原创数字图形
+  action: 记录国家读数并选择两个不同国家进行加权合并实验
+  feedback: 即时显示人口÷面积、总量÷总面积和简单平均的差异，并标出统计边界
 evidenceOutput:
-  type: 图表
-  description: 一条总体规律、两个反例及尺度局限
+  type: 对比表
+  description: 至少两个国家的总量、面积、密度记录和一组按面积加权的合并结果
   persistsFreeText: false
-reflectionPrompt: 相同纬度或海拔的地区为何仍可能具有完全不同的人口密度？
-hints: [先比较人口占比与土地占比, 主动寻找不符合单一解释的地区]
-components: [DataExplorer, MapProviderAdapter, EvidencePanel]
+reflectionPrompt: 国家平均人口密度能说明一个国家内部均匀吗？两个国家合并时为什么不能直接平均两个密度？
+hints: [先统一年份和单位, 先算人口÷陆地面积, 合并时把总人口和总面积一起相加, 把相关与因果分开]
+components: [PopulationLab, DensityGrid, PairBars, EvidenceTable]
 sources:
-  - kind: reference
-    id: DS-POP-GHSL
-    title: GHS-POP R2023A
-    publisher: European Commission Joint Research Centre
-    attribution: European Commission, Joint Research Centre
-    url: https://human-settlement.emergency.copernicus.eu/ghs_pop2023.php
-    review: &sourceReview { status: unreviewed, notes: 快照、加工参数和地图门禁完成后改为 dataset }
-  - kind: reference
-    id: DS-TOPO-ETOPO
-    title: ETOPO 2022 Global Relief Model
-    publisher: NOAA National Centers for Environmental Information
-    attribution: NOAA NCEI
-    url: https://www.ncei.noaa.gov/products/etopo-global-relief-model
-    review: *sourceReview
-reviews:
-  teaching: &pending { status: unreviewed, notes: 待主题教学审核 }
-  curriculum: *pending
-  textbook: *pending
-  data: { status: blocked, notes: GHSL 与 ETOPO 正式快照尚未生成 }
-  map: { status: blocked, notes: 人口栅格叠加后的送审判断尚未完成 }
-  copyright: *pending
-  privacy: *pending
-  technical: *pending
-version: 0.1.0
-updatedAt: "2026-08-09"
+  - kind: dataset
+    id: DS-WB-POP-2023
+    title: World Development Indicators：Population, total（SP.POP.TOTL）
+    attribution: World Bank, World Development Indicators
+    url: "https://api.worldbank.org/v2/country/AUS;BGD;NLD;JPN/indicator/SP.POP.TOTL?date=2023&format=json&per_page=100"
+    version: "WDI API v2；响应标记 lastupdated 2026-07-13"
+    license: CC BY 4.0
+    retrievedAt: "2026-09-19"
+    timeCoverage: "2023"
+    spatialCoverage: "AUS、BGD、NLD、JPN"
+    snapshotPath: src/topics/population/data/world-bank-2023.json
+    checksum: "sha256:62dfff2de4bd921a6f6ec61cd2a15948c5e35175729adbf962736fed7af517cb"
+    processing:
+      - 按国家代码筛选 AUS、BGD、NLD、JPN 的 2023 年返回值
+      - 与同年 AG.LND.TOTL.K2 响应按国家代码合并为一个最小本地 JSON 快照
+      - 保留人口原值；密度由运行时用人口除以陆地面积计算
+    review: { status: initial, checkedAt: "2026-09-19", notes: 官方API响应、指标页面CC BY 4.0、同年口径和本地快照已核验 }
+  - kind: dataset
+    id: DS-WB-LAND-2023
+    title: World Development Indicators：Land area (sq. km)（AG.LND.TOTL.K2）
+    attribution: World Bank, World Development Indicators
+    url: "https://api.worldbank.org/v2/country/AUS;BGD;NLD;JPN/indicator/AG.LND.TOTL.K2?date=2023&format=json&per_page=100"
+    version: "WDI API v2；响应标记 lastupdated 2026-07-13"
+    license: CC BY 4.0
+    retrievedAt: "2026-09-19"
+    timeCoverage: "2023"
+    spatialCoverage: "AUS、BGD、NLD、JPN"
+    snapshotPath: src/topics/population/data/world-bank-2023.json
+    checksum: "sha256:62dfff2de4bd921a6f6ec61cd2a15948c5e35175729adbf962736fed7af517cb"
+    processing:
+      - 按国家代码筛选 AUS、BGD、NLD、JPN 的 2023 年返回值
+      - 保留陆地面积原值，单位为平方千米；未换算为总面积或地图面积
+      - 与同年 SP.POP.TOTL 响应合并并在运行时计算密度
+    review: { status: initial, checkedAt: "2026-09-19", notes: 官方API响应、指标页面CC BY 4.0、同年口径和本地快照已核验 }
+aiReview:
+  status: passed
+  agent: Codex
+  checkedAt: "2026-09-19"
+  evidencePath: docs/reviews/population-v2.md
+  scope: [schema, sources, model, classroom, interaction, accessibility, offline, responsive]
+  version: 2.0.0
+version: 2.0.0
+updatedAt: "2026-09-19"

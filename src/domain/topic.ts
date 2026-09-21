@@ -57,6 +57,22 @@ export interface ReviewRecord {
   notes?: string | undefined;
 }
 
+export const aiReviewStatuses = ["pending", "passed", "blocked"] as const;
+export type AiReviewStatus = (typeof aiReviewStatuses)[number];
+
+export interface AiReviewRecord {
+  status: AiReviewStatus;
+  agent: string;
+  checkedAt: string;
+  evidencePath: string;
+  scope?: string[] | undefined;
+  version?: `${number}.${number}.${number}` | undefined;
+}
+
+// Keep the acronym-spelled alias available to callers that use the field name
+// as the type name while using the project's existing PascalCase convention.
+export type AIReviewRecord = AiReviewRecord;
+
 interface SourceBase {
   id: string;
   title: string;
@@ -160,7 +176,7 @@ export interface TopicManifestSource extends CatalogEntry {
   hints: string[];
   components: string[];
   sources: SourceRef[];
-  reviews: {
+  reviews?: {
     teaching: ReviewRecord;
     curriculum: ReviewRecord;
     textbook: ReviewRecord;
@@ -169,12 +185,14 @@ export interface TopicManifestSource extends CatalogEntry {
     copyright: ReviewRecord;
     privacy: ReviewRecord;
     technical: ReviewRecord;
-  };
+  } | undefined;
+  aiReview?: AiReviewRecord | undefined;
   version: `${number}.${number}.${number}`;
   updatedAt: string;
 }
 
 export type PublicReviewSummary = Pick<ReviewRecord, "status" | "checkedAt">;
+export type PublicAiReviewSummary = Pick<AiReviewRecord, "status" | "checkedAt">;
 
 type PublicSourceProjection<T> = T extends SourceRef
   ? Omit<T, "review"> & { review: PublicReviewSummary }
@@ -182,10 +200,14 @@ type PublicSourceProjection<T> = T extends SourceRef
 
 export type PublicSourceRef = PublicSourceProjection<SourceRef>;
 
-export type PublicTopicManifest = Omit<TopicManifestSource, "reviews" | "sources"> & {
+export type PublicTopicManifest = Omit<
+  TopicManifestSource,
+  "reviews" | "sources" | "aiReview"
+> & {
   sources: PublicSourceRef[];
+  aiReview?: PublicAiReviewSummary | undefined;
   reviewSummary: {
-    status: ReviewStatus;
+    status: ReviewStatus | AiReviewStatus;
     checkedAt?: string | undefined;
   };
 };

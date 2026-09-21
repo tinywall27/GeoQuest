@@ -1,5 +1,6 @@
 import { Suspense, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { ClockIcon, CompassRoseIcon, QuestionIcon } from "@phosphor-icons/react";
 import { useExperienceMode } from "../app/ExperienceMode";
 import {
   ModeToolbar,
@@ -35,12 +36,15 @@ export function TopicPage(): React.JSX.Element {
   }
 
   const available = topic.status === "已发布" || import.meta.env.DEV;
+  if (available && (slug === "contour-rescue" || slug === "earth-motion-lab" || slug === "loess-soil-water" || slug === "south-asia-monsoon" || slug === "world-population-map") && Interactive) {
+    return <Suspense fallback={<div className={styles.loading}>正在准备互动实验……</div>}><Interactive /></Suspense>;
+  }
   if (!available) {
     return (
       <div className={styles.centeredPage}>
         <span className={styles.kickerDark}>{topic.id} · {topic.releaseBatch}</span>
         <h1>{topic.title}</h1>
-        <p>这个主题正在完成教学、数据、地图、版权与技术审核，暂未公开。</p>
+        <p>这个主题正在完成 AI 审查与自动校验，暂未公开。</p>
         <Link to="/topics">查看其他主题</Link>
       </div>
     );
@@ -68,9 +72,9 @@ export function TopicPage(): React.JSX.Element {
           <p>{topic.summary}</p>
         </div>
         <dl className={styles.topicMeta}>
-          <div><dt>课堂</dt><dd>{topic.classroomMinutes} 分钟</dd></div>
-          <div><dt>探索</dt><dd>{topic.explorationMinutes} 分钟</dd></div>
-          <div><dt>状态</dt><dd>{topic.status}</dd></div>
+          <div><dt><ClockIcon aria-hidden="true" />课堂</dt><dd>{topic.classroomMinutes} 分钟</dd></div>
+          <div><dt><CompassRoseIcon aria-hidden="true" />探索</dt><dd>{topic.explorationMinutes} 分钟</dd></div>
+          <div><dt>审核状态</dt><dd>{topic.status}</dd></div>
         </dl>
       </header>
 
@@ -83,7 +87,7 @@ export function TopicPage(): React.JSX.Element {
       />
 
       <section className={styles.questionCard} aria-labelledby="core-question">
-        <span>核心问题</span>
+        <span><QuestionIcon aria-hidden="true" weight="fill" />核心问题</span>
         <h2 id="core-question">{topic.coreQuestion}</h2>
       </section>
 
@@ -145,7 +149,7 @@ export function TopicPage(): React.JSX.Element {
               ? source.limitations
               : source.review.status === "approved"
                 ? []
-                : [`${source.title}尚未完成人工审核，不能作为已发布资产。`],
+                : [`${source.title}尚未完成来源校验。`],
           )}
         />
       ) : null}

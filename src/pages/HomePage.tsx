@@ -1,110 +1,12 @@
 import { Link } from "react-router-dom";
-import { productChannels, v1TopicCatalog, volumeCatalog } from "../content/catalog";
-import { TopicCard } from "../components/TopicCard";
-import styles from "./Pages.module.css";
+import "./HomeV2.css";
 
-export function HomePage(): React.JSX.Element {
-  const weeklyTopic = v1TopicCatalog[0];
-
-  return (
-    <>
-      <section className={styles.hero}>
-        <div className={styles.heroContent}>
-          <span className={styles.kicker}>GEOQUEST · 地理智探</span>
-          <h1>探索地球，<br />而不只是阅读地理</h1>
-          <p>
-            从教材里的一个问题出发，操纵变量、比较地图、阅读证据，
-            亲手解释真实世界为什么如此运转。
-          </p>
-          <div className={styles.heroActions}>
-            <Link className={styles.primaryButton} to="/topics">开始一次探索</Link>
-            <Link className={styles.ghostButton} to="/classroom">用于课堂展示</Link>
-          </div>
-          <ul className={styles.trustRow} aria-label="平台特性">
-            <li>无账号</li>
-            <li>无追踪</li>
-            <li>课堂断网可用</li>
-          </ul>
-        </div>
-        <div className={styles.planetVisual} aria-hidden="true">
-          <div className={styles.orbitOuter}><span /></div>
-          <div className={styles.orbitInner}><span /></div>
-          <div className={styles.planet}>
-            <i className={styles.landOne} />
-            <i className={styles.landTwo} />
-            <i className={styles.landThree} />
-          </div>
-          <div className={styles.coordinate}>30°N · 110°E</div>
-        </div>
-      </section>
-
-      <section className={styles.pageSection} aria-labelledby="books-title">
-        <div className={styles.sectionHeader}>
-          <div>
-            <span className={styles.kickerDark}>从熟悉的章节出发</span>
-            <h2 id="books-title">选择你的地理书</h2>
-          </div>
-          <Link to="/textbooks">查看全部卷册 →</Link>
-        </div>
-        <div className={styles.bookGrid}>
-          {volumeCatalog.map((book, index) => (
-            <Link key={book.code} to={`/textbooks/${book.code}`} className={styles.bookCard}>
-              <span className={styles.bookIndex}>0{index + 1}</span>
-              <small>{book.grade}</small>
-              <h3>{book.label}</h3>
-              <p>{book.description}</p>
-              <span className={styles.cardArrow} aria-hidden="true">↗</span>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <section className={`${styles.pageSection} ${styles.darkSection}`} aria-labelledby="channels-title">
-        <div className={styles.sectionHeader}>
-          <div>
-            <span className={styles.kicker}>六条探索路径</span>
-            <h2 id="channels-title">今天想怎样认识地球？</h2>
-          </div>
-        </div>
-        <div className={styles.channelGrid}>
-          {productChannels.map((channel) => (
-            <Link key={channel.key} to={channel.path} className={styles.channelCard}>
-              <span>{channel.index}</span>
-              <small>{channel.eyebrow}</small>
-              <h3>{channel.title}</h3>
-              <p>{channel.description}</p>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {weeklyTopic ? (
-        <section className={styles.pageSection} aria-labelledby="weekly-title">
-          <div className={styles.sectionHeader}>
-            <div>
-              <span className={styles.kickerDark}>本周探索</span>
-              <h2 id="weekly-title">从一个“如果”开始</h2>
-            </div>
-            <p>V1 共 10 个主题，分五轮完成开发与审核。</p>
-          </div>
-          <div className={styles.featureGrid}>
-            <article className={styles.weeklyCard}>
-              <span>{weeklyTopic.id} · {weeklyTopic.releaseBatch}</span>
-              <h3>{weeklyTopic.title}</h3>
-              <p>{weeklyTopic.coreQuestion}</p>
-              <Link to={`/topics/${weeklyTopic.slug}`}>进入实验 →</Link>
-            </article>
-            <div>
-              <h3>热门实验</h3>
-              <div className={styles.compactTopicGrid}>
-                {v1TopicCatalog.slice(1, 4).map((topic) => (
-                  <TopicCard key={topic.id} topic={topic} />
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-      ) : null}
-    </>
-  );
+export function HomePage() {
+  return <div className="home-v2"><header><span>GEOQUEST / 地理智探</span><h1>少一些主题，<br />多一点真正的探究。</h1><p>转动一座山，读懂一条等高线。让模型、操作和证据连在一起。</p></header>
+    <Link className="home-feature" to="/topics/contour-rescue"><div><span>01 / 地形实验室 · 可体验</span><h2>把等高线，<br />读成一座山。</h2><p>三维山地 × 等高线 × 路线剖面</p><strong>进入地形实验 →</strong></div><svg viewBox="0 0 500 300" role="img" aria-label="山体与等高线示意"><g fill="none" stroke="currentColor">{Array.from({length:12},(_,i)=><path key={i} d={`M${40+i*12} ${255-i*8} Q${100+i*8} ${235-i*16} ${160+i*8} ${100-i*3} Q${205+i*8} ${20+i*7} ${255+i*8} ${90+i*5} Q${320+i*8} ${170+i*4} ${445-i*5} ${240-i*3} Z`} opacity={.35+i*.05}/> )}</g></svg></Link>
+    <Link className="home-feature home-earth-feature" to="/topics/earth-motion-lab"><div><span>02 / 地球与太阳 · 可体验</span><h2>跟随一个点，<br/>读懂昼夜与四季。</h2><p>地球光照 × 南北昼长 × 倾角对照实验</p><strong>进入地球实验 →</strong></div><svg viewBox="0 0 500 300" role="img" aria-label="地球受光半球与倾斜地轴示意"><circle cx="290" cy="150" r="95" fill="#173c56"/><path d="M290 55A95 95 0 0 0 290 245Z" fill="#78b9d0"/><ellipse cx="290" cy="150" rx="95" ry="24" fill="none" stroke="#efcd86" strokeWidth="2" transform="rotate(-23.4 290 150)"/><path d="M235 25L345 275" stroke="#efcd86" strokeWidth="3"/>{[120,150,180].map(y=><path key={y} d={`M70 ${y}h90l-10 -5m10 5-10 5`} stroke="#d1a64f" strokeWidth="2" fill="none"/>)}</svg></Link>
+    <Link className="home-feature home-water-feature" to="/topics/loess-soil-water"><div><span>03 / 水土与流域 · 可体验</span><h2>跟随一场雨，<br/>从山坡走到下游。</h2><p>坡面对照 × 流域调蓄 × 水量守恒</p><strong>进入水土实验 →</strong></div><svg viewBox="0 0 500 300" role="img" aria-label="坡面汇水到滞蓄区与出口示意"><path d="M30 190L125 60L230 155L310 80L455 210L280 265Z" fill="#a6c29b"/><path d="M125 60L113 125L153 104M310 80L290 137L339 125" fill="#e0e6ca"/><path d="M145 150Q180 220 285 218M315 159L285 218L400 250" stroke="#347f96" strokeWidth="7" fill="none"/><ellipse cx="285" cy="218" rx="48" ry="22" fill="#71adbd"/>{[140,190,240,290].map(x=><path key={x} d={`M${x} 30l-8 22`} stroke="#347f96" strokeWidth="3"/>)}</svg></Link>
+    <Link className="home-feature home-water-feature" to="/topics/south-asia-monsoon"><div><span>04 / 气候与农业 · 可体验</span><h2>看雨何时来，<br/>想作物如何种。</h2><p>雨热日历 × 有限补灌 × 农业方案取舍</p><strong>进入农业实验 →</strong></div><svg viewBox="0 0 500 300" role="img" aria-label="降雨与作物生长日历示意"><path d="M50 235H450" stroke="#58784b" strokeWidth="3"/>{[80,145,210,275,340,405].map((x,i)=><g key={x}><path d={`M${x} 235v-${35+i*16}l-18 -14m18 14 18 -14`} stroke="#58784b" strokeWidth="5" fill="none"/><path d={`M${x} 45v35`} stroke="#397e9c" strokeWidth="8"/></g>)}</svg></Link>
+    <Link className="home-feature home-earth-feature" to="/topics/world-population-map"><div><span>05 / 人口与区域 · 可体验</span><h2>换一个指标，<br/>看见不同的区域。</h2><p>真实数据 × 总量与密度 × 统计尺度</p><strong>进入人口实验 →</strong></div><svg viewBox="0 0 500 300" role="img" aria-label="四个区域的统计柱比较示意">{[60,230,150,100].map((h,i)=><rect key={i} x={80+i*90} y={260-h} width="55" height={h} rx="4" fill={i===1?'#bc843b':'#397e9c'}/>)}<path d="M55 260H445" stroke="#4b605b" strokeWidth="2"/></svg></Link>
+  </div>;
 }

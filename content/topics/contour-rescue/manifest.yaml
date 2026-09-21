@@ -1,49 +1,47 @@
 id: GQ-T006
 slug: contour-rescue
-title: 等高线山地救援
-summary: 读取原创等高线地形，比较三条候选路线，为山地救援选择相对稳妥的路径。
-coreQuestion: 只看等高线能判断哪些地形条件，还缺哪些信息才能选择相对安全的路线？
+title: 地形与路线探究
+summary: 旋转三维山地，对照同源等高线与路线剖面，用距离、爬升和坡度证据比较三条路线。
+coreQuestion: 直达的路线一定更省力吗，等高线与剖面能提供哪些证据？
 volume: G7A
 chapter: 学会使用地图
 prototype: geo-challenge
 channels: [map-lab, geo-challenge, textbook-explorer]
 competencies: [区域认知, 地理实践力]
-status: 开发中
+status: 已发布
 releaseBatch: Sprint 1
-classroomMinutes: 12
+classroomMinutes: 20
 explorationMinutes: 20
 modes:
   exploration: { path: /topics/contour-rescue }
   classroom: { query: "?mode=classroom", sameContent: true }
 primaryInteraction:
-  object: 原创虚构等高线地形图
-  action: 判读地形部位并比较三条同起终点候选路线
-  feedback: 区分地形判读错误、计算错误与现有证据不足
+  object: 同源三维高程表面与等高线
+  action: 旋转俯视与切片观察，比较三条同起终点路线
+  feedback: 三维和二维观察点、剖面及距离爬升坡度同步更新
 evidenceOutput:
   type: 路线
-  description: 地形标注、路线指标、选择依据和仍需补充的信息
+  description: 多条路线的水平距离、累计爬升与最大局部坡度对照表，可导出CSV
   persistsFreeText: false
 reflectionPrompt: 为什么等高线证据不能单独保证现实中的救援安全？
-hints: [先找闭合等高线和鞍部, 等高线越密通常坡度越陡]
-components: [GeoChallenge, CoordinatePicker, EvidencePanel]
+hints: [观察闭合线内侧标高变化以判断山顶, 相同比例尺与等高距下比较等高线疏密]
+components: [TerrainScene, ContourMap, RouteProfile, EvidenceTable]
 sources:
   - kind: simulation
     id: DS-SIM-TOPO-GQ
-    title: GeoQuest 虚构山地高程网格
+    title: GeoQuest 虚构山地高程模型
     attribution: GeoQuest
-    method: 固定高程网格派生 50 米等高距与三条预设路线指标
-    parameters: [原创高程网格, 50 米等高距, 总爬升, 最大坡度, 谷地穿越, 通视]
-    version: 0.1.0
-    limitations: [不对应真实地点, 不含天气道路植被和地质灾害数据]
-    review: { status: unreviewed, notes: 原创示意图仍需完成地图合规性质确认 }
-reviews:
-  teaching: &pending { status: unreviewed, notes: 待主题教学审核 }
-  curriculum: *pending
-  textbook: *pending
-  data: *pending
-  map: { status: initial, notes: 原创虚构地形，不含行政边界或坐标；仍需人工确认 }
-  copyright: *pending
-  privacy: *pending
-  technical: *pending
-version: 0.1.0
-updatedAt: "2026-08-09"
+    method: 四个高斯山体叠加得到解析高程，121×91网格派生等高线，路线按241个等水平距离点计算
+    parameters: [水平范围4×3km, 等高距50或100或200m, 垂直夸张仅作用于显示, 总爬升, 最大局部坡度]
+    version: 2.0.0
+    limitations: [不对应真实地点, 坡度为离散采样估计, 水平切片不表示洪水范围, 不含天气道路植被和地质灾害数据]
+    review: { status: initial, notes: 来源与模型已由AI检查，结论见主题aiReview }
+aiReview:
+  status: passed
+  agent: Codex
+  checkedAt: "2026-09-16"
+  evidencePath: docs/reviews/terrain-classroom-v2.1.md
+  scope: [model, sources, classroom, interaction, accessibility, offline, responsive]
+  version: 2.1.0
+version: 2.1.0
+updatedAt: "2026-09-16"

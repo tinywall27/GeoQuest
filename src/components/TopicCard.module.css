@@ -1,10 +1,13 @@
 .card {
+  position: relative;
   display: flex;
   flex-direction: column;
   min-height: 15.5rem;
   border: 1px solid var(--color-border);
+  border-top: 0.38rem solid #246d8a;
   border-radius: var(--radius-lg);
-  background: var(--color-surface);
+  background-color: rgba(255, 250, 240, 0.86);
+  background-size: 24rem 24rem;
   box-shadow: var(--shadow-soft);
   color: var(--color-ink);
   padding: 1.25rem;
@@ -13,8 +16,8 @@
 }
 
 .card:hover {
-  transform: translateY(-3px);
-  border-color: var(--color-accent);
+  transform: translateY(-3px) rotate(-0.2deg);
+  border-color: #7fb0c2;
   box-shadow: var(--shadow-lifted);
 }
 
@@ -40,14 +43,31 @@
 }
 
 .meta span:last-child {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
   border-radius: 999px;
-  background: var(--color-surface-muted);
+  background: #e7f2ee;
   padding: 0.2rem 0.55rem;
+}
+
+.meta span:last-child svg {
+  width: .95rem;
+  height: .95rem;
+}
+
+.topicId {
+  transform: rotate(-1deg);
+  border-radius: .25rem .55rem .25rem .45rem;
+  background: #246d8a;
+  color: white;
+  padding: .2rem .48rem;
 }
 
 .card h3 {
   margin: 1rem 0 0.55rem;
-  font-size: 1.3rem;
+  color: #183f47;
+  font-size: 1.4rem;
 }
 
 .card p {
@@ -65,6 +85,14 @@
 }
 
 .status {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
   color: var(--color-accent-strong);
   font-weight: 750;
+}
+
+.status svg {
+  width: 1rem;
+  height: 1rem;
 }

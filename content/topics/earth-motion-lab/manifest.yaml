@@ -1,56 +1,71 @@
 id: GQ-T003
 slug: earth-motion-lab
-title: 如果地球不这样转
-summary: 一次只改变一个地球运动变量，观察昼夜、季节和太阳高度怎样改变。
-coreQuestion: 地球运动方式改变后，我们熟悉的昼夜和季节还会存在吗？
+title: 地球与太阳
+summary: 跟随地表观测点经历昼夜，比较南北半球日照，用同纬度与零倾角实验探究四季。
+coreQuestion: 自转怎样造成昼夜交替，地轴倾斜与公转怎样改变季节日照？
 volume: G7A
 chapter: 地球的运动
 prototype: simulator
 channels: [earth-lab, textbook-explorer]
 competencies: [综合思维, 地理实践力]
-status: 开发中
-releaseBatch: Sprint 1
-classroomMinutes: 12
+status: 已发布
+releaseBatch: Sprint 2
+classroomMinutes: 20
 explorationMinutes: 20
 modes:
   exploration: { path: /topics/earth-motion-lab }
   classroom: { query: "?mode=classroom", sameContent: true }
 primaryInteraction:
-  object: 原创二维地球运动模型
-  action: 分别改变公转位置、地轴倾角和观测纬度
-  feedback: 同步显示太阳直射纬度、昼长及相对基准变化
+  object: 地轴、太阳光与地表观测点共享几何的三维地球
+  action: 分开控制一天时刻与公转位置，比较23.4度和0度地轴倾角
+  feedback: 地表点、昼夜光照、太阳高度、南北昼长与轨道位置同步变化
 evidenceOutput:
   type: 情景结果
-  description: 三组变量—现象对照与一条机制判断
+  description: 记录昼夜时刻和同纬度至日对照，可本地导出结构化JSON
   persistsFreeText: false
-reflectionPrompt: 模型中哪些条件被简化了，结论能解释到什么范围？
-hints: [一次只改变一个变量, 先比较倾角为零与当前倾角]
-components: [ScenarioControls, EvidencePanel]
+reflectionPrompt: 模型距离不变时为何仍有日照季节差异，日照变化是否等于天气变化？
+hints: [先记录白昼与黑夜各一次, 保持纬度与倾角不变比较两次至日, 同纬度补齐零倾角对照]
+components: [EarthScene, OrbitDiagram, SolarPath, DaylightBar, EarthEvidence]
 sources:
   - kind: reference
     id: DS-SPACE-NASA
-    title: NASA Earth Facts
+    title: NASA Facts About Earth
     publisher: National Aeronautics and Space Administration
     attribution: NASA
     url: https://science.nasa.gov/earth/facts/
-    review: &sourceReview { status: unreviewed, notes: 仅核对事实参数，不复用页面图片 }
+    verifiedAt: "2026-09-17"
+    review: &sourceReview { status: initial, notes: AI核对事实和公式，不复用图片，见主题审查记录 }
+  - kind: reference
+    id: DS-SEASONS-NASA
+    title: What Causes the Seasons
+    publisher: NASA Space Place
+    attribution: NASA
+    url: https://spaceplace.nasa.gov/seasons/en/
+    verifiedAt: "2026-09-17"
+    review: *sourceReview
+  - kind: reference
+    id: DS-SOLAR-NOAA
+    title: General Solar Position Calculations
+    publisher: NOAA Global Monitoring Laboratory
+    attribution: NOAA
+    url: https://gml.noaa.gov/grad/solcalc/solareqns.PDF
+    verifiedAt: "2026-09-17"
+    review: *sourceReview
   - kind: simulation
     id: DS-SIM-EARTH-GQ
-    title: GeoQuest 地球运动教学模型
-    attribution: GeoQuest
-    method: 基于球面天文几何计算太阳直射纬度与理论昼长
-    parameters: [公转位置, 地轴倾角, 观测纬度]
-    version: 0.1.0
-    limitations: [天体大小距离与速度不按比例, 不推演停止自转后的气候灾难]
+    title: GeoQuest 地球与太阳球面几何模型
+    attribution: GeoQuest 原创
+    method: 固定地轴向量和圆轨道太阳方向，球面点积共同决定受光状态、太阳高度与理论昼长
+    parameters: [公转角0至360度, 地轴倾角23.4或0度, 地方太阳时0至24小时, 南北对照纬度0至80度]
+    version: 2.0.0
+    limitations: [天体大小距离速度不按比例, 固定日地距离的圆轨道, 无大气折射太阳视半径地形与气温模拟, 不处理极点分日情形]
     review: *sourceReview
-reviews: &reviews
-  teaching: &pending { status: unreviewed, notes: 待主题教学审核 }
-  curriculum: *pending
-  textbook: *pending
-  data: *pending
-  map: { status: initial, notes: 不涉及地图，仍需人工确认 }
-  copyright: *pending
-  privacy: *pending
-  technical: *pending
-version: 0.1.0
-updatedAt: "2026-08-09"
+aiReview:
+  status: passed
+  agent: Codex
+  checkedAt: "2026-09-17"
+  evidencePath: docs/reviews/earth-sun-v2.md
+  scope: [model, sources, classroom, interaction, accessibility, offline, responsive]
+  version: 2.0.0
+version: 2.0.0
+updatedAt: "2026-09-17"

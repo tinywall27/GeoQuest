@@ -1,12 +1,14 @@
 import { NavLink, Outlet, useLocation } from "react-router-dom";
+import {
+  ChalkboardTeacherIcon,
+  CompassRoseIcon,
+  MapTrifoldIcon,
+} from "@phosphor-icons/react";
 import { useExperienceMode } from "./ExperienceMode";
 import styles from "./AppShell.module.css";
 
 const primaryNav = [
-  { to: "/textbooks", label: "教材探索" },
-  { to: "/topics", label: "主题" },
-  { to: "/labs/maps", label: "实验室" },
-  { to: "/challenges", label: "挑战" },
+  { to: "/topics", label: "探索主题", Icon: MapTrifoldIcon },
 ];
 
 export function AppShell(): React.JSX.Element {
@@ -18,33 +20,34 @@ export function AppShell(): React.JSX.Element {
     <div className={isClassroomTopic ? styles.classroomShell : styles.shell}>
       <a className={styles.skipLink} href="#main-content">
         跳到主要内容
-      </a>
+        </a>
       <header className={styles.header}>
         <NavLink to="/" className={styles.brand ?? ""} aria-label="GeoQuest 地理智探首页">
-          <span className={styles.brandMark} aria-hidden="true">GQ</span>
+          <span className={styles.brandMark} aria-hidden="true"><CompassRoseIcon weight="fill" /></span>
           <span>
             <strong>GeoQuest</strong>
-            <small>地理智探</small>
+            <small>地理智探 · 互动实验</small>
           </span>
         </NavLink>
         {isClassroomTopic ? (
           <span className={styles.classroomLabel}>课堂展示</span>
         ) : (
           <nav aria-label="主导航" className={styles.nav}>
-            {primaryNav.map((item) => (
+            {primaryNav.map(({ to, label, Icon }) => (
               <NavLink
-                key={item.to}
-                to={item.to}
+                key={to}
+                to={to}
                 className={({ isActive }) => (isActive ? styles.activeNav : undefined)}
               >
-                {item.label}
+                <Icon aria-hidden="true" weight="duotone" />
+                {label}
               </NavLink>
             ))}
           </nav>
         )}
         {!isClassroomTopic ? (
           <NavLink to="/classroom" className={styles.classroomLink ?? ""}>
-            课堂使用
+            <ChalkboardTeacherIcon aria-hidden="true" weight="duotone" />课堂使用
           </NavLink>
         ) : null}
       </header>

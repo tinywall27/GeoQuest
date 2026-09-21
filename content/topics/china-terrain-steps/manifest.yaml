@@ -8,7 +8,7 @@ chapter: 中国的地形
 prototype: map-explorer
 channels: [map-lab, region-explorer, textbook-explorer]
 competencies: [区域认知, 综合思维]
-status: 开发中
+status: 已归档
 releaseBatch: Sprint 3
 classroomMinutes: 12
 explorationMinutes: 20

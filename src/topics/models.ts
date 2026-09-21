@@ -23,6 +23,42 @@ export function localTimeDifferenceHours(longitudeA: number, longitudeB: number)
   return (longitudeB - longitudeA) / 15;
 }
 
+/**
+ * Continuous solar declination for the field-lab animation.
+ * 0° is the March equinox, 90° the June solstice.
+ */
+export function solarDeclinationAtOrbit(
+  orbitDegrees: number,
+  axialTilt = 23.4,
+): number {
+  const longitude = toRadians(((orbitDegrees % 360) + 360) % 360);
+  const tilt = toRadians(Math.max(0, Math.min(45, axialTilt)));
+  return toDegrees(Math.asin(Math.sin(tilt) * Math.sin(longitude)));
+}
+
+export function solarNoonAltitude(
+  latitude: number,
+  declination: number,
+): number {
+  return Math.max(0, 90 - Math.abs(latitude - declination));
+}
+
+export function daylightDurationForSolarDay(
+  latitude: number,
+  declination: number,
+  solarDayHours = 24,
+): number {
+  return (dayLengthHours(latitude, declination) / 24) * solarDayHours;
+}
+
+export function localTimeDifferenceForSolarDay(
+  longitudeA: number,
+  longitudeB: number,
+  solarDayHours = 24,
+): number {
+  return ((longitudeB - longitudeA) / 360) * solarDayHours;
+}
+
 export type RouteMetrics = {
   id: "ridge" | "valley" | "saddle";
   label: string;
@@ -195,5 +231,75 @@ export function controlledErosionComparison(variable: ErosionVariable) {
     to: scenario[variable],
     runoffDelta: after.runoff - before.runoff,
     erosionDelta: after.erosion - before.erosion,
+  };
+}
+
+export type DetailedErosionPractice =
+  | "downslope"
+  | "contour"
+  | "terrace"
+  | "grass";
+
+export type DetailedErosionInput = {
+  rainIntensity: number;
+  slopeDegrees: number;
+  vegetationCover: number;
+  practice: DetailedErosionPractice;
+};
+
+export const detailedErosionBaseline: DetailedErosionInput = {
+  rainIntensity: 42,
+  slopeDegrees: 14,
+  vegetationCover: 35,
+  practice: "downslope",
+};
+
+const detailedPracticeFactor: Record<DetailedErosionPractice, number> = {
+  downslope: 1,
+  contour: 0.72,
+  terrace: 0.45,
+  grass: 0.3,
+};
+
+export function detailedErosionModel(input: DetailedErosionInput) {
+  const rain = Math.max(10, Math.min(80, input.rainIntensity));
+  const slope = Math.max(5, Math.min(35, input.slopeDegrees));
+  const cover = Math.max(0, Math.min(90, input.vegetationCover));
+  const practiceFactor = detailedPracticeFactor[input.practice];
+
+  const rainFactor = Math.pow(rain / 42, 1.28);
+  const referenceSine = Math.sin(toRadians(14));
+  const slopeFactor = Math.pow(Math.sin(toRadians(slope)) / referenceSine, 1.18);
+  const coverFactor = Math.exp(-0.022 * (cover - 35));
+
+  const erosion = Math.round(
+    Math.max(
+      0,
+      Math.min(100, 48 * rainFactor * slopeFactor * coverFactor * practiceFactor),
+    ),
+  );
+
+  const runoffPotential =
+    (rain / 80) * 63 +
+    (slope / 35) * 24 +
+    ((90 - cover) / 90) * 20;
+  const runoff = Math.round(
+    Math.max(0, Math.min(100, runoffPotential * Math.sqrt(practiceFactor))),
+  );
+
+  const protection = Math.round(
+    Math.max(0, Math.min(100, 100 - erosion * 0.72 - runoff * 0.28)),
+  );
+
+  return {
+    runoff,
+    erosion,
+    protection,
+    factors: {
+      rain: Number(rainFactor.toFixed(2)),
+      slope: Number(slopeFactor.toFixed(2)),
+      cover: Number(coverFactor.toFixed(2)),
+      practice: practiceFactor,
+    },
   };
 }

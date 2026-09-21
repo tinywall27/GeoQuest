@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { access, readFile } from "node:fs/promises";
+import { access, readFile, stat } from "node:fs/promises";
 import path from "node:path";
 import fg from "fast-glob";
 import { parse } from "yaml";
@@ -55,11 +55,32 @@ async function requirePublishedAsset(
     return undefined;
   }
   try {
-    await access(resolved);
+    const info = await stat(resolved);
+    if (!info.isFile() || info.size === 0) {
+      throw new Error("evidence must be a non-empty file");
+    }
     return resolved;
   } catch {
     failures.push(`${displayPath}: ${sourceId} 的已发布本地资产不存在：${relativePath}`);
     return undefined;
+  }
+}
+
+async function requirePublishedAiEvidence(
+  displayPath: string,
+  relativePath: string,
+): Promise<void> {
+  const resolved = resolveRepositoryPath(relativePath);
+  if (!resolved) {
+    failures.push(`${displayPath}: aiReview.evidencePath 必须是仓库内相对路径`);
+    return;
+  }
+  try {
+    if (!(await stat(resolved)).isFile()) {
+      throw new Error("path is not a file");
+    }
+  } catch {
+    failures.push(`${displayPath}: aiReview 证据文件不存在：${relativePath}`);
   }
 }
 
@@ -98,9 +119,18 @@ for (const file of manifestFiles) {
     }
 
     if (topic.status === "已发布") {
+      if (!topic.aiReview || topic.aiReview.status !== "passed") {
+        failures.push(`${displayPath}: 已发布主题必须有 status 为 passed 的 aiReview`);
+      }
+      if (topic.aiReview && topic.aiReview.version !== topic.version) {
+        failures.push(`${displayPath}: aiReview.version 必须与主题 version 一致`);
+      }
+      if (topic.aiReview) {
+        await requirePublishedAiEvidence(displayPath, topic.aiReview.evidencePath);
+      }
       for (const source of topic.sources) {
-        if (source.review.status !== "approved") {
-          failures.push(`${displayPath}: 已发布主题的来源 ${source.id} 尚未 approved`);
+        if (source.review.status === "blocked") {
+          failures.push(`${displayPath}: 来源 ${source.id} 仍处于 blocked 状态`);
         }
         if (source.kind === "reference" && !source.verifiedAt) {
           failures.push(`${displayPath}: 已发布事实参考 ${source.id} 缺少核验日期`);

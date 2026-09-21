@@ -5,28 +5,28 @@
     "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
-  --color-navy-deep: #04131e;
-  --color-navy: #071f30;
-  --color-navy-soft: #0c3547;
-  --color-teal: #0f8f8c;
-  --color-accent: #13aaa3;
-  --color-accent-strong: #087c79;
-  --color-mint: #7ee0ce;
-  --color-sand: #e8b86a;
-  --color-sand-soft: #f8eedc;
-  --color-ink: #102a37;
-  --color-ink-muted: #576d76;
-  --color-canvas: #f3f7f6;
-  --color-surface: #ffffff;
-  --color-surface-muted: #edf4f2;
-  --color-border: #d8e3e1;
-  --color-border-strong: #a9c3be;
-  --color-danger: #a23838;
+  --color-navy-deep: #092d34;
+  --color-navy: #103f46;
+  --color-navy-soft: #1d5860;
+  --color-teal: #257454;
+  --color-accent: #246d8a;
+  --color-accent-strong: #175d78;
+  --color-mint: #92d5aa;
+  --color-sand: #e2a92f;
+  --color-sand-soft: #f7e9c7;
+  --color-ink: #24383d;
+  --color-ink-muted: #566366;
+  --color-canvas: #f4eddf;
+  --color-surface: #fffaf0;
+  --color-surface-muted: #eef5ea;
+  --color-border: #ded1b9;
+  --color-border-strong: #baa98b;
+  --color-danger: #a8473d;
   --radius-sm: 0.55rem;
   --radius-md: 0.9rem;
   --radius-lg: 1.35rem;
-  --shadow-soft: 0 10px 30px rgba(3, 32, 43, 0.07);
-  --shadow-lifted: 0 20px 60px rgba(3, 32, 43, 0.17);
+  --shadow-soft: 0 0.65rem 1.8rem rgba(62, 47, 22, 0.08);
+  --shadow-lifted: 0 1.3rem 3.6rem rgba(62, 47, 22, 0.16);
   --page-max: 75rem;
 }
 
@@ -55,7 +55,7 @@ body {
   margin: 0;
   min-width: 20rem;
   min-height: 100vh;
-  background: var(--color-canvas);
+  background-color: #fbfcf8;
   color: var(--color-ink);
   line-height: 1.65;
 }
@@ -82,6 +82,7 @@ input {
 h1,
 h2,
 h3 {
+  font-family: "LXGW WenKai", "Kaiti SC", STKaiti, KaiTi, serif;
   line-height: 1.18;
   text-wrap: balance;
 }

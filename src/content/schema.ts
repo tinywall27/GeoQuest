@@ -1,5 +1,6 @@
 import { z } from "zod";
 import {
+  aiReviewStatuses,
   competencyKeys,
   productChannelKeys,
   prototypeKeys,
@@ -10,6 +11,20 @@ import {
 
 const isoDate = /^\d{4}-\d{2}-\d{2}$/;
 const sha256 = /^sha256:[a-f0-9]{64}$/;
+
+const isRepositoryRelativePath = (value: string): boolean => {
+  if (value.includes("\\") || value.startsWith("/") || /^[A-Za-z]:/.test(value)) {
+    return false;
+  }
+  return value
+    .split("/")
+    .every((segment) => segment.length > 0 && segment !== "." && segment !== "..");
+};
+
+const repositoryRelativePath = z
+  .string()
+  .min(1)
+  .refine(isRepositoryRelativePath, "路径必须是仓库内相对路径");
 
 export const reviewRecordSchema = z
   .object({
@@ -31,6 +46,21 @@ export const reviewRecordSchema = z
       });
     }
   });
+
+export const aiReviewSchema = z
+  .object({
+    status: z.enum(aiReviewStatuses),
+    agent: z.string().min(1),
+    checkedAt: z.string().regex(isoDate),
+    evidencePath: repositoryRelativePath,
+    scope: z.array(z.string().min(1)).min(1).optional(),
+    version: z
+      .custom<`${number}.${number}.${number}`>(
+        (value) => /^\d+\.\d+\.\d+$/.test(String(value)),
+      )
+      .optional(),
+  })
+  .strict();
 
 const sourceBase = z.object({
   id: z.string().min(1),
@@ -117,7 +147,7 @@ const catalogEntryFields = {
     z.literal("Sprint 5"),
     z.literal("backlog"),
   ]),
-  classroomMinutes: z.number().int().min(8).max(15),
+  classroomMinutes: z.number().int().min(8).max(20),
   explorationMinutes: z.number().int().min(15).max(25),
 } as const;
 
@@ -173,7 +203,9 @@ export const topicManifestSourceSchema = z
         privacy: reviewRecordSchema,
         technical: reviewRecordSchema,
       })
-      .strict(),
+      .strict()
+      .optional(),
+    aiReview: aiReviewSchema.optional(),
     version: z.custom<`${number}.${number}.${number}`>(
       (value) => /^\d+\.\d+\.\d+$/.test(String(value)),
       { message: "版本必须使用语义版本格式" },
@@ -189,16 +221,16 @@ export const topicManifestSourceSchema = z
         message: "探索模式路径必须与主题 slug 一致",
       });
     }
-    if (topic.status === "已发布") {
-      for (const [gate, review] of Object.entries(topic.reviews)) {
-        if (review.status !== "approved") {
-          context.addIssue({
-            code: "custom",
-            path: ["reviews", gate, "status"],
-            message: "已发布主题的全部审核门禁必须为 approved",
-          });
-        }
-      }
+    const aiReview = topic.aiReview;
+    if (
+      topic.status === "已发布" &&
+      (!aiReview || aiReview.status !== "passed" || aiReview.version !== topic.version)
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["aiReview"],
+        message: "已发布主题必须有与当前 version 一致的 passed aiReview",
+      });
     }
   });
 

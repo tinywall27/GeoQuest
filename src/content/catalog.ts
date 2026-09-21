@@ -71,7 +71,7 @@ function toCatalogEntry(
  * 因而未审核主题不会进入生产目录、路由数据或互动分包。
  */
 export const v1TopicCatalog: readonly CatalogEntry[] =
-  topicManifests.map(toCatalogEntry);
+  topicManifests.filter(topic => topic.status !== "已归档").map(toCatalogEntry);
 
 export function getCatalogEntry(slug: string): CatalogEntry | undefined {
   return v1TopicCatalog.find((topic) => topic.slug === slug);
