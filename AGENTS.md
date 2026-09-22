@@ -15,6 +15,8 @@ This file applies to the whole repository. The normative product rules are in [`
 
 ## Before handing off a change
 
+- When a new geography project goes live, update `portal/projects.json` with its verified public URL, description, and tags, rebuild the portal, and verify its entry link after deployment. The root portal is maintained here; other repositories must include this step in their release handoff. Never list planned projects as live.
+
 Run the relevant subset of:
 
 ```text

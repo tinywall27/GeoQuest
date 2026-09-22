@@ -23,7 +23,11 @@
 
 域名原有 Web Analytics 自动注入覆盖所有子域名。为保持 GeoQuest 无统计要求，添加一条 Configuration Rule：主机等于 `geo.tinywall.cc`，且路径等于 `/geoquest` 或以 `/geoquest/` 开头时，设置 `disable_rum: true`。规则仅覆盖本项目，不更改其他站点的统计设置；Pages 项目本身也不开启 Web Analytics。
 
-GeoQuest 占用 `/geoquest/`，主题路径例如 `/geoquest/topics/earth-motion-lab?mode=classroom`。服务器仅将应用已知页面路径重写到 GeoQuest HTML，资源路径直接返回资源，其他项目路径不会落入本应用。域名根目录目前提供一个项目入口。
+GeoQuest 占用 `/geoquest/`，主题路径例如 `/geoquest/topics/earth-motion-lab?mode=classroom`。服务器仅将应用已知页面路径重写到 GeoQuest HTML，资源路径直接返回资源，其他项目路径不会落入本应用。域名根目录提供「地理课堂」项目入口，页面模板和样式位于 `portal/`，已上线项目统一维护在 `portal/projects.json`。构建时生成完整静态 HTML，无需浏览器 JavaScript。
+
+新地理项目上线时，先核验公开地址，再在 `portal/projects.json` 添加唯一 `id`、名称 `name`、类型 `category`、简介 `description`、正式链接 `url`、标签 `tags` 和主题 `topics`。仅收录已上线项目；可以使用同域名路径或 HTTPS 外部链接，不能填写本机或预览地址。运行 `VITE_BASE_PATH=/geoquest/ pnpm build:pages` 后统一发布。发布后检查根目录桌面和移动布局，并实际点击新增入口确认最终页面。其他仓库发布新项目时，也须将更新此清单作为发布收尾步骤；该清单不会自动发现其他仓库。
+
+入口的等高线与山峰插图为本项目原创 SVG，仅为地形示意，不对应真实地理边界；随站点本地提供，按仓库 `LICENSE-CONTENT` 发布，不使用外部图片、字体或 CDN。
 
 未来独立地理仓库可部署到各自的 Pages 项目，再通过同域名的 Cloudflare Worker 按路径转发；或者将多个项目的构建产物汇入统一站点。添加其他项目时需同时配置路径、资源前缀和各自 SPA 回退，不能仅添加指向不同站点的同名 DNS 记录。
 

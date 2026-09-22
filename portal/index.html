@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="地理课堂的互动项目入口。用实验、观察和探究，让地理知识与真实世界相遇。">
+  <meta name="theme-color" content="#f7f8f2">
+  <title>地理课堂 · 探索世界，从这里出发</title>
+  <link rel="stylesheet" href="/portal.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23274e41'/%3E%3Cpath d='M12 46 28 16 37 32 44 23 55 46Z' fill='%23e6edce'/%3E%3C/svg%3E">
+</head>
+<body>
+  <a class="skip" href="#projects">跳到项目列表</a>
+  <header class="site-header wrap">
+    <a class="brand" href="/" aria-label="地理课堂首页"><span class="brand-icon" aria-hidden="true">◎</span><span>地理课堂<small>GEOGRAPHY STUDIO</small></span></a>
+    <nav aria-label="主导航"><a href="#projects">教学项目 <span aria-hidden="true">↗</span></a><a href="#about">关于这里</a></nav>
+  </header>
+  <main class="wrap">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy"><p class="eyebrow"><span></span> 给课堂一扇通向世界的窗</p><h1 id="hero-title">探索世界，<br>从<span class="accent">这里</span>出发。</h1><p class="intro">把抽象的地理知识，变成可以观察、操作和思考的体验。<br class="desktop-break">为每一次好奇，找到一个探索的起点。</p><a class="primary" href="#projects">发现教学项目 <span aria-hidden="true">↓</span></a><p class="hero-note">课堂演示 · 自主探索 · 地理实践</p></div>
+      <div class="landscape" aria-hidden="true">
+        <div class="figure-label">FIELD NOTES <span>01 / 地形观察</span></div>
+        <svg viewBox="0 0 500 390" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs><pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M28 0H0V28" stroke="#d5dec9" stroke-width=".6"/></pattern></defs>
+          <rect x="20" y="15" width="460" height="350" fill="url(#grid)"/>
+          <g stroke="#829579" stroke-width="1.4"><path fill="#e5ead8" d="M59 254C29 207 83 188 112 153S111 66 181 56 255 89 296 94 396 60 428 118 408 195 435 240 416 321 353 332 279 301 225 329 93 307 59 254Z"/><path d="M82 249C57 210 110 188 135 156S135 89 186 79 250 110 293 116 378 82 407 129 384 196 413 239 397 297 348 309 279 278 226 305 105 291 82 249Z"/><path d="M108 245C83 211 131 194 157 161S157 110 192 102 250 133 290 137 362 108 383 141 362 195 387 237 371 276 342 282 281 256 227 279 128 276 108 245Z"/><path fill="#d5e0c3" d="M134 238C114 210 159 191 177 166S177 134 200 128 247 155 287 158 342 133 359 153 340 199 360 233 348 254 333 257 278 234 233 253 148 261 134 238Z"/><path d="M164 230C146 208 181 190 198 172S212 158 233 173 276 184 301 177 338 171 329 195 343 230 318 232 276 213 239 229 180 246 164 230Z"/><path fill="#c1d2aa" d="M195 223C176 210 207 188 224 191S252 210 270 203 308 192 307 208 276 196 252 213 212 237 195 223Z"/></g>
+          <path d="M321 108C305 131 325 145 301 166S277 185 283 208 305 240 284 264 266 299 280 331" stroke="#749faa" stroke-width="4" stroke-linecap="round"/>
+          <path d="M90 287C115 271 130 291 164 267S201 255 221 218" stroke="#a67744" stroke-width="2" stroke-dasharray="5 6"/>
+          <circle cx="221" cy="218" r="5" fill="#274e41"/><path d="M221 205V163L245 170 221 180" stroke="#274e41" stroke-width="2" fill="#274e41"/>
+          <g fill="#52684f" font-family="sans-serif" font-size="12"><text x="112" y="116">200</text><text x="156" y="145">400</text><text x="193" y="180">600</text><text x="328" y="286" fill="#557f8a">河流</text><text x="72" y="313" fill="#8b6239">观察路线</text><text x="442" y="43">N</text></g>
+          <path d="M447 55V86M439 65 447 53 455 65" stroke="#52684f" stroke-width="1.5"/>
+        </svg>
+        <div class="figure-caption"><span>观察 · 提问 · 探究</span><span>原创地形示意 / 非真实地图</span></div>
+      </div>
+    </section>
+    <section id="projects" class="projects" aria-labelledby="projects-title">
+      <div class="section-heading"><div><p class="eyebrow">EXPLORE & LEARN</p><h2 id="projects-title">选择一个项目，开始探索</h2></div><span class="count">{{PROJECT_COUNT}} 个已上线项目</span></div>
+      <div class="project-list">{{PROJECT_CARDS}}</div>
+      <p class="continuing"><span aria-hidden="true">＋</span> 探索持续生长，新的地理项目将在这里相遇。</p>
+    </section>
+    <section id="about" class="about" aria-labelledby="about-title"><h2 id="about-title">一方小课堂，一个大世界。</h2><p>这里汇集面向地理教学的数字项目，供教师组织课堂演示，也供学生自主探索。<br>从看见现象到理解规律，让每一次操作，都成为思考的开始。</p><span class="about-mark" aria-hidden="true">↗</span></section>
+  </main>
+  <footer class="wrap"><span>地理课堂 <span class="footer-dot">/</span> 与好奇心同行</span><a href="#hero-title">回到顶部 ↑</a></footer>
+</body>
+</html>
