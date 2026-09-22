@@ -10,7 +10,7 @@ for (const project of projects) {
     if (typeof project[field] !== "string" || !project[field].trim()) throw new Error(`Missing project ${field}`);
   }
   if (!/^[a-z0-9-]+$/.test(project.id) || ids.has(project.id) || urls.has(project.url)) throw new Error("Invalid or duplicate portal project");
-  if (!/^\/(?!\/)[a-z0-9/_-]+\/$/.test(project.url) && !/^https:\/\/[a-z0-9.-]+(?:\/[^\s]*)?$/i.test(project.url)) throw new Error(`Invalid project URL: ${project.id}`);
+  if (!/^\/(?!\/)[a-z0-9/_-]+\/$/i.test(project.url) && !/^https:\/\/[a-z0-9.-]+(?:\/[^\s]*)?$/i.test(project.url)) throw new Error(`Invalid project URL: ${project.id}`);
   for (const field of ["tags", "topics"]) {
     if (!Array.isArray(project[field]) || project[field].length === 0 || project[field].some((value) => typeof value !== "string" || !value.trim())) throw new Error(`Invalid project ${field}`);
   }

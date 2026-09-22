@@ -23,7 +23,7 @@
     "name": "地形与等高线",
     "category": "地形演示",
     "description": "将三维地形与二维等高线同屏对照，观察山地、高原、丘陵、平原与盆地，调整等高距并探索地形起伏。",
-    "url": "https://geo.tinywall.cc/GeoLandform/Landforms1/",
+    "url": "/GeoLandform/Landforms1/",
     "tags": [
       "初中地理",
       "三维模型",
