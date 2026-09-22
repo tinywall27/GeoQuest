@@ -1,0 +1,85 @@
+id: GQ-T002
+slug: earth-evidence-grid
+title: 经纬网定位证据
+summary: 能读出带 N/S、E/W 的经纬度，并说明只改变一个坐标时点沿什么线移动。
+coreQuestion: 怎样用两条相交的角度线，把一个点的位置说清楚？
+volume: G7A
+chapter: 地球与经纬网
+prototype: data-explorer
+channels:
+  - textbook-explorer
+  - data-lab
+competencies:
+  - 综合思维
+  - 地理实践力
+status: 已发布
+releaseBatch: backlog
+classroomMinutes: 15
+explorationMinutes: 20
+modes:
+  exploration:
+    path: /topics/earth-evidence-grid
+  classroom:
+    query: ?mode=classroom
+    sameContent: true
+primaryInteraction:
+  object: 经纬网定位证据
+  action: 先示范，保持其他条件不变进行对照，记录证据并独立检验
+  feedback: 图形与数值使用同一模型，显示条件、结果和适用边界
+evidenceOutput:
+  type: 对比表
+  description: 导出条件、结果、支持程度和独立题作答过程；看过反馈的重答单独标记
+  persistsFreeText: false
+reflectionPrompt: 延后以相同问法给点（60°N，30°W），让学生独立画交点并标方向；不同时加入时差或距离计算。
+hints:
+  - 认为纬线向东西延伸，所以纬度表示东西位置；把 30°W 写成 30°E，或给 0°强加 N/S。
+components:
+  - SelectedLab
+sources:
+  - kind: simulation
+    id: SIM-GQ-T002
+    title: 经纬网定位证据原创教学模型
+    attribution: GeoQuest 原创
+    method: 横坐标按经度、纵坐标按纬度作线性展示；仅提供 −60°到 60°、间隔 30°的离散读图。0°单独命名，不标为南北纬或东西经。
+    parameters:
+      - 纬度
+      - 经度
+    version: 1.0.0
+    limitations:
+      - 原创抽象坐标网，不是现实地图，不含真实边界；矩形格子不能用于判断真实面积、球面距离或两条经线的间距。
+      - 东经/西经不等同于教材中的东/西半球划分；本课不讨论半球分界、极点、180°经线与跨日界线。
+      - 15 分钟投屏纸笔设想，学情未经观察；真实试教与教师地理表述审核仍待完成。
+    review:
+      status: initial
+  - kind: reference
+    id: REF-GQ-T002-1
+    title: What is latitude?
+    publisher: NOAA National Ocean Service
+    attribution: NOAA National Ocean Service
+    url: https://oceanservice.noaa.gov/facts/latitude.html
+    verifiedAt: 2026-09-22
+    review:
+      status: initial
+  - kind: reference
+    id: REF-GQ-T002-2
+    title: What is longitude?
+    publisher: NOAA National Ocean Service
+    attribution: NOAA National Ocean Service
+    url: https://oceanservice.noaa.gov/facts/longitude.html
+    verifiedAt: 2026-09-22
+    review:
+      status: initial
+aiReview:
+  status: passed
+  agent: codex-content-review
+  checkedAt: 2026-09-22
+  evidencePath: docs/reviews/selected-reading.md
+  scope:
+    - model
+    - teaching-walkthrough
+    - sources
+    - accessibility
+    - offline
+  version: 1.0.0
+version: 1.0.0
+updatedAt: 2026-09-22

@@ -5,6 +5,7 @@ import { parse } from "yaml";
 import { topicManifestSourceSchema } from "../src/content/schema.ts";
 import { toPublicTopicManifest } from "../src/content/publicManifest.ts";
 import type { PublicTopicManifest } from "../src/domain/topic.ts";
+import { selectedGroups } from '../src/topics/selected/selection.ts';
 
 const projectRoot = process.cwd();
 const manifestFiles = await fg("content/topics/*/manifest.yaml", {
@@ -56,6 +57,9 @@ type InteractiveModule = {
 };
 
 const interactiveModules: Readonly<Record<string, InteractiveModule>> = {
+  ...Object.fromEntries(selectedGroups.reading.map(slug => [slug, {path: '../topics/selected/ReadingLab'}])),
+  ...Object.fromEntries(selectedGroups.process.map(slug => [slug, {path: '../topics/selected/ProcessLab'}])),
+  ...Object.fromEntries(selectedGroups.decisions.map(slug => [slug, {path: '../topics/selected/DecisionLab'}])),
   "earth-motion-lab": { path: "../topics/earth/EarthSunLab" },
   "contour-rescue": { path: "../topics/terrain/TerrainLab" },
   "world-population-map": { path: "../topics/population/PopulationLab" },

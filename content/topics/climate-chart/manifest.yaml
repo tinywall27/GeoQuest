@@ -1,0 +1,86 @@
+id: GQ-T013
+slug: climate-chart
+title: 气候图判读与证据
+summary: 能分别读两轴，求年温差与年降水量，并依据最热月和多雨月份判断雨热同期或不同期。
+coreQuestion: 怎样用月份、气温和降水三个证据描述季节特点，而不只凭图形猜名称？
+volume: G7A
+chapter: 世界的气候
+prototype: data-explorer
+channels:
+  - textbook-explorer
+  - data-lab
+competencies:
+  - 综合思维
+  - 地理实践力
+status: 已发布
+releaseBatch: backlog
+classroomMinutes: 15
+explorationMinutes: 20
+modes:
+  exploration:
+    path: /topics/climate-chart
+  classroom:
+    query: ?mode=classroom
+    sameContent: true
+primaryInteraction:
+  object: 气候图判读与证据
+  action: 先示范，保持其他条件不变进行对照，记录证据并独立检验
+  feedback: 图形与数值使用同一模型，显示条件、结果和适用边界
+evidenceOutput:
+  type: 对比表
+  description: 导出条件、结果、支持程度和独立题作答过程；看过反馈的重答单独标记
+  persistsFreeText: false
+reflectionPrompt: 延后提供不同数值但相同双轴格式：最暖月 26°C、最冷月 8°C；独立写 18°C，并说明这不是单日温差。
+hints:
+  - 把单月降水量当成年降水量；把柱比线高解释为降水数值大于气温，忽略不同单位。
+components:
+  - SelectedLab
+sources:
+  - kind: simulation
+    id: SIM-GQ-T013
+    title: 气候图判读与证据原创教学模型
+    attribution: GeoQuest 原创
+    method: 原创的 12 个月模拟平均值。最热月情景通过循环平移 6 个月改变季节；多雨期情景再将降水平移 6 个月。统计与 SVG、数据表共用
+      climateModel，温度轴恒定 0–30°C，降水轴恒定 0–200 mm。
+    parameters:
+      - 最热月情景
+      - 多雨期情景
+    version: 1.0.0
+    limitations:
+      - 数据是人为构造的多年平均月值练习，无真实地点、统计期或预测能力；外部来源只核验变量与读图原理，不是这组数据的来源。
+      - 这些温度和降水组合只练习读图；不能代表某种气候所有特征，也不能仅凭最热月断定全部真实地点的半球。
+      - 不推断降水成因，不把季节相关当成因果。15 分钟投屏纸笔设想，未经真实师生试教，教师须核验学生是否独立读轴。
+    review:
+      status: initial
+  - kind: reference
+    id: REF-GQ-T013-1
+    title: Historic station data — monthly climate variables
+    publisher: Met Office
+    attribution: Met Office
+    url: https://www.metoffice.gov.uk/research/climate/maps-and-data/historic-station-data
+    verifiedAt: 2026-09-22
+    review:
+      status: initial
+  - kind: reference
+    id: REF-GQ-T013-2
+    title: Climate
+    publisher: Met Office
+    attribution: Met Office
+    url: https://weather.metoffice.gov.uk/climate
+    verifiedAt: 2026-09-22
+    review:
+      status: initial
+aiReview:
+  status: passed
+  agent: codex-content-review
+  checkedAt: 2026-09-22
+  evidencePath: docs/reviews/selected-reading.md
+  scope:
+    - model
+    - teaching-walkthrough
+    - sources
+    - accessibility
+    - offline
+  version: 1.0.0
+version: 1.0.0
+updatedAt: 2026-09-22

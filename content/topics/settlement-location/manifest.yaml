@@ -1,0 +1,76 @@
+id: GQ-T010
+slug: settlement-location
+title: 聚落选址：先查条件再比较
+summary: 根据坡度、供水与需求排除不合条件的地块，再用接路距离解释选择。
+coreQuestion: 离道路最近的地块，一定适合本题聚落吗？
+volume: G7A
+chapter: 聚落与环境
+prototype: decision-lab
+channels:
+  - textbook-explorer
+  - region-explorer
+competencies:
+  - 综合思维
+  - 地理实践力
+status: 已发布
+releaseBatch: backlog
+classroomMinutes: 15
+explorationMinutes: 20
+modes:
+  exploration:
+    path: /topics/settlement-location
+  classroom:
+    query: ?mode=classroom
+    sameContent: true
+primaryInteraction:
+  object: 聚落选址：先查条件再比较
+  action: 先示范，保持其他条件不变进行对照，记录证据并独立检验
+  feedback: 图形与数值使用同一模型，显示条件、结果和适用边界
+evidenceOutput:
+  type: 对比表
+  description: 导出条件、结果、支持程度和独立题作答过程；看过反馈的重答单独标记
+  persistsFreeText: false
+reflectionPrompt: 若新增地块供水 90 m³/日、坡度 3°、接路 2 km，需求仍为 80，写出两项资格判断及它与乙的取舍；不要增加题目没有提供的安全结论。
+hints:
+  - 把离路近视为万能优势，或把教学坡度阈值理解为现实建设安全线。
+components:
+  - SelectedLab
+sources:
+  - kind: simulation
+    id: SIM-GQ-T010
+    title: 聚落选址：先查条件再比较原创教学模型
+    attribution: GeoQuest 原创
+    method: 15 分钟教师投屏＋纸笔：3 分钟读条件，4 分钟示范，4 分钟单变量对照，4 分钟独立判断。供水条共用固定尺度，无真实地图。
+    parameters:
+      - 候选地块
+      - 日需水量（m³/日）
+    version: 1.0.0
+    limitations:
+      - 全部地块与数据为原创虚构；5° 为题设筛选条件，不是工程规范。
+      - 未模拟水质、季节变化、土地权属、灾害与生态因素；不能据此判断现实选址安全。
+      - 已进行开发者模拟试讲与算例核对，未经真实课堂试教；教师须核对教材术语及学生读数起点。
+    review:
+      status: initial
+  - kind: reference
+    id: REF-GQ-T010-1
+    title: Transport and Location
+    publisher: Jean-Paul Rodrigue · The Geography of Transport Systems
+    attribution: Jean-Paul Rodrigue · The Geography of Transport Systems
+    url: https://transportgeography.org/contents/chapter2/transport-and-location/
+    verifiedAt: 2026-09-22
+    review:
+      status: initial
+aiReview:
+  status: passed
+  agent: codex-content-review
+  checkedAt: 2026-09-22
+  evidencePath: docs/reviews/selected-decisions.md
+  scope:
+    - model
+    - teaching-walkthrough
+    - sources
+    - accessibility
+    - offline
+  version: 1.0.0
+version: 1.0.0
+updatedAt: 2026-09-22

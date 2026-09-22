@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { v1TopicCatalog } from '../content/catalog';
+import { selectedSlugs } from '../topics/selected/selection';
 import "./HomeV2.css";
 
 export function HomePage() {
@@ -8,5 +10,6 @@ export function HomePage() {
     <Link className="home-feature home-water-feature" to="/topics/loess-soil-water"><div><span>03 / 水土与流域 · 可体验</span><h2>跟随一场雨，<br/>从山坡走到下游。</h2><p>坡面对照 × 流域调蓄 × 水量守恒</p><strong>进入水土实验 →</strong></div><svg viewBox="0 0 500 300" role="img" aria-label="坡面汇水到滞蓄区与出口示意"><path d="M30 190L125 60L230 155L310 80L455 210L280 265Z" fill="#a6c29b"/><path d="M125 60L113 125L153 104M310 80L290 137L339 125" fill="#e0e6ca"/><path d="M145 150Q180 220 285 218M315 159L285 218L400 250" stroke="#347f96" strokeWidth="7" fill="none"/><ellipse cx="285" cy="218" rx="48" ry="22" fill="#71adbd"/>{[140,190,240,290].map(x=><path key={x} d={`M${x} 30l-8 22`} stroke="#347f96" strokeWidth="3"/>)}</svg></Link>
     <Link className="home-feature home-water-feature" to="/topics/south-asia-monsoon"><div><span>04 / 气候与农业 · 可体验</span><h2>看雨何时来，<br/>想作物如何种。</h2><p>雨热日历 × 有限补灌 × 农业方案取舍</p><strong>进入农业实验 →</strong></div><svg viewBox="0 0 500 300" role="img" aria-label="降雨与作物生长日历示意"><path d="M50 235H450" stroke="#58784b" strokeWidth="3"/>{[80,145,210,275,340,405].map((x,i)=><g key={x}><path d={`M${x} 235v-${35+i*16}l-18 -14m18 14 18 -14`} stroke="#58784b" strokeWidth="5" fill="none"/><path d={`M${x} 45v35`} stroke="#397e9c" strokeWidth="8"/></g>)}</svg></Link>
     <Link className="home-feature home-earth-feature" to="/topics/world-population-map"><div><span>05 / 人口与区域 · 可体验</span><h2>换一个指标，<br/>看见不同的区域。</h2><p>真实数据 × 总量与密度 × 统计尺度</p><strong>进入人口实验 →</strong></div><svg viewBox="0 0 500 300" role="img" aria-label="四个区域的统计柱比较示意">{[60,230,150,100].map((h,i)=><rect key={i} x={80+i*90} y={260-h} width="55" height={h} rx="4" fill={i===1?'#bc843b':'#397e9c'}/>)}<path d="M55 260H445" stroke="#4b605b" strokeWidth="2"/></svg></Link>
+    <section className="home-selected" aria-labelledby="selected-lessons"><span>读图 · 过程 · 取舍</span><h2 id="selected-lessons">用 15 分钟，弄懂一个问题</h2><p>先跟着示范，再记录对照，最后收起提示独立解释。按当前任务需要选择支持。</p><div>{v1TopicCatalog.filter(t => selectedSlugs.includes(t.slug)).map(t => <Link key={t.id} to={`/topics/${t.slug}`}><span>{t.volume} · {t.classroomMinutes} 分钟</span><h3>{t.title}</h3><p>{t.coreQuestion}</p><strong>进入课段 →</strong></Link>)}</div></section>
   </div>;
 }

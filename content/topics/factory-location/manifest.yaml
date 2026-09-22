@@ -1,0 +1,77 @@
+id: GQ-T048
+slug: factory-location
+title: 工业区位：哪一段运输更关键
+summary: 分别计算原料和成品运输费用，排除产能不足候选，用两段数据解释区位选择。
+coreQuestion: 运入原料比运出成品重时，靠近哪一端能减少本题运费？
+volume: G8A
+chapter: 工业
+prototype: decision-lab
+channels:
+  - textbook-explorer
+  - region-explorer
+competencies:
+  - 综合思维
+  - 地理实践力
+status: 已发布
+releaseBatch: backlog
+classroomMinutes: 15
+explorationMinutes: 20
+modes:
+  exploration:
+    path: /topics/factory-location
+  classroom:
+    query: ?mode=classroom
+    sameContent: true
+primaryInteraction:
+  object: 工业区位：哪一段运输更关键
+  action: 先示范，保持其他条件不变进行对照，记录证据并独立检验
+  feedback: 图形与数值使用同一模型，显示条件、结果和适用边界
+evidenceOutput:
+  type: 对比表
+  description: 导出条件、结果、支持程度和独立题作答过程；看过反馈的重答单独标记
+  persistsFreeText: false
+reflectionPrompt: 新情景每日原料和成品都为 8 t，候选点两段距离分别为 20/80 km 与 70/30 km，产能均足够。比较运费并说明还需收集哪些非运输资料。
+hints:
+  - 只算原料或成品一段；把本题最低运费直接当作所有工厂的最佳区位。
+components:
+  - SelectedLab
+sources:
+  - kind: simulation
+    id: SIM-GQ-T048
+    title: 工业区位：哪一段运输更关键原创教学模型
+    attribution: GeoQuest 原创
+    method: 15 分钟投屏纸笔，以两段费用分栏记录，最后遮住算式作答。统一运价，固定单原料地、单市场和候选距离，不按示意线长量距。
+    parameters:
+      - 候选厂址
+      - 每吨成品需原料（t）
+      - 计划日产成品（t/日）
+    version: 1.0.0
+    limitations:
+      - 所有厂址和数值为虚构，原料损耗/副产品处理未展开。
+      - 省略劳动、能源、地价、环保和政策；最低运输费不是现实综合最优。
+      - 已核对算例与产能边界，未经真实课堂试教。
+    review:
+      status: initial
+  - kind: reference
+    id: REF-GQ-T048-1
+    title: Transport and Location
+    publisher: Jean-Paul Rodrigue · The Geography of Transport Systems
+    attribution: Jean-Paul Rodrigue · The Geography of Transport Systems
+    url: https://transportgeography.org/contents/chapter2/transport-and-location/
+    verifiedAt: 2026-09-22
+    review:
+      status: initial
+aiReview:
+  status: passed
+  agent: codex-content-review
+  checkedAt: 2026-09-22
+  evidencePath: docs/reviews/selected-decisions.md
+  scope:
+    - model
+    - teaching-walkthrough
+    - sources
+    - accessibility
+    - offline
+  version: 1.0.0
+version: 1.0.0
+updatedAt: 2026-09-22

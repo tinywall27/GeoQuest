@@ -22,7 +22,7 @@ export function TopicsPage(): React.JSX.Element {
       <header className={styles.pageHero}>
         <span className={styles.kickerDark}>精选互动主题</span>
         <h1>用问题组织探索</h1>
-        <p>优先完成地形实验。地球与太阳、流域与水土、气候与农业将逐步融合打磨。</p>
+        <p>从读图、自然过程到区位选择，用示范、对照和独立检验完成一段地理学习。模型结论与真实教学效果分别核验。</p>
       </header>
       <section className={styles.filters} aria-label="筛选主题">
         <label>

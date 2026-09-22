@@ -83,7 +83,7 @@ const validManifest = {
 
 describe("主题内容契约", () => {
   it("生产投影只允许已发布主题", () => {
-    expect(developmentManifests).toHaveLength(10);
+    expect(developmentManifests).toHaveLength(20);
     expect(publishedManifests.every((topic) => topic.status === "已发布")).toBe(true);
   });
 

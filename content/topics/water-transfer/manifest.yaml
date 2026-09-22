@@ -1,0 +1,78 @@
+id: GQ-T044
+slug: water-transfer
+title: 跨流域调水：能调多少水？
+summary: 独立用同一期水量守恒计算可调量、输水损耗和受水区缺口，解释生态约束为何限制调水。
+coreQuestion: 调出区必须留足生态用水，输水又有损耗，申请的水一定能够送到吗？
+volume: G8A
+chapter: 中国的自然资源
+prototype: simulator
+channels:
+  - textbook-explorer
+  - earth-lab
+competencies:
+  - 综合思维
+  - 地理实践力
+status: 已发布
+releaseBatch: backlog
+classroomMinutes: 15
+explorationMinutes: 20
+modes:
+  exploration:
+    path: /topics/water-transfer
+  classroom:
+    query: ?mode=classroom
+    sameContent: true
+primaryInteraction:
+  object: 跨流域调水：能调多少水？
+  action: 先示范，保持其他条件不变进行对照，记录证据并独立检验
+  feedback: 图形与数值使用同一模型，显示条件、结果和适用边界
+evidenceOutput:
+  type: 对比表
+  description: 导出条件、结果、支持程度和独立题作答过程；看过反馈的重答单独标记
+  persistsFreeText: false
+reflectionPrompt: 用来水80的同类案例检验：不能继续照搬取水60；可调水只剩40，到水36，缺口14。
+hints:
+  - 申请调水量不是实际调出量，实际调出量也不是到水量；生态留水不是可以随意扣除的“浪费”。
+components:
+  - SelectedLab
+sources:
+  - kind: simulation
+    id: SIM-GQ-T044
+    title: 跨流域调水：能调多少水？原创教学模型
+    attribution: GeoQuest 原创
+    method: 虚构单期水账，无蓄水跨期调节。实际调出=min(申请量,max(0,来水−生态留水底线))；到水=调出×90%。固定受水区需求50万
+      m³。原流域留水+途中损耗+到水=来水。
+    parameters:
+      - 调出区本期来水（万 m³）
+      - 原流域生态留水底线（万 m³）
+      - 申请调出量（万 m³）
+    version: 1.0.0
+    limitations:
+      - 10%为教学假设，不代表任何真实调水工程的损耗率；途中损耗指未到受水区，并非水从自然界消失。
+      - 不评价真实线路、工程成本、水质、移民与跨期生态影响；生态底线也不是现实审批标准。
+      - 开发者模拟走读已完成，真实试教与教师对答案、课时的审核尚未进行。
+    review:
+      status: initial
+  - kind: reference
+    id: REF-GQ-T044-1
+    title: "1995 Water-Use Guidelines: Glossary（conveyance loss）"
+    publisher: U.S. Geological Survey
+    attribution: U.S. Geological Survey
+    url: https://water.usgs.gov/usgs/watuse/1995guidelines/glossary.html
+    verifiedAt: 2026-09-22
+    review:
+      status: initial
+aiReview:
+  status: passed
+  agent: codex-content-review
+  checkedAt: 2026-09-22
+  evidencePath: docs/reviews/selected-process.md
+  scope:
+    - model
+    - teaching-walkthrough
+    - sources
+    - accessibility
+    - offline
+  version: 1.0.0
+version: 1.0.0
+updatedAt: 2026-09-22

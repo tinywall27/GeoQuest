@@ -1,6 +1,14 @@
 import { lazy, type ComponentType } from "react";
+import { selectedGroups } from './selected/selection';
+
+const ReadingLab = lazy(() => import('./selected/ReadingLab'));
+const ProcessLab = lazy(() => import('./selected/ProcessLab'));
+const DecisionLab = lazy(() => import('./selected/DecisionLab'));
 
 const registry: Record<string, ComponentType> = {
+  ...Object.fromEntries(selectedGroups.reading.map(slug => [slug, ReadingLab])),
+  ...Object.fromEntries(selectedGroups.process.map(slug => [slug, ProcessLab])),
+  ...Object.fromEntries(selectedGroups.decisions.map(slug => [slug, DecisionLab])),
   "earth-motion-lab": lazy(() => import("./earth/EarthSunLab")),
   "contour-rescue": lazy(() => import("./terrain/TerrainLab")),
   "world-population-map": lazy(() => import("./population/PopulationLab")),

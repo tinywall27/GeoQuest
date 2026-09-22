@@ -1,0 +1,78 @@
+id: GQ-T014
+slug: mountain-rain-shadow
+title: 山脉两侧，哪里更容易下雨？
+summary: 能按风向辨认迎风坡，用抬升—冷却—凝结解释降水条件，并计算给定凝结高度以上的抬升高度。
+coreQuestion: 保持山高和来流湿度条件不变，只改变风向，迎风坡和背风坡怎样变化？
+volume: G7A
+chapter: 天气与气候
+prototype: simulator
+channels:
+  - textbook-explorer
+  - earth-lab
+competencies:
+  - 综合思维
+  - 地理实践力
+status: 已发布
+releaseBatch: backlog
+classroomMinutes: 15
+explorationMinutes: 20
+modes:
+  exploration:
+    path: /topics/mountain-rain-shadow
+  classroom:
+    query: ?mode=classroom
+    sameContent: true
+primaryInteraction:
+  object: 山脉两侧，哪里更容易下雨？
+  action: 先示范，保持其他条件不变进行对照，记录证据并独立检验
+  feedback: 图形与数值使用同一模型，显示条件、结果和适用边界
+evidenceOutput:
+  type: 对比表
+  description: 导出条件、结果、支持程度和独立题作答过程；看过反馈的重答单独标记
+  persistsFreeText: false
+reflectionPrompt: 把风向改为东风而保持高度不变，要求学生解释为什么迎风坡换边、500 m高度差却不变。
+hints:
+  - 迎风坡不是固定的东坡或西坡；空气达到凝结条件不等于一定产生可测降雨，更不能由山高直接算年降水量。
+components:
+  - SelectedLab
+sources:
+  - kind: simulation
+    id: SIM-GQ-T014
+    title: 山脉两侧，哪里更容易下雨？原创教学模型
+    attribution: GeoQuest 原创
+    method: 固定0—2500
+      m纵轴；剖面原创且水平距离不计。凝结高度作为题设输入，超过它的抬升=max(0,山顶−凝结高度)。只表示湿润来流越山的原理，不建立降水量方程。
+    parameters:
+      - 来风方向
+      - 山顶高度
+      - 给定凝结高度（非预测）
+    version: 1.0.0
+    limitations:
+      - 没有计算湿度、稳定度、风速、气温递减率和降水效率；不能作天气预测。
+      - 迎风多雨、背风少雨是特定来流条件下的常见现象，不是每座山、每次天气都成立。
+      - 已完成开发者模拟试讲走读，尚无真实师生试教；先备知识与15分钟时长须由教师核验。
+    review:
+      status: initial
+  - kind: reference
+    id: REF-GQ-T014-1
+    title: What do leeward and windward mean?
+    publisher: NOAA Ocean Service
+    attribution: NOAA Ocean Service
+    url: https://oceanservice.noaa.gov/facts/windward-leeward.html
+    verifiedAt: 2026-09-22
+    review:
+      status: initial
+aiReview:
+  status: passed
+  agent: codex-content-review
+  checkedAt: 2026-09-22
+  evidencePath: docs/reviews/selected-process.md
+  scope:
+    - model
+    - teaching-walkthrough
+    - sources
+    - accessibility
+    - offline
+  version: 1.0.0
+version: 1.0.0
+updatedAt: 2026-09-22

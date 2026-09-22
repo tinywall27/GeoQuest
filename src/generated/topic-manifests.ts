@@ -94,6 +94,99 @@ export const topicManifests: readonly PublicTopicManifest[] = [
     }
   },
   {
+    "id": "GQ-T049",
+    "slug": "china-route-designer",
+    "title": "运输方案：便宜也要能按时送到",
+    "summary": "用载量与时限筛选方案，再比较可行方案费用，能解释没有可行方案的情况。",
+    "coreQuestion": "最低费用方案为什么可能不能交付这批货物？",
+    "volume": "G8A",
+    "chapter": "交通运输",
+    "prototype": "decision-lab",
+    "channels": [
+      "textbook-explorer",
+      "region-explorer"
+    ],
+    "competencies": [
+      "综合思维",
+      "地理实践力"
+    ],
+    "status": "已发布",
+    "releaseBatch": "backlog",
+    "classroomMinutes": 15,
+    "explorationMinutes": 20,
+    "modes": {
+      "exploration": {
+        "path": "/topics/china-route-designer"
+      },
+      "classroom": {
+        "query": "?mode=classroom",
+        "sameContent": true
+      }
+    },
+    "primaryInteraction": {
+      "object": "运输方案：便宜也要能按时送到",
+      "action": "先示范，保持其他条件不变进行对照，记录证据并独立检验",
+      "feedback": "图形与数值使用同一模型，显示条件、结果和适用边界"
+    },
+    "evidenceOutput": {
+      "type": "对比表",
+      "description": "导出条件、结果、支持程度和独立题作答过程；看过反馈的重答单独标记",
+      "persistsFreeText": false
+    },
+    "reflectionPrompt": "把时限收紧至 16 小时、货物增至 15 t，判断是否存在可行方案。若没有，写出一项需要重新协商的条件，而不是硬选最低价。",
+    "hints": [
+      "认定一种运输方式永远最好；把虚构费用和载量误认为现实线路报价与运力。"
+    ],
+    "components": [
+      "SelectedLab"
+    ],
+    "version": "1.0.0",
+    "updatedAt": "2026-09-22",
+    "sources": [
+      {
+        "id": "SIM-GQ-T049",
+        "title": "运输方案：便宜也要能按时送到原创教学模型",
+        "attribution": "GeoQuest 原创",
+        "review": {
+          "status": "initial"
+        },
+        "kind": "simulation",
+        "method": "15 分钟教师投屏＋纸笔；示范一行、提示一行、独立一行。三条虚构方案均为 600 km，全程用时含装卸等待，时间轴固定 0–72 小时。",
+        "parameters": [
+          "运输方案",
+          "本批货物（t）",
+          "交付时限（小时）"
+        ],
+        "version": "1.0.0",
+        "limitations": [
+          "无真实中国线路或地图，所有费用、载量和时间均为题设值，不可用于出行或物流报价。",
+          "假定每种方案单批发运，不拆批、不增车辆，未模拟班次、天气和线路可达性。",
+          "模型只比较本题可行方案费用，不概括各运输方式的一般运力；未经真实课堂试教。"
+        ]
+      },
+      {
+        "id": "REF-GQ-T049-1",
+        "title": "Distance, Modal Choice and Transport Cost",
+        "attribution": "Jean-Paul Rodrigue · The Geography of Transport Systems",
+        "review": {
+          "status": "initial"
+        },
+        "kind": "reference",
+        "publisher": "Jean-Paul Rodrigue · The Geography of Transport Systems",
+        "url": "https://transportgeography.org/contents/chapter5/transportation-modes-modal-competition-modal-shift/distance-modal-choice-transport-cost/",
+        "verifiedAt": "2026-09-22"
+      }
+    ],
+    "aiReview": {
+      "status": "passed",
+      "checkedAt": "2026-09-22"
+    },
+    "reviewSummary": {
+      "status": "passed",
+      "checkedAt": "2026-09-22"
+    }
+  },
+  {
     "id": "GQ-T037",
     "slug": "china-terrain-steps",
     "title": "穿越中国三级阶梯",
@@ -162,6 +255,110 @@ export const topicManifests: readonly PublicTopicManifest[] = [
     ],
     "reviewSummary": {
       "status": "blocked"
+    }
+  },
+  {
+    "id": "GQ-T013",
+    "slug": "climate-chart",
+    "title": "气候图判读与证据",
+    "summary": "能分别读两轴，求年温差与年降水量，并依据最热月和多雨月份判断雨热同期或不同期。",
+    "coreQuestion": "怎样用月份、气温和降水三个证据描述季节特点，而不只凭图形猜名称？",
+    "volume": "G7A",
+    "chapter": "世界的气候",
+    "prototype": "data-explorer",
+    "channels": [
+      "textbook-explorer",
+      "data-lab"
+    ],
+    "competencies": [
+      "综合思维",
+      "地理实践力"
+    ],
+    "status": "已发布",
+    "releaseBatch": "backlog",
+    "classroomMinutes": 15,
+    "explorationMinutes": 20,
+    "modes": {
+      "exploration": {
+        "path": "/topics/climate-chart"
+      },
+      "classroom": {
+        "query": "?mode=classroom",
+        "sameContent": true
+      }
+    },
+    "primaryInteraction": {
+      "object": "气候图判读与证据",
+      "action": "先示范，保持其他条件不变进行对照，记录证据并独立检验",
+      "feedback": "图形与数值使用同一模型，显示条件、结果和适用边界"
+    },
+    "evidenceOutput": {
+      "type": "对比表",
+      "description": "导出条件、结果、支持程度和独立题作答过程；看过反馈的重答单独标记",
+      "persistsFreeText": false
+    },
+    "reflectionPrompt": "延后提供不同数值但相同双轴格式：最暖月 26°C、最冷月 8°C；独立写 18°C，并说明这不是单日温差。",
+    "hints": [
+      "把单月降水量当成年降水量；把柱比线高解释为降水数值大于气温，忽略不同单位。"
+    ],
+    "components": [
+      "SelectedLab"
+    ],
+    "version": "1.0.0",
+    "updatedAt": "2026-09-22",
+    "sources": [
+      {
+        "id": "SIM-GQ-T013",
+        "title": "气候图判读与证据原创教学模型",
+        "attribution": "GeoQuest 原创",
+        "review": {
+          "status": "initial"
+        },
+        "kind": "simulation",
+        "method": "原创的 12 个月模拟平均值。最热月情景通过循环平移 6 个月改变季节；多雨期情景再将降水平移 6 个月。统计与 SVG、数据表共用 climateModel，温度轴恒定 0–30°C，降水轴恒定 0–200 mm。",
+        "parameters": [
+          "最热月情景",
+          "多雨期情景"
+        ],
+        "version": "1.0.0",
+        "limitations": [
+          "数据是人为构造的多年平均月值练习，无真实地点、统计期或预测能力；外部来源只核验变量与读图原理，不是这组数据的来源。",
+          "这些温度和降水组合只练习读图；不能代表某种气候所有特征，也不能仅凭最热月断定全部真实地点的半球。",
+          "不推断降水成因，不把季节相关当成因果。15 分钟投屏纸笔设想，未经真实师生试教，教师须核验学生是否独立读轴。"
+        ]
+      },
+      {
+        "id": "REF-GQ-T013-1",
+        "title": "Historic station data — monthly climate variables",
+        "attribution": "Met Office",
+        "review": {
+          "status": "initial"
+        },
+        "kind": "reference",
+        "publisher": "Met Office",
+        "url": "https://www.metoffice.gov.uk/research/climate/maps-and-data/historic-station-data",
+        "verifiedAt": "2026-09-22"
+      },
+      {
+        "id": "REF-GQ-T013-2",
+        "title": "Climate",
+        "attribution": "Met Office",
+        "review": {
+          "status": "initial"
+        },
+        "kind": "reference",
+        "publisher": "Met Office",
+        "url": "https://weather.metoffice.gov.uk/climate",
+        "verifiedAt": "2026-09-22"
+      }
+    ],
+    "aiReview": {
+      "status": "passed",
+      "checkedAt": "2026-09-22"
+    },
+    "reviewSummary": {
+      "status": "passed",
+      "checkedAt": "2026-09-22"
     }
   },
   {
@@ -251,6 +448,110 @@ export const topicManifests: readonly PublicTopicManifest[] = [
     "reviewSummary": {
       "status": "passed",
       "checkedAt": "2026-09-16"
+    }
+  },
+  {
+    "id": "GQ-T002",
+    "slug": "earth-evidence-grid",
+    "title": "经纬网定位证据",
+    "summary": "能读出带 N/S、E/W 的经纬度，并说明只改变一个坐标时点沿什么线移动。",
+    "coreQuestion": "怎样用两条相交的角度线，把一个点的位置说清楚？",
+    "volume": "G7A",
+    "chapter": "地球与经纬网",
+    "prototype": "data-explorer",
+    "channels": [
+      "textbook-explorer",
+      "data-lab"
+    ],
+    "competencies": [
+      "综合思维",
+      "地理实践力"
+    ],
+    "status": "已发布",
+    "releaseBatch": "backlog",
+    "classroomMinutes": 15,
+    "explorationMinutes": 20,
+    "modes": {
+      "exploration": {
+        "path": "/topics/earth-evidence-grid"
+      },
+      "classroom": {
+        "query": "?mode=classroom",
+        "sameContent": true
+      }
+    },
+    "primaryInteraction": {
+      "object": "经纬网定位证据",
+      "action": "先示范，保持其他条件不变进行对照，记录证据并独立检验",
+      "feedback": "图形与数值使用同一模型，显示条件、结果和适用边界"
+    },
+    "evidenceOutput": {
+      "type": "对比表",
+      "description": "导出条件、结果、支持程度和独立题作答过程；看过反馈的重答单独标记",
+      "persistsFreeText": false
+    },
+    "reflectionPrompt": "延后以相同问法给点（60°N，30°W），让学生独立画交点并标方向；不同时加入时差或距离计算。",
+    "hints": [
+      "认为纬线向东西延伸，所以纬度表示东西位置；把 30°W 写成 30°E，或给 0°强加 N/S。"
+    ],
+    "components": [
+      "SelectedLab"
+    ],
+    "version": "1.0.0",
+    "updatedAt": "2026-09-22",
+    "sources": [
+      {
+        "id": "SIM-GQ-T002",
+        "title": "经纬网定位证据原创教学模型",
+        "attribution": "GeoQuest 原创",
+        "review": {
+          "status": "initial"
+        },
+        "kind": "simulation",
+        "method": "横坐标按经度、纵坐标按纬度作线性展示；仅提供 −60°到 60°、间隔 30°的离散读图。0°单独命名，不标为南北纬或东西经。",
+        "parameters": [
+          "纬度",
+          "经度"
+        ],
+        "version": "1.0.0",
+        "limitations": [
+          "原创抽象坐标网，不是现实地图，不含真实边界；矩形格子不能用于判断真实面积、球面距离或两条经线的间距。",
+          "东经/西经不等同于教材中的东/西半球划分；本课不讨论半球分界、极点、180°经线与跨日界线。",
+          "15 分钟投屏纸笔设想，学情未经观察；真实试教与教师地理表述审核仍待完成。"
+        ]
+      },
+      {
+        "id": "REF-GQ-T002-1",
+        "title": "What is latitude?",
+        "attribution": "NOAA National Ocean Service",
+        "review": {
+          "status": "initial"
+        },
+        "kind": "reference",
+        "publisher": "NOAA National Ocean Service",
+        "url": "https://oceanservice.noaa.gov/facts/latitude.html",
+        "verifiedAt": "2026-09-22"
+      },
+      {
+        "id": "REF-GQ-T002-2",
+        "title": "What is longitude?",
+        "attribution": "NOAA National Ocean Service",
+        "review": {
+          "status": "initial"
+        },
+        "kind": "reference",
+        "publisher": "NOAA National Ocean Service",
+        "url": "https://oceanservice.noaa.gov/facts/longitude.html",
+        "verifiedAt": "2026-09-22"
+      }
+    ],
+    "aiReview": {
+      "status": "passed",
+      "checkedAt": "2026-09-22"
+    },
+    "reviewSummary": {
+      "status": "passed",
+      "checkedAt": "2026-09-22"
     }
   },
   {
@@ -376,6 +677,205 @@ export const topicManifests: readonly PublicTopicManifest[] = [
     "reviewSummary": {
       "status": "passed",
       "checkedAt": "2026-09-17"
+    }
+  },
+  {
+    "id": "GQ-T048",
+    "slug": "factory-location",
+    "title": "工业区位：哪一段运输更关键",
+    "summary": "分别计算原料和成品运输费用，排除产能不足候选，用两段数据解释区位选择。",
+    "coreQuestion": "运入原料比运出成品重时，靠近哪一端能减少本题运费？",
+    "volume": "G8A",
+    "chapter": "工业",
+    "prototype": "decision-lab",
+    "channels": [
+      "textbook-explorer",
+      "region-explorer"
+    ],
+    "competencies": [
+      "综合思维",
+      "地理实践力"
+    ],
+    "status": "已发布",
+    "releaseBatch": "backlog",
+    "classroomMinutes": 15,
+    "explorationMinutes": 20,
+    "modes": {
+      "exploration": {
+        "path": "/topics/factory-location"
+      },
+      "classroom": {
+        "query": "?mode=classroom",
+        "sameContent": true
+      }
+    },
+    "primaryInteraction": {
+      "object": "工业区位：哪一段运输更关键",
+      "action": "先示范，保持其他条件不变进行对照，记录证据并独立检验",
+      "feedback": "图形与数值使用同一模型，显示条件、结果和适用边界"
+    },
+    "evidenceOutput": {
+      "type": "对比表",
+      "description": "导出条件、结果、支持程度和独立题作答过程；看过反馈的重答单独标记",
+      "persistsFreeText": false
+    },
+    "reflectionPrompt": "新情景每日原料和成品都为 8 t，候选点两段距离分别为 20/80 km 与 70/30 km，产能均足够。比较运费并说明还需收集哪些非运输资料。",
+    "hints": [
+      "只算原料或成品一段；把本题最低运费直接当作所有工厂的最佳区位。"
+    ],
+    "components": [
+      "SelectedLab"
+    ],
+    "version": "1.0.0",
+    "updatedAt": "2026-09-22",
+    "sources": [
+      {
+        "id": "SIM-GQ-T048",
+        "title": "工业区位：哪一段运输更关键原创教学模型",
+        "attribution": "GeoQuest 原创",
+        "review": {
+          "status": "initial"
+        },
+        "kind": "simulation",
+        "method": "15 分钟投屏纸笔，以两段费用分栏记录，最后遮住算式作答。统一运价，固定单原料地、单市场和候选距离，不按示意线长量距。",
+        "parameters": [
+          "候选厂址",
+          "每吨成品需原料（t）",
+          "计划日产成品（t/日）"
+        ],
+        "version": "1.0.0",
+        "limitations": [
+          "所有厂址和数值为虚构，原料损耗/副产品处理未展开。",
+          "省略劳动、能源、地价、环保和政策；最低运输费不是现实综合最优。",
+          "已核对算例与产能边界，未经真实课堂试教。"
+        ]
+      },
+      {
+        "id": "REF-GQ-T048-1",
+        "title": "Transport and Location",
+        "attribution": "Jean-Paul Rodrigue · The Geography of Transport Systems",
+        "review": {
+          "status": "initial"
+        },
+        "kind": "reference",
+        "publisher": "Jean-Paul Rodrigue · The Geography of Transport Systems",
+        "url": "https://transportgeography.org/contents/chapter2/transport-and-location/",
+        "verifiedAt": "2026-09-22"
+      }
+    ],
+    "aiReview": {
+      "status": "passed",
+      "checkedAt": "2026-09-22"
+    },
+    "reviewSummary": {
+      "status": "passed",
+      "checkedAt": "2026-09-22"
+    }
+  },
+  {
+    "id": "GQ-T063",
+    "slug": "karez-water-budget",
+    "title": "坎儿井水账：省下的水从哪里来？",
+    "summary": "用自流剖面说明水沿落差流动，在相同补给下比较明暗渠到水量，并用守恒解释暗渠不能凭空增水。",
+    "coreQuestion": "暗渠减少蒸发，是否意味着没有补给也能一直出水？",
+    "volume": "G8B",
+    "chapter": "西北地区",
+    "prototype": "simulator",
+    "channels": [
+      "textbook-explorer",
+      "earth-lab"
+    ],
+    "competencies": [
+      "综合思维",
+      "地理实践力"
+    ],
+    "status": "已发布",
+    "releaseBatch": "backlog",
+    "classroomMinutes": 15,
+    "explorationMinutes": 20,
+    "modes": {
+      "exploration": {
+        "path": "/topics/karez-water-budget"
+      },
+      "classroom": {
+        "query": "?mode=classroom",
+        "sameContent": true
+      }
+    },
+    "primaryInteraction": {
+      "object": "坎儿井水账：省下的水从哪里来？",
+      "action": "先示范，保持其他条件不变进行对照，记录证据并独立检验",
+      "feedback": "图形与数值使用同一模型，显示条件、结果和适用边界"
+    },
+    "evidenceOutput": {
+      "type": "对比表",
+      "description": "导出条件、结果、支持程度和独立题作答过程；看过反馈的重答单独标记",
+      "persistsFreeText": false
+    },
+    "reflectionPrompt": "只降低补给至60万 m³，再用同一水账计算暗渠到水38；说明暗渠仍然可能无法满足50万 m³的需求。",
+    "hints": [
+      "竖井用于施工维护，不等于每口井都抽水；暗渠省的是输送过程蒸发，不是创造补给，更不能保证永久有水。"
+    ],
+    "components": [
+      "SelectedLab"
+    ],
+    "version": "1.0.0",
+    "updatedAt": "2026-09-22",
+    "sources": [
+      {
+        "id": "SIM-GQ-T063",
+        "title": "坎儿井水账：省下的水从哪里来？原创教学模型",
+        "attribution": "GeoQuest 原创",
+        "review": {
+          "status": "initial"
+        },
+        "kind": "simulation",
+        "method": "虚构单期水账，留存目标20万 m³、取水上限80万 m³；不动用历史储水。正落差时取水=min(80,max(0,补给−20))，无落差时取水0。暗渠/明渠蒸发率分别假设5%/20%，其余输送损失忽略。",
+        "parameters": [
+          "本期地下水补给（万 m³）",
+          "输水方式（教学假设蒸发率）",
+          "入口至出口落差（不设水泵）"
+        ],
+        "version": "1.0.0",
+        "limitations": [
+          "百分比为教学对照，不是新疆或任何真实坎儿井实测值；原理参考亦不提供这些数值。",
+          "实际出水受地下水位、渗透性、隧道坡度及多年储量变化影响，本模型不计算流速或工程施工参数。",
+          "明渠对照只是相同取水量的无遮盖输水情境；图中地表随遮盖状态改变，仅用于区分暗渠与露天渠，不能据此推导施工成本。",
+          "完成的是开发者模拟试讲走读，尚未真实课堂试教，不能宣称提升学习成效。"
+        ]
+      },
+      {
+        "id": "REF-GQ-T063-1",
+        "title": "The Persian Qanat（重力自流原理）",
+        "attribution": "UNESCO World Heritage Centre",
+        "review": {
+          "status": "initial"
+        },
+        "kind": "reference",
+        "publisher": "UNESCO World Heritage Centre",
+        "url": "https://whc.unesco.org/en/list/1506/",
+        "verifiedAt": "2026-09-22"
+      },
+      {
+        "id": "REF-GQ-T063-2",
+        "title": "Qanat Irrigated Agricultural Heritage Systems of Kashan（减少蒸发）",
+        "attribution": "FAO",
+        "review": {
+          "status": "initial"
+        },
+        "kind": "reference",
+        "publisher": "FAO",
+        "url": "https://www.fao.org/family-farming/detail/en/c/283205/",
+        "verifiedAt": "2026-09-22"
+      }
+    ],
+    "aiReview": {
+      "status": "passed",
+      "checkedAt": "2026-09-22"
+    },
+    "reviewSummary": {
+      "status": "passed",
+      "checkedAt": "2026-09-22"
     }
   },
   {
@@ -586,6 +1086,400 @@ export const topicManifests: readonly PublicTopicManifest[] = [
     "reviewSummary": {
       "status": "passed",
       "checkedAt": "2026-09-17"
+    }
+  },
+  {
+    "id": "GQ-T001",
+    "slug": "map-choice-lab",
+    "title": "地图选择与比例尺",
+    "summary": "能换算图上与实地距离；在相同图幅前提下，用覆盖范围解释比例尺的选择。",
+    "coreQuestion": "同样大小的图幅，怎样选择能看清局部又能覆盖任务范围的比例尺？",
+    "volume": "G7A",
+    "chapter": "地图的阅读",
+    "prototype": "data-explorer",
+    "channels": [
+      "textbook-explorer",
+      "data-lab"
+    ],
+    "competencies": [
+      "综合思维",
+      "地理实践力"
+    ],
+    "status": "已发布",
+    "releaseBatch": "backlog",
+    "classroomMinutes": 15,
+    "explorationMinutes": 20,
+    "modes": {
+      "exploration": {
+        "path": "/topics/map-choice-lab"
+      },
+      "classroom": {
+        "query": "?mode=classroom",
+        "sameContent": true
+      }
+    },
+    "primaryInteraction": {
+      "object": "地图选择与比例尺",
+      "action": "先示范，保持其他条件不变进行对照，记录证据并独立检验",
+      "feedback": "图形与数值使用同一模型，显示条件、结果和适用边界"
+    },
+    "evidenceOutput": {
+      "type": "对比表",
+      "description": "导出条件、结果、支持程度和独立题作答过程；看过反馈的重答单独标记",
+      "persistsFreeText": false
+    },
+    "reflectionPrompt": "延后用同样问法检查：0.5 km 路段在 1:25000 图上长多少？学生独立写 2 cm，并说明单位换算。",
+    "hints": [
+      "把分母大当成比例尺大，或认为换比例尺会改变同一路段的实地长度。"
+    ],
+    "components": [
+      "SelectedLab"
+    ],
+    "version": "1.0.0",
+    "updatedAt": "2026-09-22",
+    "sources": [
+      {
+        "id": "SIM-GQ-T001",
+        "title": "地图选择与比例尺原创教学模型",
+        "attribution": "GeoQuest 原创",
+        "review": {
+          "status": "initial"
+        },
+        "kind": "simulation",
+        "method": "固定虚拟图幅宽 20 cm；图上厘米 = 实地千米×100000÷比例尺分母；覆盖宽 = 20×分母÷100000。图幅高固定 10 cm，覆盖面积为覆盖宽×覆盖宽÷2。",
+        "parameters": [
+          "比例尺",
+          "实地直线路段长度"
+        ],
+        "version": "1.0.0",
+        "limitations": [
+          "原创虚构直线路段，无现实导航用途。图示矩形的虚拟纸面宽高固定为 20×10 cm。",
+          "同图幅比较范围，不模拟投影变形、道路曲折或制图取舍；不能由比例尺直接保证某地物一定被绘出。",
+          "15 分钟教师投屏、学生纸笔的教学设想；尚未经真实师生试教，独立完成情况须由教师核验。"
+        ]
+      },
+      {
+        "id": "REF-GQ-T001-1",
+        "title": "Map Scales",
+        "attribution": "U.S. Geological Survey",
+        "review": {
+          "status": "initial"
+        },
+        "kind": "reference",
+        "publisher": "U.S. Geological Survey",
+        "url": "https://www.usgs.gov/publications/map-scales",
+        "verifiedAt": "2026-09-22"
+      },
+      {
+        "id": "REF-GQ-T001-2",
+        "title": "Topographic Mapping",
+        "attribution": "U.S. Geological Survey",
+        "review": {
+          "status": "initial"
+        },
+        "kind": "reference",
+        "publisher": "U.S. Geological Survey",
+        "url": "https://www.usgs.gov/educational-resources/topographic-mapping",
+        "verifiedAt": "2026-09-22"
+      }
+    ],
+    "aiReview": {
+      "status": "passed",
+      "checkedAt": "2026-09-22"
+    },
+    "reviewSummary": {
+      "status": "passed",
+      "checkedAt": "2026-09-22"
+    }
+  },
+  {
+    "id": "GQ-T014",
+    "slug": "mountain-rain-shadow",
+    "title": "山脉两侧，哪里更容易下雨？",
+    "summary": "能按风向辨认迎风坡，用抬升—冷却—凝结解释降水条件，并计算给定凝结高度以上的抬升高度。",
+    "coreQuestion": "保持山高和来流湿度条件不变，只改变风向，迎风坡和背风坡怎样变化？",
+    "volume": "G7A",
+    "chapter": "天气与气候",
+    "prototype": "simulator",
+    "channels": [
+      "textbook-explorer",
+      "earth-lab"
+    ],
+    "competencies": [
+      "综合思维",
+      "地理实践力"
+    ],
+    "status": "已发布",
+    "releaseBatch": "backlog",
+    "classroomMinutes": 15,
+    "explorationMinutes": 20,
+    "modes": {
+      "exploration": {
+        "path": "/topics/mountain-rain-shadow"
+      },
+      "classroom": {
+        "query": "?mode=classroom",
+        "sameContent": true
+      }
+    },
+    "primaryInteraction": {
+      "object": "山脉两侧，哪里更容易下雨？",
+      "action": "先示范，保持其他条件不变进行对照，记录证据并独立检验",
+      "feedback": "图形与数值使用同一模型，显示条件、结果和适用边界"
+    },
+    "evidenceOutput": {
+      "type": "对比表",
+      "description": "导出条件、结果、支持程度和独立题作答过程；看过反馈的重答单独标记",
+      "persistsFreeText": false
+    },
+    "reflectionPrompt": "把风向改为东风而保持高度不变，要求学生解释为什么迎风坡换边、500 m高度差却不变。",
+    "hints": [
+      "迎风坡不是固定的东坡或西坡；空气达到凝结条件不等于一定产生可测降雨，更不能由山高直接算年降水量。"
+    ],
+    "components": [
+      "SelectedLab"
+    ],
+    "version": "1.0.0",
+    "updatedAt": "2026-09-22",
+    "sources": [
+      {
+        "id": "SIM-GQ-T014",
+        "title": "山脉两侧，哪里更容易下雨？原创教学模型",
+        "attribution": "GeoQuest 原创",
+        "review": {
+          "status": "initial"
+        },
+        "kind": "simulation",
+        "method": "固定0—2500 m纵轴；剖面原创且水平距离不计。凝结高度作为题设输入，超过它的抬升=max(0,山顶−凝结高度)。只表示湿润来流越山的原理，不建立降水量方程。",
+        "parameters": [
+          "来风方向",
+          "山顶高度",
+          "给定凝结高度（非预测）"
+        ],
+        "version": "1.0.0",
+        "limitations": [
+          "没有计算湿度、稳定度、风速、气温递减率和降水效率；不能作天气预测。",
+          "迎风多雨、背风少雨是特定来流条件下的常见现象，不是每座山、每次天气都成立。",
+          "已完成开发者模拟试讲走读，尚无真实师生试教；先备知识与15分钟时长须由教师核验。"
+        ]
+      },
+      {
+        "id": "REF-GQ-T014-1",
+        "title": "What do leeward and windward mean?",
+        "attribution": "NOAA Ocean Service",
+        "review": {
+          "status": "initial"
+        },
+        "kind": "reference",
+        "publisher": "NOAA Ocean Service",
+        "url": "https://oceanservice.noaa.gov/facts/windward-leeward.html",
+        "verifiedAt": "2026-09-22"
+      }
+    ],
+    "aiReview": {
+      "status": "passed",
+      "checkedAt": "2026-09-22"
+    },
+    "reviewSummary": {
+      "status": "passed",
+      "checkedAt": "2026-09-22"
+    }
+  },
+  {
+    "id": "GQ-T025",
+    "slug": "polar-station",
+    "title": "极地科考站：补给与风况的取舍",
+    "summary": "区分设备风况约束与费用比较，用补给质量和距离解释运费变化。",
+    "coreQuestion": "补给最近的候选点，为什么不一定是本题合适的建站地点？",
+    "volume": "G7B",
+    "chapter": "极地地区",
+    "prototype": "decision-lab",
+    "channels": [
+      "textbook-explorer",
+      "region-explorer"
+    ],
+    "competencies": [
+      "综合思维",
+      "地理实践力"
+    ],
+    "status": "已发布",
+    "releaseBatch": "backlog",
+    "classroomMinutes": 15,
+    "explorationMinutes": 20,
+    "modes": {
+      "exploration": {
+        "path": "/topics/polar-station"
+      },
+      "classroom": {
+        "query": "?mode=classroom",
+        "sameContent": true
+      }
+    },
+    "primaryInteraction": {
+      "object": "极地科考站：补给与风况的取舍",
+      "action": "先示范，保持其他条件不变进行对照，记录证据并独立检验",
+      "feedback": "图形与数值使用同一模型，显示条件、结果和适用边界"
+    },
+    "evidenceOutput": {
+      "type": "对比表",
+      "description": "导出条件、结果、支持程度和独立题作答过程；看过反馈的重答单独标记",
+      "persistsFreeText": false
+    },
+    "reflectionPrompt": "新点设置费 18000 元，距离 30 km，题设风速 10 m/s。补给 10 t 时先算费用，再与乙比较；写出还不能判断现实建站可行性的一个缺失条件。",
+    "hints": [
+      "把题设风速上限当作通用施工安全标准，或把较低风速等同现实安全。"
+    ],
+    "components": [
+      "SelectedLab"
+    ],
+    "version": "1.0.0",
+    "updatedAt": "2026-09-22",
+    "sources": [
+      {
+        "id": "SIM-GQ-T025",
+        "title": "极地科考站：补给与风况的取舍原创教学模型",
+        "attribution": "GeoQuest 原创",
+        "review": {
+          "status": "initial"
+        },
+        "kind": "simulation",
+        "method": "15 分钟教师投屏＋纸笔，先算一个点再同类比较。三点同属虚构极地情景，节点不对应南北极真实站位；补给同一批次、同一费率。",
+        "parameters": [
+          "候选点",
+          "单次补给（t）",
+          "题设各点风速增量（m/s）"
+        ],
+        "version": "1.0.0",
+        "limitations": [
+          "数值均为虚构教学值，14 m/s 仅是题设设备条件，不是现实极地安全限值。",
+          "省略海冰、地基、生态影响、许可、科学目标和全年保障；真实考察须专业评估。",
+          "风速增量用于单变量对照，不是极地天气预报；未经真实课堂试教。"
+        ]
+      },
+      {
+        "id": "REF-GQ-T025-1",
+        "title": "Antarctic fieldwork planning",
+        "attribution": "British Antarctic Survey",
+        "review": {
+          "status": "initial"
+        },
+        "kind": "reference",
+        "publisher": "British Antarctic Survey",
+        "url": "https://www.bas.ac.uk/science/opportunities-for-polar-fieldwork/antarctic-fieldwork-planning/",
+        "verifiedAt": "2026-09-22"
+      },
+      {
+        "id": "REF-GQ-T025-2",
+        "title": "Wind in Antarctica",
+        "attribution": "British Antarctic Survey",
+        "review": {
+          "status": "initial"
+        },
+        "kind": "reference",
+        "publisher": "British Antarctic Survey",
+        "url": "https://legacy.bas.ac.uk/about_antarctica/geography/weather/wind.php",
+        "verifiedAt": "2026-09-22"
+      }
+    ],
+    "aiReview": {
+      "status": "passed",
+      "checkedAt": "2026-09-22"
+    },
+    "reviewSummary": {
+      "status": "passed",
+      "checkedAt": "2026-09-22"
+    }
+  },
+  {
+    "id": "GQ-T010",
+    "slug": "settlement-location",
+    "title": "聚落选址：先查条件再比较",
+    "summary": "根据坡度、供水与需求排除不合条件的地块，再用接路距离解释选择。",
+    "coreQuestion": "离道路最近的地块，一定适合本题聚落吗？",
+    "volume": "G7A",
+    "chapter": "聚落与环境",
+    "prototype": "decision-lab",
+    "channels": [
+      "textbook-explorer",
+      "region-explorer"
+    ],
+    "competencies": [
+      "综合思维",
+      "地理实践力"
+    ],
+    "status": "已发布",
+    "releaseBatch": "backlog",
+    "classroomMinutes": 15,
+    "explorationMinutes": 20,
+    "modes": {
+      "exploration": {
+        "path": "/topics/settlement-location"
+      },
+      "classroom": {
+        "query": "?mode=classroom",
+        "sameContent": true
+      }
+    },
+    "primaryInteraction": {
+      "object": "聚落选址：先查条件再比较",
+      "action": "先示范，保持其他条件不变进行对照，记录证据并独立检验",
+      "feedback": "图形与数值使用同一模型，显示条件、结果和适用边界"
+    },
+    "evidenceOutput": {
+      "type": "对比表",
+      "description": "导出条件、结果、支持程度和独立题作答过程；看过反馈的重答单独标记",
+      "persistsFreeText": false
+    },
+    "reflectionPrompt": "若新增地块供水 90 m³/日、坡度 3°、接路 2 km，需求仍为 80，写出两项资格判断及它与乙的取舍；不要增加题目没有提供的安全结论。",
+    "hints": [
+      "把离路近视为万能优势，或把教学坡度阈值理解为现实建设安全线。"
+    ],
+    "components": [
+      "SelectedLab"
+    ],
+    "version": "1.0.0",
+    "updatedAt": "2026-09-22",
+    "sources": [
+      {
+        "id": "SIM-GQ-T010",
+        "title": "聚落选址：先查条件再比较原创教学模型",
+        "attribution": "GeoQuest 原创",
+        "review": {
+          "status": "initial"
+        },
+        "kind": "simulation",
+        "method": "15 分钟教师投屏＋纸笔：3 分钟读条件，4 分钟示范，4 分钟单变量对照，4 分钟独立判断。供水条共用固定尺度，无真实地图。",
+        "parameters": [
+          "候选地块",
+          "日需水量（m³/日）"
+        ],
+        "version": "1.0.0",
+        "limitations": [
+          "全部地块与数据为原创虚构；5° 为题设筛选条件，不是工程规范。",
+          "未模拟水质、季节变化、土地权属、灾害与生态因素；不能据此判断现实选址安全。",
+          "已进行开发者模拟试讲与算例核对，未经真实课堂试教；教师须核对教材术语及学生读数起点。"
+        ]
+      },
+      {
+        "id": "REF-GQ-T010-1",
+        "title": "Transport and Location",
+        "attribution": "Jean-Paul Rodrigue · The Geography of Transport Systems",
+        "review": {
+          "status": "initial"
+        },
+        "kind": "reference",
+        "publisher": "Jean-Paul Rodrigue · The Geography of Transport Systems",
+        "url": "https://transportgeography.org/contents/chapter2/transport-and-location/",
+        "verifiedAt": "2026-09-22"
+      }
+    ],
+    "aiReview": {
+      "status": "passed",
+      "checkedAt": "2026-09-22"
+    },
+    "reviewSummary": {
+      "status": "passed",
+      "checkedAt": "2026-09-22"
     }
   },
   {
@@ -803,6 +1697,99 @@ export const topicManifests: readonly PublicTopicManifest[] = [
     ],
     "reviewSummary": {
       "status": "blocked"
+    }
+  },
+  {
+    "id": "GQ-T044",
+    "slug": "water-transfer",
+    "title": "跨流域调水：能调多少水？",
+    "summary": "独立用同一期水量守恒计算可调量、输水损耗和受水区缺口，解释生态约束为何限制调水。",
+    "coreQuestion": "调出区必须留足生态用水，输水又有损耗，申请的水一定能够送到吗？",
+    "volume": "G8A",
+    "chapter": "中国的自然资源",
+    "prototype": "simulator",
+    "channels": [
+      "textbook-explorer",
+      "earth-lab"
+    ],
+    "competencies": [
+      "综合思维",
+      "地理实践力"
+    ],
+    "status": "已发布",
+    "releaseBatch": "backlog",
+    "classroomMinutes": 15,
+    "explorationMinutes": 20,
+    "modes": {
+      "exploration": {
+        "path": "/topics/water-transfer"
+      },
+      "classroom": {
+        "query": "?mode=classroom",
+        "sameContent": true
+      }
+    },
+    "primaryInteraction": {
+      "object": "跨流域调水：能调多少水？",
+      "action": "先示范，保持其他条件不变进行对照，记录证据并独立检验",
+      "feedback": "图形与数值使用同一模型，显示条件、结果和适用边界"
+    },
+    "evidenceOutput": {
+      "type": "对比表",
+      "description": "导出条件、结果、支持程度和独立题作答过程；看过反馈的重答单独标记",
+      "persistsFreeText": false
+    },
+    "reflectionPrompt": "用来水80的同类案例检验：不能继续照搬取水60；可调水只剩40，到水36，缺口14。",
+    "hints": [
+      "申请调水量不是实际调出量，实际调出量也不是到水量；生态留水不是可以随意扣除的“浪费”。"
+    ],
+    "components": [
+      "SelectedLab"
+    ],
+    "version": "1.0.0",
+    "updatedAt": "2026-09-22",
+    "sources": [
+      {
+        "id": "SIM-GQ-T044",
+        "title": "跨流域调水：能调多少水？原创教学模型",
+        "attribution": "GeoQuest 原创",
+        "review": {
+          "status": "initial"
+        },
+        "kind": "simulation",
+        "method": "虚构单期水账，无蓄水跨期调节。实际调出=min(申请量,max(0,来水−生态留水底线))；到水=调出×90%。固定受水区需求50万 m³。原流域留水+途中损耗+到水=来水。",
+        "parameters": [
+          "调出区本期来水（万 m³）",
+          "原流域生态留水底线（万 m³）",
+          "申请调出量（万 m³）"
+        ],
+        "version": "1.0.0",
+        "limitations": [
+          "10%为教学假设，不代表任何真实调水工程的损耗率；途中损耗指未到受水区，并非水从自然界消失。",
+          "不评价真实线路、工程成本、水质、移民与跨期生态影响；生态底线也不是现实审批标准。",
+          "开发者模拟走读已完成，真实试教与教师对答案、课时的审核尚未进行。"
+        ]
+      },
+      {
+        "id": "REF-GQ-T044-1",
+        "title": "1995 Water-Use Guidelines: Glossary（conveyance loss）",
+        "attribution": "U.S. Geological Survey",
+        "review": {
+          "status": "initial"
+        },
+        "kind": "reference",
+        "publisher": "U.S. Geological Survey",
+        "url": "https://water.usgs.gov/usgs/watuse/1995guidelines/glossary.html",
+        "verifiedAt": "2026-09-22"
+      }
+    ],
+    "aiReview": {
+      "status": "passed",
+      "checkedAt": "2026-09-22"
+    },
+    "reviewSummary": {
+      "status": "passed",
+      "checkedAt": "2026-09-22"
     }
   },
   {

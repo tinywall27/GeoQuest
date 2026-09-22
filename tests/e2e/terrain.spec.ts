@@ -111,7 +111,8 @@ test("terrain classroom board fits projection, resets a dragged camera and prese
   await page.mouse.down();await page.mouse.move(box!.x+box!.width*.7,box!.y+box!.height*.6,{steps:8});await page.mouse.up();
   expect((await canvas.screenshot()).equals(initial)).toBe(false);
   await page.getByRole("button",{name:"复位视角"}).click();
-  expect((await canvas.screenshot()).equals(initial)).toBe(true);
+  // Camera updates render on the next animation frame, especially in software WebGL.
+  await expect.poll(async () => (await canvas.screenshot()).equals(initial)).toBe(true);
   await page.getByRole("button",{name:"＋ 记入证据"}).click();
   const recordedBoard=await page.locator(".terrain-evidence").boundingBox();
   expect(recordedBoard!.y+recordedBoard!.height).toBeLessThanOrEqual(768);

@@ -13,6 +13,7 @@ import { getPublicTopicManifest } from "#topic-manifests";
 import { getTopicInteractive } from "#topic-registry";
 import { getTopicBody } from "#topic-body-registry";
 import styles from "./Pages.module.css";
+import { selectedSlugs } from '../topics/selected/selection';
 
 export function TopicPage(): React.JSX.Element {
   const { slug = "" } = useParams();
@@ -36,7 +37,7 @@ export function TopicPage(): React.JSX.Element {
   }
 
   const available = topic.status === "已发布" || import.meta.env.DEV;
-  if (available && (slug === "contour-rescue" || slug === "earth-motion-lab" || slug === "loess-soil-water" || slug === "south-asia-monsoon" || slug === "world-population-map") && Interactive) {
+  if (available && (selectedSlugs.includes(slug) || slug === "contour-rescue" || slug === "earth-motion-lab" || slug === "loess-soil-water" || slug === "south-asia-monsoon" || slug === "world-population-map") && Interactive) {
     return <Suspense fallback={<div className={styles.loading}>正在准备互动实验……</div>}><Interactive /></Suspense>;
   }
   if (!available) {

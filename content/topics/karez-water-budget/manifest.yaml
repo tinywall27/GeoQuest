@@ -1,0 +1,88 @@
+id: GQ-T063
+slug: karez-water-budget
+title: 坎儿井水账：省下的水从哪里来？
+summary: 用自流剖面说明水沿落差流动，在相同补给下比较明暗渠到水量，并用守恒解释暗渠不能凭空增水。
+coreQuestion: 暗渠减少蒸发，是否意味着没有补给也能一直出水？
+volume: G8B
+chapter: 西北地区
+prototype: simulator
+channels:
+  - textbook-explorer
+  - earth-lab
+competencies:
+  - 综合思维
+  - 地理实践力
+status: 已发布
+releaseBatch: backlog
+classroomMinutes: 15
+explorationMinutes: 20
+modes:
+  exploration:
+    path: /topics/karez-water-budget
+  classroom:
+    query: ?mode=classroom
+    sameContent: true
+primaryInteraction:
+  object: 坎儿井水账：省下的水从哪里来？
+  action: 先示范，保持其他条件不变进行对照，记录证据并独立检验
+  feedback: 图形与数值使用同一模型，显示条件、结果和适用边界
+evidenceOutput:
+  type: 对比表
+  description: 导出条件、结果、支持程度和独立题作答过程；看过反馈的重答单独标记
+  persistsFreeText: false
+reflectionPrompt: 只降低补给至60万 m³，再用同一水账计算暗渠到水38；说明暗渠仍然可能无法满足50万 m³的需求。
+hints:
+  - 竖井用于施工维护，不等于每口井都抽水；暗渠省的是输送过程蒸发，不是创造补给，更不能保证永久有水。
+components:
+  - SelectedLab
+sources:
+  - kind: simulation
+    id: SIM-GQ-T063
+    title: 坎儿井水账：省下的水从哪里来？原创教学模型
+    attribution: GeoQuest 原创
+    method: 虚构单期水账，留存目标20万 m³、取水上限80万
+      m³；不动用历史储水。正落差时取水=min(80,max(0,补给−20))，无落差时取水0。暗渠/明渠蒸发率分别假设5%/20%，其余输送损失忽略。
+    parameters:
+      - 本期地下水补给（万 m³）
+      - 输水方式（教学假设蒸发率）
+      - 入口至出口落差（不设水泵）
+    version: 1.0.0
+    limitations:
+      - 百分比为教学对照，不是新疆或任何真实坎儿井实测值；原理参考亦不提供这些数值。
+      - 实际出水受地下水位、渗透性、隧道坡度及多年储量变化影响，本模型不计算流速或工程施工参数。
+      - 明渠对照只是相同取水量的无遮盖输水情境；图中地表随遮盖状态改变，仅用于区分暗渠与露天渠，不能据此推导施工成本。
+      - 完成的是开发者模拟试讲走读，尚未真实课堂试教，不能宣称提升学习成效。
+    review:
+      status: initial
+  - kind: reference
+    id: REF-GQ-T063-1
+    title: The Persian Qanat（重力自流原理）
+    publisher: UNESCO World Heritage Centre
+    attribution: UNESCO World Heritage Centre
+    url: https://whc.unesco.org/en/list/1506/
+    verifiedAt: 2026-09-22
+    review:
+      status: initial
+  - kind: reference
+    id: REF-GQ-T063-2
+    title: Qanat Irrigated Agricultural Heritage Systems of Kashan（减少蒸发）
+    publisher: FAO
+    attribution: FAO
+    url: https://www.fao.org/family-farming/detail/en/c/283205/
+    verifiedAt: 2026-09-22
+    review:
+      status: initial
+aiReview:
+  status: passed
+  agent: codex-content-review
+  checkedAt: 2026-09-22
+  evidencePath: docs/reviews/selected-process.md
+  scope:
+    - model
+    - teaching-walkthrough
+    - sources
+    - accessibility
+    - offline
+  version: 1.0.0
+version: 1.0.0
+updatedAt: 2026-09-22

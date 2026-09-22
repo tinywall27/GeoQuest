@@ -2,10 +2,20 @@
 import { lazy, type ComponentType } from "react";
 
 const registry: Record<string, ComponentType> = {
+  "china-route-designer": lazy(() => import("../../content/topics/china-route-designer/index.mdx")),
+  "climate-chart": lazy(() => import("../../content/topics/climate-chart/index.mdx")),
   "contour-rescue": lazy(() => import("../../content/topics/contour-rescue/index.mdx")),
+  "earth-evidence-grid": lazy(() => import("../../content/topics/earth-evidence-grid/index.mdx")),
   "earth-motion-lab": lazy(() => import("../../content/topics/earth-motion-lab/index.mdx")),
+  "factory-location": lazy(() => import("../../content/topics/factory-location/index.mdx")),
+  "karez-water-budget": lazy(() => import("../../content/topics/karez-water-budget/index.mdx")),
   "loess-soil-water": lazy(() => import("../../content/topics/loess-soil-water/index.mdx")),
+  "map-choice-lab": lazy(() => import("../../content/topics/map-choice-lab/index.mdx")),
+  "mountain-rain-shadow": lazy(() => import("../../content/topics/mountain-rain-shadow/index.mdx")),
+  "polar-station": lazy(() => import("../../content/topics/polar-station/index.mdx")),
+  "settlement-location": lazy(() => import("../../content/topics/settlement-location/index.mdx")),
   "south-asia-monsoon": lazy(() => import("../../content/topics/south-asia-monsoon/index.mdx")),
+  "water-transfer": lazy(() => import("../../content/topics/water-transfer/index.mdx")),
   "world-population-map": lazy(() => import("../../content/topics/world-population-map/index.mdx")),
 };
 

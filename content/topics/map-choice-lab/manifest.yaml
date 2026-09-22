@@ -1,0 +1,86 @@
+id: GQ-T001
+slug: map-choice-lab
+title: 地图选择与比例尺
+summary: 能换算图上与实地距离；在相同图幅前提下，用覆盖范围解释比例尺的选择。
+coreQuestion: 同样大小的图幅，怎样选择能看清局部又能覆盖任务范围的比例尺？
+volume: G7A
+chapter: 地图的阅读
+prototype: data-explorer
+channels:
+  - textbook-explorer
+  - data-lab
+competencies:
+  - 综合思维
+  - 地理实践力
+status: 已发布
+releaseBatch: backlog
+classroomMinutes: 15
+explorationMinutes: 20
+modes:
+  exploration:
+    path: /topics/map-choice-lab
+  classroom:
+    query: ?mode=classroom
+    sameContent: true
+primaryInteraction:
+  object: 地图选择与比例尺
+  action: 先示范，保持其他条件不变进行对照，记录证据并独立检验
+  feedback: 图形与数值使用同一模型，显示条件、结果和适用边界
+evidenceOutput:
+  type: 对比表
+  description: 导出条件、结果、支持程度和独立题作答过程；看过反馈的重答单独标记
+  persistsFreeText: false
+reflectionPrompt: 延后用同样问法检查：0.5 km 路段在 1:25000 图上长多少？学生独立写 2 cm，并说明单位换算。
+hints:
+  - 把分母大当成比例尺大，或认为换比例尺会改变同一路段的实地长度。
+components:
+  - SelectedLab
+sources:
+  - kind: simulation
+    id: SIM-GQ-T001
+    title: 地图选择与比例尺原创教学模型
+    attribution: GeoQuest 原创
+    method: 固定虚拟图幅宽 20 cm；图上厘米 = 实地千米×100000÷比例尺分母；覆盖宽 = 20×分母÷100000。图幅高固定 10
+      cm，覆盖面积为覆盖宽×覆盖宽÷2。
+    parameters:
+      - 比例尺
+      - 实地直线路段长度
+    version: 1.0.0
+    limitations:
+      - 原创虚构直线路段，无现实导航用途。图示矩形的虚拟纸面宽高固定为 20×10 cm。
+      - 同图幅比较范围，不模拟投影变形、道路曲折或制图取舍；不能由比例尺直接保证某地物一定被绘出。
+      - 15 分钟教师投屏、学生纸笔的教学设想；尚未经真实师生试教，独立完成情况须由教师核验。
+    review:
+      status: initial
+  - kind: reference
+    id: REF-GQ-T001-1
+    title: Map Scales
+    publisher: U.S. Geological Survey
+    attribution: U.S. Geological Survey
+    url: https://www.usgs.gov/publications/map-scales
+    verifiedAt: 2026-09-22
+    review:
+      status: initial
+  - kind: reference
+    id: REF-GQ-T001-2
+    title: Topographic Mapping
+    publisher: U.S. Geological Survey
+    attribution: U.S. Geological Survey
+    url: https://www.usgs.gov/educational-resources/topographic-mapping
+    verifiedAt: 2026-09-22
+    review:
+      status: initial
+aiReview:
+  status: passed
+  agent: codex-content-review
+  checkedAt: 2026-09-22
+  evidencePath: docs/reviews/selected-reading.md
+  scope:
+    - model
+    - teaching-walkthrough
+    - sources
+    - accessibility
+    - offline
+  version: 1.0.0
+version: 1.0.0
+updatedAt: 2026-09-22

@@ -2,10 +2,20 @@
 import { lazy, type ComponentType } from "react";
 
 const registry: Record<string, ComponentType> = {
+  "china-route-designer": lazy(() => import("../topics/selected/DecisionLab")),
+  "climate-chart": lazy(() => import("../topics/selected/ReadingLab")),
   "contour-rescue": lazy(() => import("../topics/terrain/TerrainLab")),
+  "earth-evidence-grid": lazy(() => import("../topics/selected/ReadingLab")),
   "earth-motion-lab": lazy(() => import("../topics/earth/EarthSunLab")),
+  "factory-location": lazy(() => import("../topics/selected/DecisionLab")),
+  "karez-water-budget": lazy(() => import("../topics/selected/ProcessLab")),
   "loess-soil-water": lazy(() => import("../topics/watershed/WatershedLab")),
+  "map-choice-lab": lazy(() => import("../topics/selected/ReadingLab")),
+  "mountain-rain-shadow": lazy(() => import("../topics/selected/ProcessLab")),
+  "polar-station": lazy(() => import("../topics/selected/DecisionLab")),
+  "settlement-location": lazy(() => import("../topics/selected/DecisionLab")),
   "south-asia-monsoon": lazy(() => import("../topics/agriculture/AgricultureLab")),
+  "water-transfer": lazy(() => import("../topics/selected/ProcessLab")),
   "world-population-map": lazy(() => import("../topics/population/PopulationLab")),
 };
 

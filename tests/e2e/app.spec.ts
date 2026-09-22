@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
-test("首页展示五个课堂实验", async ({ page }) => {
+test("首页保留五个课堂实验并展示十个新增课段", async ({ page }) => {
   await page.goto("/");
 
   await expect(page.getByRole("heading", { name: /少一些主题/ })).toBeVisible();
@@ -10,6 +10,7 @@ test("首页展示五个课堂实验", async ({ page }) => {
   await expect(page.getByRole("link", { name: /进入水土实验/ })).toBeVisible();
   await expect(page.getByRole("link", { name: /进入农业实验/ })).toBeVisible();
   await expect(page.getByRole("link", { name: /进入人口实验/ })).toBeVisible();
+  await expect(page.locator('.home-selected a')).toHaveCount(10);
 
   const results = await new AxeBuilder({ page }).analyze();
   expect(results.violations).toEqual([]);

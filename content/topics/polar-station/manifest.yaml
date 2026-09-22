@@ -1,0 +1,86 @@
+id: GQ-T025
+slug: polar-station
+title: 极地科考站：补给与风况的取舍
+summary: 区分设备风况约束与费用比较，用补给质量和距离解释运费变化。
+coreQuestion: 补给最近的候选点，为什么不一定是本题合适的建站地点？
+volume: G7B
+chapter: 极地地区
+prototype: decision-lab
+channels:
+  - textbook-explorer
+  - region-explorer
+competencies:
+  - 综合思维
+  - 地理实践力
+status: 已发布
+releaseBatch: backlog
+classroomMinutes: 15
+explorationMinutes: 20
+modes:
+  exploration:
+    path: /topics/polar-station
+  classroom:
+    query: ?mode=classroom
+    sameContent: true
+primaryInteraction:
+  object: 极地科考站：补给与风况的取舍
+  action: 先示范，保持其他条件不变进行对照，记录证据并独立检验
+  feedback: 图形与数值使用同一模型，显示条件、结果和适用边界
+evidenceOutput:
+  type: 对比表
+  description: 导出条件、结果、支持程度和独立题作答过程；看过反馈的重答单独标记
+  persistsFreeText: false
+reflectionPrompt: 新点设置费 18000 元，距离 30 km，题设风速 10 m/s。补给 10 t 时先算费用，再与乙比较；写出还不能判断现实建站可行性的一个缺失条件。
+hints:
+  - 把题设风速上限当作通用施工安全标准，或把较低风速等同现实安全。
+components:
+  - SelectedLab
+sources:
+  - kind: simulation
+    id: SIM-GQ-T025
+    title: 极地科考站：补给与风况的取舍原创教学模型
+    attribution: GeoQuest 原创
+    method: 15 分钟教师投屏＋纸笔，先算一个点再同类比较。三点同属虚构极地情景，节点不对应南北极真实站位；补给同一批次、同一费率。
+    parameters:
+      - 候选点
+      - 单次补给（t）
+      - 题设各点风速增量（m/s）
+    version: 1.0.0
+    limitations:
+      - 数值均为虚构教学值，14 m/s 仅是题设设备条件，不是现实极地安全限值。
+      - 省略海冰、地基、生态影响、许可、科学目标和全年保障；真实考察须专业评估。
+      - 风速增量用于单变量对照，不是极地天气预报；未经真实课堂试教。
+    review:
+      status: initial
+  - kind: reference
+    id: REF-GQ-T025-1
+    title: Antarctic fieldwork planning
+    publisher: British Antarctic Survey
+    attribution: British Antarctic Survey
+    url: https://www.bas.ac.uk/science/opportunities-for-polar-fieldwork/antarctic-fieldwork-planning/
+    verifiedAt: 2026-09-22
+    review:
+      status: initial
+  - kind: reference
+    id: REF-GQ-T025-2
+    title: Wind in Antarctica
+    publisher: British Antarctic Survey
+    attribution: British Antarctic Survey
+    url: https://legacy.bas.ac.uk/about_antarctica/geography/weather/wind.php
+    verifiedAt: 2026-09-22
+    review:
+      status: initial
+aiReview:
+  status: passed
+  agent: codex-content-review
+  checkedAt: 2026-09-22
+  evidencePath: docs/reviews/selected-decisions.md
+  scope:
+    - model
+    - teaching-walkthrough
+    - sources
+    - accessibility
+    - offline
+  version: 1.0.0
+version: 1.0.0
+updatedAt: 2026-09-22
