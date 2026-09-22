@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="单文件等高线综合地形演示模型">
+  <title>等高线地形演示模型</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #06111f;
+      --panel: #0d1b2b;
+      --panel-2: #102235;
+      --line: #253b50;
+      --text: #e8f0ef;
+      --muted: #8195a5;
+      --yellow: #ffd326;
+      --cyan: #6de1d5;
+    }
+    * { box-sizing: border-box; }
+    html, body { width: 100%; min-height: 100%; margin: 0; }
+    body {
+      overflow: hidden;
+      color: var(--text);
+      background: var(--bg);
+      font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+    }
+    button, input { font: inherit; }
+    button { color: inherit; }
+    .app { min-height: 100vh; background: radial-gradient(circle at 45% 35%, #0b2030 0, #06111f 52%); }
+    .topbar {
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 22px;
+      border-bottom: 1px solid #21354a;
+      background: rgba(8, 20, 33, .94);
+    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .mark {
+      width: 42px; height: 42px; display: grid; place-items: center;
+      color: #10251f; font-weight: 900; border-radius: 12px;
+      background: linear-gradient(135deg, var(--yellow), var(--cyan));
+      box-shadow: 0 0 22px rgba(109, 225, 213, .18);
+    }
+    .eyebrow { margin: 0 0 3px; color: #8398a8; font-size: 10px; letter-spacing: .18em; }
+    h1 { margin: 0; font-size: 20px; letter-spacing: .06em; }
+    .live { display: flex; align-items: center; gap: 8px; color: #9bb0bd; font-size: 12px; }
+    .live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #3ee2aa; box-shadow: 0 0 12px #3ee2aa; }
+    .layout { height: calc(100vh - 68px); display: grid; grid-template-columns: minmax(0, 1fr) 360px; }
+    .stage {
+      min-width: 0; min-height: 0; display: grid; grid-template-rows: repeat(2, minmax(0, 1fr));
+      gap: 1px; background: #21354a; border-right: 1px solid #21354a;
+    }
+    .stage[data-view="terrain"], .stage[data-view="map"] { grid-template-rows: minmax(0, 1fr); }
+    .stage[data-view="terrain"] .map-card { display: none; }
+    .stage[data-view="map"] .terrain-card { display: none; }
+    .canvas-card { position: relative; min-height: 0; overflow: hidden; background: #061323; }
+    .canvas-card::after {
+      content: attr(data-caption); position: absolute; left: 16px; top: 14px; pointer-events: none;
+      color: rgba(224, 237, 239, .68); font-size: 11px; letter-spacing: .08em;
+    }
+    canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+    #terrainCanvas { cursor: grab; }
+    #terrainCanvas:active { cursor: grabbing; }
+    .map-tip {
+      position: absolute; display: none; z-index: 3; transform: translate(10px, -26px);
+      padding: 5px 8px; border: 1px solid rgba(255, 215, 75, .7); border-radius: 6px;
+      color: #4b351e; background: rgba(255, 250, 226, .95); font-size: 11px; font-weight: 700;
+      pointer-events: none; white-space: nowrap;
+    }
+    aside { min-height: 0; overflow-y: auto; padding: 12px; background: linear-gradient(180deg, #0b1827, #07131f); scrollbar-width: thin; scrollbar-color: #32485c transparent; }
+    .panel { margin-bottom: 10px; padding: 12px; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(180deg, rgba(18, 35, 52, .98), rgba(11, 25, 39, .98)); }
+    .status { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+    .status strong, .panel h2 { color: #f4d958; }
+    .status span { padding: 5px 8px; border: 1px solid #36526a; border-radius: 6px; color: #b6c4cd; font-size: 11px; }
+    .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; margin-top: 10px; }
+    .metric { padding: 9px 8px; border: 1px solid #294159; border-radius: 7px; background: #091828; }
+    .metric span { display: block; margin-bottom: 4px; color: #768c9d; font-size: 10px; }
+    .metric strong { color: #ecf3df; font-size: 16px; }
+    .summary { margin: 10px 0 0; color: #91a5b2; font-size: 11px; line-height: 1.7; }
+    .note { display: block; margin-top: 6px; color: #f2d76d; font-size: 10px; }
+    .panel h2 { margin: 0 0 9px; font-size: 11px; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+    .regions { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    button {
+      min-height: 42px; padding: 8px; border: 1px solid #2a465e; border-radius: 8px;
+      color: #c9d4da; background: #112438; cursor: pointer; transition: border-color .15s, transform .15s, background .15s;
+    }
+    button:hover { border-color: #5d829a; transform: translateY(-1px); }
+    button[aria-pressed="true"] { color: #12251f; border-color: #ffe03b; background: linear-gradient(135deg, #ffd52d, #70dfd6); font-weight: 800; }
+    .regions button { min-height: 36px; color: #f3dc6d; font-size: 11px; }
+    .range-row { display: grid; grid-template-columns: 1fr auto; gap: 5px 10px; margin-top: 12px; }
+    .range-row label { color: #9aabb7; font-size: 11px; }
+    .range-row output { color: #ffe36f; font-size: 11px; font-weight: 800; }
+    input[type="range"] { grid-column: 1 / -1; width: 100%; accent-color: #ffc51d; cursor: pointer; }
+    .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .help { margin: 10px 2px 2px; color: #647b8b; font-size: 10px; text-align: center; }
+    @media (max-width: 980px) {
+      body { overflow: auto; }
+      .layout { height: auto; display: block; }
+      .stage { height: 920px; border-right: 0; border-bottom: 1px solid #21354a; }
+      aside { overflow: visible; }
+    }
+    @media (max-width: 640px) {
+      .topbar { height: 60px; padding: 0 12px; }
+      .mark { width: 36px; height: 36px; border-radius: 9px; }
+      h1 { font-size: 16px; }
+      .eyebrow, .live { display: none; }
+      .layout { height: auto; }
+      .stage { height: 780px; }
+      .regions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="mark" aria-hidden="true">等</div>
+        <div><p class="eyebrow">CONTOUR TERRAIN MODEL</p><h1>等高线 · 综合地形演示</h1></div>
+      </div>
+      <div class="live">单文件实时模型</div>
+    </header>
+    <main class="layout">
+      <section class="stage" id="stage" data-view="split" aria-label="综合地形观测区">
+        <article class="canvas-card terrain-card" data-caption="3D 地形模型">
+          <canvas id="terrainCanvas" role="img" aria-label="三维综合地形模型，可拖动旋转、滚轮缩放"></canvas>
+        </article>
+        <article class="canvas-card map-card" data-caption="2D 等高线图">
+          <canvas id="mapCanvas" role="img" aria-label="二维等高线地形图"></canvas>
+          <span class="map-tip" id="mapTip"></span>
+        </article>
+      </section>
+      <aside aria-label="地形控制台">
+        <section class="panel">
+          <div class="status"><strong id="statusName">正在观察 · 综合地形</strong><span id="statusView">同屏对照</span></div>
+          <div class="metrics">
+            <div class="metric"><span>最高点</span><strong id="maxHeight">—</strong></div>
+            <div class="metric"><span>最低陆地</span><strong id="minHeight">—</strong></div>
+            <div class="metric"><span>地势起伏</span><strong id="reliefHeight">—</strong></div>
+          </div>
+          <p class="summary">北侧为千米山地与白色峰顶，东侧为五百米以上高原，西侧丘陵、中央盆地和南侧平原共同连接湖泊、河流、半岛、岛屿、海峡与海湾。</p>
+          <small class="note">平原 150–200 m · 蓝色仅表示水体</small>
+        </section>
+        <section class="panel">
+          <h2>地貌定位</h2>
+          <div class="grid regions" id="regionButtons">
+            <button data-x="-0.08" data-y="0.78">山地</button><button data-x="0.68" data-y="0.2">高原</button>
+            <button data-x="-0.67" data-y="0.02">丘陵</button><button data-x="0.1" data-y="-0.27">平原</button>
+            <button data-x="0.02" data-y="0.27">盆地</button><button data-x="0.2" data-y="-0.7">半岛</button>
+            <button data-x="-0.68" data-y="-0.78">岛屿</button><button data-x="0.42" data-y="-0.62">水体</button>
+          </div>
+        </section>
+        <section class="panel">
+          <h2>投影方式</h2>
+          <div class="grid" id="viewButtons">
+            <button data-view="terrain">3D 立体</button><button data-view="map">2D 俯视</button>
+            <button data-view="split" aria-pressed="true">同屏对照</button><button id="demoButton" aria-pressed="false">投影演示</button>
+          </div>
+        </section>
+        <section class="panel">
+          <h2>地图显示</h2>
+          <div class="grid" id="displayButtons">
+            <button data-display="full" aria-pressed="true">地貌 + 等高线</button><button data-display="contours">仅等高线</button>
+            <button data-display="relief">仅地貌</button><button data-display="mono">坡度显色</button>
+          </div>
+        </section>
+        <section class="panel">
+          <h2>参数调节</h2>
+          <div class="range-row"><label for="interval">等高距</label><output id="intervalOut">50 m</output><input id="interval" type="range" min="25" max="100" step="25" value="50"></div>
+          <div class="range-row"><label for="exaggeration">显示调节</label><output id="exaggerationOut">115%</output><input id="exaggeration" type="range" min="0.8" max="2.2" step="0.05" value="1.15"></div>
+        </section>
+        <div class="actions"><button id="autoButton" aria-pressed="false">自动旋转</button><button id="resetButton">重置视角</button></div>
+        <p class="help">3D 操作：拖动旋转 · 滚轮缩放</p>
+      </aside>
+    </main>
+  </div>
+  <script>
+    (() => {
+      "use strict";
+      const SEA_LEVEL = 100, LAKE_LEVEL = 225, DEFAULT_YAW = -0.66;
+      const $ = (selector) => document.querySelector(selector);
+      const terrainCanvas = $("#terrainCanvas"), mapCanvas = $("#mapCanvas"), stage = $("#stage"), mapTip = $("#mapTip");
+      const state = { view: "split", yaw: DEFAULT_YAW, tilt: .44, zoom: 1, focusX: 0, focusY: 0, interval: 50, exaggeration: 1.15, contours: true, relief: true, palette: "natural", auto: false, flow: 0 };
+      const labels = [
+        ["山地", -.08, .82, "land"], ["高原", .7, .22, "land"], ["丘陵", -.7, .02, "land"],
+        ["平原", .12, -.26, "land"], ["盆地", .02, .3, "land"], ["半岛", .18, -.72, "land"],
+        ["岛", -.68, -.78, "land"], ["湖泊", -.47, .38, "water"], ["海峡", -.69, -.61, "water"],
+        ["海湾", .59, -.35, "water"], ["海洋", .68, -.78, "water"]
+      ];
+      const sigmoid = v => v >= 0 ? 1 / (1 + Math.exp(-v)) : Math.exp(v) / (1 + Math.exp(v));
+      const ellipse = (x, y, cx, cy, rx, ry, soft = .08) => sigmoid((1 - ((x - cx) / rx) ** 2 - ((y - cy) / ry) ** 2) / soft);
+      const lakeMask = (x, y) => ellipse(x, y, -.47, .38, .17, .105, .1);
+      const riverX = y => -.43 + (.38 - y) * .42 + .025 * Math.sin(y * 11);
+      const riverMask = (x, y) => Math.exp(-1 * ((x - riverX(y)) / .021) ** 2) * sigmoid((.38 - y) / .025) * sigmoid((y + .55) / .025);
+      function waterHeight(x, y) {
+        if (lakeMask(x, y) > .46) return LAKE_LEVEL;
+        if (riverMask(x, y) > .46) return LAKE_LEVEL + (SEA_LEVEL - LAKE_LEVEL) * Math.max(0, Math.min(1, (.38 - y) / .93));
+        return SEA_LEVEL;
+      }
+      function coverage(x, y) {
+        const coast = -.48 + .055 * Math.sin(x * 5.4) + .035 * Math.sin(x * 10.2 + .8) + .17 * Math.exp(-1 * ((x - .56) / .3) ** 2);
+        const mainland = sigmoid((y - coast) / .026);
+        const pieces = [ellipse(x, y, .14, -.5, .12, .28, .12), ellipse(x, y, .2, -.72, .2, .27, .1), ellipse(x, y, -.68, -.78, .18, .12, .09), ellipse(x, y, .73, -.77, .12, .085, .08), ellipse(x, y, -.2, -.82, .075, .055, .08)];
+        let land = mainland; pieces.forEach(p => { land = 1 - (1 - land) * (1 - p); });
+        return Math.max(0, Math.min(1, land * (1 - Math.max(lakeMask(x, y), riverMask(x, y) * .99))));
+      }
+      function landHeight(x, y) {
+        const g = (cx, cy, sx, sy, h) => h * Math.exp(-1 * ((x - cx) / sx) ** 2 - ((y - cy) / sy) ** 2);
+        const plain = 174 + 11 * y + 5 * Math.sin(x * 2.4 + .5) * Math.cos(y * 1.8) + 3 * Math.sin((x - y) * 3.5);
+        const mountains = g(-.58, .72, .24, .22, 620) + g(-.2, .83, .22, .2, 780) + g(.17, .78, .23, .22, 720) + g(.48, .68, .26, .25, 540) + g(-.02, .52, .42, .2, 95);
+        const mountainValley = -58 * Math.exp(-1 * ((x + .02 - .12 * Math.sin(y * 5)) / .07) ** 2) * sigmoid((y - .38) / .07);
+        const hills = g(-.78, .12, .24, .27, 118) + g(-.53, -.08, .25, .28, 96) + g(-.77, -.43, .24, .25, 78) + g(-.42, -.5, .3, .22, 54);
+        const edge = .42 + .06 * Math.sin(y * 4.2) + .035 * Math.cos(y * 8.1);
+        const pm = sigmoid((x - edge) / .055) * sigmoid((y + .58) / .07) * sigmoid((.52 - y) / .08);
+        const plateau = pm * (350 + 9 * Math.sin(y * 5.2) + 6 * Math.cos((x + y) * 4.1));
+        const gullies = -52 * pm * Math.exp(-1 * ((y + .18 + .34 * (x - .42)) / .055) ** 2) * sigmoid((.86 - x) / .07) - 34 * pm * Math.exp(-1 * ((y - .27 + .2 * (x - .5)) / .05) ** 2) * sigmoid((.8 - x) / .08);
+        const basin = -62 * Math.exp(-1 * ((x + .02) / .32) ** 2 - ((y - .18) / .27) ** 2) + g(-.28, .34, .22, .14, 48) + g(.28, .36, .22, .14, 42);
+        const off = x - riverX(y), valleyRange = sigmoid((.34 - y) / .045) * sigmoid((y + .52) / .055);
+        const valleyWalls = valleyRange * (72 * Math.exp(-1 * ((off + .115) / .072) ** 2) + 68 * Math.exp(-1 * ((off - .115) / .072) ** 2));
+        const coastRelief = g(.2, -.72, .17, .22, 22) + g(-.68, -.78, .13, .1, 52) + g(.73, -.77, .09, .07, 34) + g(-.2, -.82, .055, .045, 24);
+        return plain + mountains + mountainValley + hills + plateau + gullies + basin + valleyWalls + coastRelief;
+      }
+      function elevation(x, y) {
+        const c = coverage(x, y), water = waterHeight(x, y);
+        if (c <= .46) return water;
+        return water + Math.max(0, Math.min(1, (c - .46) / .32)) * (landHeight(x, y) - water);
+      }
+      const palettes = {
+        natural: [[0,[42,116,62]],[.2,[91,153,65]],[.4,[166,181,69]],[.58,[222,184,61]],[.76,[218,116,43]],[.86,[193,67,39]],[.91,[238,232,214]],[1,[252,254,255]]],
+        mono: [[0,[57,78,72]],[.5,[139,151,142]],[1,[231,233,224]]]
+      };
+      function color(height, alpha = 1) {
+        const n = Math.max(0, Math.min(1, (height - stats.min) / Math.max(1, stats.max - stats.min))), stops = palettes[state.palette];
+        let lo = stops[0], hi = stops.at(-1);
+        for (let i = 1; i < stops.length; i++) if (n <= stops[i][0]) { lo = stops[i - 1]; hi = stops[i]; break; }
+        const t = Math.max(0, Math.min(1, (n - lo[0]) / Math.max(.0001, hi[0] - lo[0]))), rgb = lo[1].map((v, i) => Math.round(v + (hi[1][i] - v) * t));
+        return `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${alpha})`;
+      }
+      function statistics() {
+        let min = Infinity, max = -Infinity;
+        for (let r = 0; r <= 70; r++) for (let c = 0; c <= 70; c++) {
+          const x = -1 + 2 * c / 70, y = -1 + 2 * r / 70;
+          if (coverage(x, y) < .72) continue;
+          const h = elevation(x, y); min = Math.min(min, h); max = Math.max(max, h);
+        }
+        return { min, max };
+      }
+      const stats = statistics();
+      $("#maxHeight").textContent = `${Math.round(stats.max)} m`;
+      $("#minHeight").textContent = `${Math.round(stats.min)} m`;
+      $("#reliefHeight").textContent = `${Math.round(stats.max - stats.min)} m`;
+      function contourSegments(level, resolution = 62) {
+        const out = [], values = Array.from({length: resolution + 1}, (_, r) => Array.from({length: resolution + 1}, (_, c) => elevation(-1 + 2 * c / resolution, -1 + 2 * r / resolution)));
+        const interp = (a,b,va,vb) => { const t = Math.max(0, Math.min(1, (level - va) / (vb - va || .000001))); return {x:a.x+(b.x-a.x)*t,y:a.y+(b.y-a.y)*t}; };
+        const add = (a,b) => { const m={x:(a.x+b.x)/2,y:(a.y+b.y)/2}; if (coverage(a.x,a.y)>.68 && coverage(b.x,b.y)>.68 && coverage(m.x,m.y)>.68) out.push({a,b,level}); };
+        for (let r=0;r<resolution;r++) for (let c=0;c<resolution;c++) {
+          const x0=-1+2*c/resolution,x1=-1+2*(c+1)/resolution,y0=-1+2*r/resolution,y1=-1+2*(r+1)/resolution;
+          const p=[{x:x0,y:y0},{x:x1,y:y0},{x:x1,y:y1},{x:x0,y:y1}], v=[values[r][c],values[r][c+1],values[r+1][c+1],values[r+1][c]], cross=[];
+          [[0,1],[1,2],[2,3],[3,0]].forEach(([a,b])=>{ if ((v[a]-level<0)!==(v[b]-level<0)) cross.push(interp(p[a],p[b],v[a],v[b])); });
+          if (cross.length===2) add(cross[0],cross[1]); else if (cross.length===4) { const center=v.reduce((s,n)=>s+n,0)/4; if(center>=level){add(cross[0],cross[1]);add(cross[2],cross[3]);}else{add(cross[0],cross[3]);add(cross[1],cross[2]);} }
+        }
+        return out;
+      }
+      let levels = [], contours = [];
+      function rebuildContours() {
+        levels = []; contours = [];
+        const first=Math.ceil(stats.min/state.interval)*state.interval,last=Math.floor(stats.max/state.interval)*state.interval;
+        for(let h=first;h<=last;h+=state.interval){levels.push(h);contours.push(...contourSegments(h));}
+      }
+      rebuildContours();
+      function setup(canvas) {
+        const rect=canvas.getBoundingClientRect(), dpr=Math.min(devicePixelRatio||1,2), w=Math.max(1,Math.round(rect.width)),h=Math.max(1,Math.round(rect.height));
+        if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);}
+        const ctx=canvas.getContext("2d");ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);return{ctx,w,h};
+      }
+      function arrow(ctx,a,b,color,width=1.5){const ang=Math.atan2(b.y-a.y,b.x-a.x);ctx.save();ctx.strokeStyle=ctx.fillStyle=color;ctx.lineWidth=width;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();ctx.beginPath();ctx.moveTo(b.x,b.y);ctx.lineTo(b.x-7*Math.cos(ang-.5),b.y-7*Math.sin(ang-.5));ctx.lineTo(b.x-7*Math.cos(ang+.5),b.y-7*Math.sin(ang+.5));ctx.closePath();ctx.fill();ctx.restore();}
+      function label(ctx,p,text,kind="land",size=10){const palette=kind==="water"?["rgba(4,74,119,.9)","#8ae0ff","#d4f4ff"]:kind==="contour"?["rgba(255,248,220,.92)","#765039","#55351f"]:["rgba(19,31,24,.88)","#f4d967","#fff8cf"];ctx.save();ctx.font=`700 ${size}px sans-serif`;ctx.textAlign="center";ctx.textBaseline="middle";const bw=ctx.measureText(text).width+12,bh=size+9;ctx.beginPath();ctx.roundRect(p.x-bw/2,p.y-bh/2,bw,bh,6);ctx.fillStyle=palette[0];ctx.fill();ctx.strokeStyle=palette[1];ctx.lineWidth=.8;ctx.stroke();ctx.fillStyle=palette[2];ctx.fillText(text,p.x,p.y+.5);ctx.restore();}
+      function projectFactory(w,h){const scale=Math.min(w*.42,h*.56)*state.zoom,base=SEA_LEVEL-42,c=Math.cos(state.yaw),s=Math.sin(state.yaw);return(p,z)=>{const fx=p.x-state.focusX,fy=p.y-state.focusY,rx=fx*c-fy*s,ry=fx*s+fy*c,n=Math.max(0,(z-base)/Math.max(1,stats.max-base));return{x:w*.5+rx*scale,y:h*.79-ry*scale*state.tilt-n*scale*.98*state.exaggeration,depth:ry};};}
+      function drawTerrain(){
+        if(state.view==="map") return; const {ctx,w,h}=setup(terrainCanvas),project=projectFactory(w,h),base=SEA_LEVEL-42,res=46,items=[];
+        const floor=[project({x:-1,y:-1},base),project({x:1,y:-1},base),project({x:1,y:1},base),project({x:-1,y:1},base)];ctx.beginPath();floor.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.closePath();ctx.fillStyle="rgba(4,13,22,.45)";ctx.fill();ctx.strokeStyle="#183247";ctx.stroke();
+        for(let r=0;r<res;r++)for(let c=0;c<res;c++){
+          const x0=-1+2*c/res,x1=-1+2*(c+1)/res,y0=-1+2*r/res,y1=-1+2*(r+1)/res,points=[{x:x0,y:y0},{x:x1,y:y0},{x:x1,y:y1},{x:x0,y:y1}],heights=points.map(p=>elevation(p.x,p.y)),screen=points.map((p,i)=>project(p,heights[i])),cx=(x0+x1)/2,cy=(y0+y1)/2;
+          items.push({kind:"cell",depth:screen.reduce((a,p)=>a+p.depth,0)/4,points:screen,height:heights.reduce((a,n)=>a+n,0)/4,water:coverage(cx,cy)<.52});
+        }
+        if(state.contours)contours.forEach(seg=>{const p=[project(seg.a,seg.level+3),project(seg.b,seg.level+3)];items.push({kind:"line",depth:(p[0].depth+p[1].depth)/2-.006,points:p,level:seg.level});});
+        const riverPoint=t=>{const y=.35-t*.9,x=riverX(y);return project({x,y},waterHeight(x,y)+5);};
+        const river=Array.from({length:48},(_,i)=>riverPoint(i/47));for(let i=0;i<river.length-1;i++){const p=[river[i],river[i+1]];items.push({kind:"river",depth:(p[0].depth+p[1].depth)/2-.008,points:p});}
+        items.sort((a,b)=>b.depth-a.depth||(a.kind==="cell"?-1:1));
+        items.forEach(it=>{if(it.kind==="cell"){ctx.beginPath();it.points.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.closePath();ctx.fillStyle=it.water?"rgba(39,139,207,.97)":state.relief?color(it.height):"#142a29";ctx.fill();ctx.strokeStyle=it.water?"rgba(144,220,249,.08)":"rgba(4,12,15,.05)";ctx.lineWidth=.35;ctx.stroke();}else{ctx.beginPath();ctx.moveTo(it.points[0].x,it.points[0].y);ctx.lineTo(it.points[1].x,it.points[1].y);ctx.strokeStyle=it.kind==="river"?"rgba(91,211,251,.95)":it.level%100===0?"rgba(66,38,24,.94)":"rgba(78,48,29,.72)";ctx.lineWidth=it.kind==="river"?2.4:it.level%100===0?1.25:.75;ctx.stroke();}});
+        for(let i=0;i<5;i++){const p=riverPoint((state.flow+i/5)%1);ctx.beginPath();ctx.arc(p.x,p.y,2.6,0,Math.PI*2);ctx.fillStyle="#e0faff";ctx.fill();}
+        labels.map(([text,x,y,kind])=>({text,x,y,kind,p:project({x,y},(kind==="water"?waterHeight(x,y):elevation(x,y))+(kind==="water"?8:18))})).sort((a,b)=>b.p.depth-a.p.depth).forEach(o=>{if(o.p.x>32&&o.p.x<w-32&&o.p.y>50&&o.p.y<h-35)label(ctx,o.p,o.text,o.kind,10);});
+      }
+      function drawMap(){
+        if(state.view==="terrain") return; const {ctx,w,h}=setup(mapCanvas),pad=Math.max(18,Math.min(w,h)*.045),size=Math.min(w-pad*2,h-pad*2),left=(w-size)/2,top=(h-size)/2,ang=state.view==="split"?state.yaw:0,c=Math.cos(ang),s=Math.sin(ang);
+        const mp=p=>{const rx=p.x*c-p.y*s,ry=p.x*s+p.y*c;return{x:left+(rx+1)*size/2,y:top+(1-(ry+1)/2)*size};};
+        ctx.fillStyle="#091626";ctx.fillRect(left,top,size,size);ctx.save();ctx.beginPath();ctx.rect(left,top,size,size);ctx.clip();ctx.translate(left+size/2,top+size/2);ctx.rotate(-ang);ctx.translate(-(left+size/2),-(top+size/2));
+        const res=72;for(let r=0;r<res;r++)for(let col=0;col<res;col++){const x=-1+2*(col+.5)/res,y=1-2*(r+.5)/res,hv=elevation(x,y),water=coverage(x,y)<.52;ctx.fillStyle=water?"rgba(42,139,207,.97)":state.relief?color(hv,.9):"#142a29";ctx.fillRect(left+col*size/res,top+r*size/res,size/res+1,size/res+1);}ctx.restore();
+        ctx.save();ctx.beginPath();ctx.rect(left,top,size,size);ctx.clip();
+        if(state.contours){levels.forEach(level=>{ctx.beginPath();contours.filter(seg=>seg.level===level).forEach(seg=>{const a=mp(seg.a),b=mp(seg.b);ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);});ctx.strokeStyle=level%100===0?"#684b31":"rgba(104,75,49,.78)";ctx.lineWidth=level%100===0?1.6:.9;ctx.stroke();});const step=state.interval<=25?50:state.interval;levels.filter(l=>l%step===0).forEach(level=>{const segs=contours.filter(x=>x.level===level),seg=segs[Math.floor(segs.length*.3)];if(seg)label(ctx,mp({x:(seg.a.x+seg.b.x)/2,y:(seg.a.y+seg.b.y)/2}),`${level} m`,"contour",8);});}
+        const lake=Array.from({length:48},(_,i)=>{const a=i/47*Math.PI*2;return mp({x:-.47+Math.cos(a)*.155,y:.38+Math.sin(a)*.092});});ctx.beginPath();lake.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.closePath();ctx.fillStyle="rgba(30,143,218,.92)";ctx.fill();ctx.strokeStyle="#9be9ff";ctx.lineWidth=1.6;ctx.stroke();
+        const rp=t=>{const y=.35-t*.9;return mp({x:riverX(y),y});},path=Array.from({length:52},(_,i)=>rp(i/51));ctx.beginPath();path.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.strokeStyle="#58d3fa";ctx.lineWidth=2.5;ctx.stroke();for(let i=0;i<5;i++){const p=rp((state.flow+i/5)%1);ctx.beginPath();ctx.arc(p.x,p.y,2.5,0,Math.PI*2);ctx.fillStyle="#e7fcff";ctx.fill();}
+        labels.forEach(([text,x,y,kind])=>label(ctx,mp({x,y}),text,kind,10));ctx.restore();ctx.strokeStyle="rgba(77,104,91,.45)";ctx.strokeRect(left,top,size,size);
+        const north={x:-Math.sin(ang),y:-Math.cos(ang)},center={x:left+size-23,y:top+35},tip={x:center.x+north.x*18,y:center.y+north.y*18};ctx.fillStyle="#1e3329";ctx.font="700 10px sans-serif";ctx.textAlign="center";ctx.fillText("北 N",center.x+north.x*28,center.y+north.y*28+4);arrow(ctx,center,tip,"#1e3329",1.4);
+        mapCanvas._map={left,top,size,ang};
+      }
+      function drawAll(){drawTerrain();drawMap();}
+      function updateControls(){stage.dataset.view=state.view;$("#statusView").textContent=state.view==="terrain"?"3D 立体":state.view==="map"?"2D 俯视":"同屏对照";document.querySelectorAll("#viewButtons [data-view]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.view===state.view));["#demoButton","#autoButton"].forEach(id=>$(id).setAttribute("aria-pressed",String(state.auto)));$("#autoButton").textContent=state.auto?"停止旋转":"自动旋转";}
+      document.querySelectorAll("#viewButtons [data-view]").forEach(b=>b.addEventListener("click",()=>{state.view=b.dataset.view;updateControls();requestAnimationFrame(drawAll);}));
+      function toggleAuto(){state.auto=!state.auto;updateControls();} $("#demoButton").addEventListener("click",toggleAuto);$("#autoButton").addEventListener("click",toggleAuto);
+      document.querySelectorAll("#displayButtons button").forEach(b=>b.addEventListener("click",()=>{const mode=b.dataset.display;state.relief=mode!=="contours";state.contours=mode!=="relief";state.palette=mode==="mono"?"mono":"natural";document.querySelectorAll("#displayButtons button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));drawAll();}));
+      $("#interval").addEventListener("input",e=>{state.interval=+e.target.value;$("#intervalOut").textContent=`${state.interval} m`;rebuildContours();drawAll();});
+      $("#exaggeration").addEventListener("input",e=>{state.exaggeration=+e.target.value;$("#exaggerationOut").textContent=`${Math.round(state.exaggeration*100)}%`;drawAll();});
+      $("#resetButton").addEventListener("click",()=>{Object.assign(state,{yaw:DEFAULT_YAW,tilt:.44,zoom:1,focusX:0,focusY:0,auto:false});$("#statusName").textContent="正在观察 · 综合地形";document.querySelectorAll("#regionButtons button").forEach(b=>b.setAttribute("aria-pressed","false"));updateControls();drawAll();});
+      document.querySelectorAll("#regionButtons button").forEach(b=>b.addEventListener("click",()=>{state.auto=false;state.view="terrain";state.zoom=1.18;state.focusX=+b.dataset.x*.42;state.focusY=+b.dataset.y*.42;$("#statusName").textContent=`正在观察 · ${b.textContent}`;document.querySelectorAll("#regionButtons button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));updateControls();drawAll();}));
+      let drag=null;terrainCanvas.addEventListener("pointerdown",e=>{terrainCanvas.setPointerCapture(e.pointerId);drag={id:e.pointerId,x:e.clientX,y:e.clientY};});terrainCanvas.addEventListener("pointermove",e=>{if(!drag||drag.id!==e.pointerId)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;drag.x=e.clientX;drag.y=e.clientY;state.yaw+=dx*.009;state.tilt=Math.max(.3,Math.min(.78,state.tilt+dy*.003));drawAll();});["pointerup","pointercancel"].forEach(type=>terrainCanvas.addEventListener(type,e=>{if(drag&&drag.id===e.pointerId)drag=null;}));terrainCanvas.addEventListener("wheel",e=>{e.preventDefault();state.zoom=Math.max(.75,Math.min(1.38,state.zoom-e.deltaY*.001));drawAll();},{passive:false});
+      mapCanvas.addEventListener("pointermove",e=>{const m=mapCanvas._map;if(!m)return;const rect=mapCanvas.getBoundingClientRect(),left=e.clientX-rect.left,top=e.clientY-rect.top;if(left<m.left||left>m.left+m.size||top<m.top||top>m.top+m.size){mapTip.style.display="none";return;}const rx=-1+2*(left-m.left)/m.size,ry=1-2*(top-m.top)/m.size,c=Math.cos(m.ang),s=Math.sin(m.ang),x=rx*c+ry*s,y=-rx*s+ry*c;if(Math.abs(x)>1||Math.abs(y)>1){mapTip.style.display="none";return;}mapTip.textContent=`${Math.round(elevation(x,y))} m`;mapTip.style.left=`${left}px`;mapTip.style.top=`${top}px`;mapTip.style.display="block";});mapCanvas.addEventListener("pointerleave",()=>mapTip.style.display="none");
+      new ResizeObserver(()=>requestAnimationFrame(drawAll)).observe(stage);
+      let last=0;function animate(time){if(time-last>36){if(state.auto&&state.view!=="map")state.yaw+=(time-last||36)*.0007;state.flow=(time*.00016)%1;drawAll();last=time;}requestAnimationFrame(animate);}updateControls();drawAll();requestAnimationFrame(animate);
+    })();
+  </script>
+</body>
+</html>
