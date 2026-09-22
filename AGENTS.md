@@ -15,7 +15,7 @@ This file applies to the whole repository. The normative product rules are in [`
 
 ## Before handing off a change
 
-- Deploy all geography projects through this repository to the existing Cloudflare Pages project `geoquest`. Place standalone sources in `projects/<id>/`, integrate their output and scoped security headers in `scripts/prepare-projects.mjs`, and preserve existing public paths. Do not create a separate Worker or Pages project for a new geography project.
+- Deploy all geography projects through this repository to the Git-integrated Cloudflare Pages project `geoquest-git`. Place standalone sources in `projects/<id>/`, integrate their output and scoped security headers in `scripts/prepare-projects.mjs`, and preserve existing public paths. Do not create a separate Worker or Pages project for a new geography project.
 - When a new geography project goes live, update `portal/projects.json` with its verified public URL, description, and tags, rebuild the unified site, and verify its entry link after deployment. The root portal is maintained here; other repositories must include this integration in their release handoff. Never list planned projects as live.
 
 Run the relevant subset of:

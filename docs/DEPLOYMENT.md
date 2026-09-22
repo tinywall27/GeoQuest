@@ -1,6 +1,6 @@
 # 地理教学项目统一发布
 
-正式入口：<https://geo.tinywall.cc/>。所有地理项目由本仓库统一构建，发布到同一个 Cloudflare Pages 项目 `geoquest`（`geoquest-3ob.pages.dev`）。
+正式入口：<https://geo.tinywall.cc/>。所有地理项目由本仓库统一构建，发布到同一个 Git 集成的 Cloudflare Pages 项目 `geoquest-git`（`geoquest-git.pages.dev`）。
 
 ## 地址与来源
 
@@ -17,10 +17,10 @@
 - GitHub：`tinywall27/GeoQuest`；生产分支 `main`；使用 SSH 推送。
 - Node 22；pnpm 版本由 `package.json` 固定；发布配置 `wrangler.jsonc`。
 - 构建：`VITE_BASE_PATH=/geoquest/ pnpm build:pages`，产物 `dist/`。
-- 现有 Pages 项目使用 Direct Upload。Cloudflare 不支持将这类项目直接改为原生 Git 集成，因此采用 GitHub Actions 自动发布，保留原项目和域名。
-- `.github/workflows/ci.yml` 在 push / PR 上执行内容、代码、类型、单元测试与浏览器检查。主分支检查通过后，部署同一次构建保存的统一站点产物，再进行线上桌面和手机验收。PR 不发布生产。
-- 启用自动发布需要 GitHub repository secret `CLOUDFLARE_API_TOKEN`（目标账号的 Cloudflare Pages:Edit）、repository variable `CLOUDFLARE_ACCOUNT_ID`，以及 `CLOUDFLARE_DEPLOY_ENABLED=true`。关闭最后一个变量可暂停自动发布，但继续运行质量检查。
-- Token 仅保存于 GitHub Secrets，不进入仓库、构建产物或日志；不要把本地 Wrangler OAuth 凭据复制进 CI。
+- Cloudflare 原生 Git 集成关联 `tinywall27/GeoQuest`，生产分支 `main`。推送后由 Cloudflare 拉取代码、安装依赖、检查并构建部署；控制台直接显示关联仓库与构建日志。
+- Cloudflare 构建命令：`pnpm lint && pnpm typecheck && pnpm test:run && VITE_BASE_PATH=/geoquest/ pnpm build:pages`；输出目录 `dist`；环境变量 `NODE_VERSION=22`、`PNPM_VERSION=11.16.0`。根目录留空。
+- GitHub Actions 继续执行质量检查与浏览器回归，不再上传部署包。Cloudflare 构建与 GitHub 检查独立触发；原生构建命令自身包含 lint、类型、单元测试与边界门禁，不会等待 GitHub 浏览器回归结果。
+- 旧 Direct Upload 项目 `geoquest` 仅保留历史部署作为回滚备份，不绑定正式域名；旧 Actions 发布开关已关闭，生产不再依赖 GitHub 中的 Cloudflare 上传令牌。
 - 不开启 Web Analytics，不设置运行时 API、账号或追踪服务。
 
 `build:pages` 先校验内容、编译公共投影、构建应用，再把 GeoQuest 放入 `dist/geoquest/`，把独立项目复制到各自路径，生成根入口、404、定向重写和安全响应头，并执行公开边界检查。GeoQuest 与单文件项目分别使用 CSP；单文件内联脚本按构建时生成的 SHA-256 放行，不使用 `unsafe-inline` 脚本权限。Pages 会合并匹配的响应头，因此不能让根通配 CSP 与独立项目 CSP 重复叠加。
@@ -34,7 +34,7 @@ pnpm dlx wrangler@4.135.0 pages dev dist --port 4176
 RELEASE_URL=http://127.0.0.1:4176 pnpm exec playwright test --config playwright.release.config.ts
 ```
 
-已登录的维护者可手动发布：`pnpm dlx wrangler@4.135.0 pages deploy dist --project-name geoquest --branch main`。禁止把普通根路径 Vite 构建直接上传为统一站点。
+正常发布只需推送 main；在 Cloudflare 控制台可重试失败构建。禁止把普通根路径 Vite 构建直接上传为统一站点。
 
 ## 新项目上线约定
 
@@ -48,10 +48,10 @@ RELEASE_URL=http://127.0.0.1:4176 pnpm exec playwright test --config playwright.
 
 ## 域名、隐私与回滚
 
-`geo.tinywall.cc` 绑定到 Pages `geoquest`；`tinywall.cc` 主站保持独立。历史域名级 Web Analytics 曾自动注入子域名，需维持对地理站点的禁用配置，发布后核验 HTML、浏览器网络与 Cookie，不能只看项目开关。
+`geo.tinywall.cc` 绑定到 Git 集成 Pages `geoquest-git`；`tinywall.cc` 主站保持独立。历史域名级 Web Analytics 曾自动注入子域名，需维持对地理站点的禁用配置，发布后核验 HTML、浏览器网络与 Cookie，不能只看项目开关。
 
 `pnpm exec playwright test --config playwright.release.config.ts` 默认检查正式域名，`RELEASE_URL` 可指定预览域名。验收覆盖根目录、GeoQuest 的主题深链接与刷新、课堂切换、农业交互、地形演示 CSP 与交互、无第三方请求/Cookie以及未知路径 404。
 
-回滚时在 Pages 选择已验证的统一部署，或提交 revert 触发同一流水线；不强制改写 Git 历史。迁入首次验收前保留原 Worker；若需要回退路由，原路径为 `/GeoLandform/Landforms1` 与 `/GeoLandform/Landforms1/*`。不要回滚到不含其他已上线项目的旧单项目构建包。
+回滚时在新 Pages 项目选择已验证的统一部署，或提交 revert 触发同一流水线；不强制改写 Git 历史。迁入首次验收前保留原 Worker；若需要回退路由，原路径为 `/GeoLandform/Landforms1` 与 `/GeoLandform/Landforms1/*`。不要回滚到不含其他已上线项目的旧单项目构建包。
 
 官方参考：[Direct Upload 限制](https://developers.cloudflare.com/pages/get-started/direct-upload/)、[持续集成发布](https://developers.cloudflare.com/pages/how-to/use-direct-upload-with-continuous-integration/)、[安全响应头](https://developers.cloudflare.com/pages/configuration/headers/)。
